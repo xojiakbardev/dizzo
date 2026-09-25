@@ -43,7 +43,6 @@ jobs:
             git commit -m "$MSG"
             git push origin main
             echo "Successfully synced to dizzo-org/Dizzo-Studio-Backend"
-            git push "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/Dizzo-Studio-Backend.git" main || true
           fi
           cd ..
 
@@ -64,7 +63,6 @@ jobs:
             git commit -m "$MSG"
             git push origin main
             echo "Successfully synced to dizzo-org/Dizzo-Studio-Frontend"
-            git push "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/Dizzo-Studio-Frontend.git" main || true
           fi
           cd ..
 
@@ -85,6 +83,5 @@ jobs:
             git commit -m "$MSG"
             git push origin main
             echo "Successfully synced to dizzo-org/Dizzo-Studio-Mobile"
-            git push "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/Dizzo-Studio-Mobile.git" main || true
           fi
           cd ..
