@@ -8,9 +8,11 @@ useSiteSeo();
 // <html lang> and the page's twins in the other languages (hreflang); the
 // canonical link is useSiteSeo's.
 const localeHead = useLocaleHead({ seo: { canonicalQueries: ['c', 'p'] } });
+// The Studio (noindex) gets no hreflang twins either.
+const isStudio = computed(() => /^\/studio(\/|$)/.test(stripLocalePrefix(route.path)));
 useHead(() => ({
   htmlAttrs: { lang: localeHead.value.htmlAttrs?.lang },
-  link: (localeHead.value.link ?? []).filter(l => l.rel !== 'canonical'),
+  link: isStudio.value ? [] : (localeHead.value.link ?? []).filter(l => l.rel !== 'canonical'),
   meta: localeHead.value.meta ?? [],
 }));
 const { data: currentUser } = useCurrentUser();

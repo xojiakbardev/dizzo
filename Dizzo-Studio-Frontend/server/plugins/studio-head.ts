@@ -1,15 +1,17 @@
-// The Studio's pages are a SPA shell, so crawlers and link previews that
-// don't run JS would see the site-wide title. Put the product's title,
-// description, image and canonical link into that shell (the product was
-// loaded by middleware/studio-product.ts).
-import { localizedPath, OG_IMAGE_PATH, OG_LOCALE, productSeo, SEO_LANGS } from '#shared/seo';
+// The Studio's pages are a SPA shell, so link previews that don't run JS
+// would see the site-wide title. Put the product's title, description and
+// image into that shell (the product was loaded by
+// middleware/studio-product.ts). The editor itself is not a page for search
+// engines: noindex (also sent as X-Robots-Tag, see nuxt.config.ts), and no
+// canonical/hreflang links that would contradict it.
+import { localizedPath, OG_IMAGE_PATH, OG_LOCALE, productSeo } from '#shared/seo';
 import type { ServerProduct } from '../utils/catalog';
 
 const HTML_ESCAPES: Record<string, string> = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' };
 const escapeHtml = (s: string) => s.replace(/[<>&"]/g, c => HTML_ESCAPES[c]!);
 
 // The site-wide versions of what the product replaces.
-const SITE_WIDE = /<title>[\s\S]*?<\/title>|<meta[^>]+(?:name="(?:description|twitter:title|twitter:description|twitter:image)"|property="og:(?:title|description|url|image)")[^>]*>|<link[^>]+rel="canonical"[^>]*>/g;
+const SITE_WIDE = /<title>[\s\S]*?<\/title>|<meta[^>]+(?:name="(?:description|twitter:title|twitter:description|twitter:image)"|property="og:(?:title|description|url|image)")[^>]*>|<meta[^>]+name="robots"[^>]*>|<link[^>]+rel="(?:canonical|alternate)"[^>]*hreflang[^>]*>|<link[^>]+rel="canonical"[^>]*>/g;
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:html', (html, { event }) => {
@@ -29,9 +31,7 @@ export default defineNitroPlugin((nitroApp) => {
     html.head.push([
       `<title>${title}</title>`,
       `<meta name="description" content="${description}">`,
-      `<link rel="canonical" href="${url}">`,
-      ...SEO_LANGS.map(l => `<link rel="alternate" hreflang="${l}" href="${escapeHtml(`${site}${localizedPath(path, l)}`)}">`),
-      `<link rel="alternate" hreflang="x-default" href="${escapeHtml(`${site}${path}`)}">`,
+      '<meta name="robots" content="noindex, follow">',
       `<meta property="og:locale" content="${OG_LOCALE[lang]}">`,
       `<meta property="og:title" content="${title}">`,
       `<meta property="og:description" content="${description}">`,

@@ -97,9 +97,11 @@ export function useSiteSeo() {
   // The product page writes its own title, preview and structured data.
   const ownHead = computed(() => /^\/products\/[^/]+$/.test(path.value));
   const mine = <T>(value: T) => (ownHead.value ? undefined : value);
+  // The Studio is a client-only editor: link previews yes, search results no.
+  const isStudio = computed(() => /^\/studio(\/|$)/.test(path.value));
   const robots = computed(() => {
     if (isPrivate.value) return 'noindex, nofollow';
-    if (NOINDEX_PATH.test(path.value)) return 'noindex, follow';
+    if (isStudio.value || NOINDEX_PATH.test(path.value)) return 'noindex, follow';
     return 'index, follow, max-image-preview:large, max-snippet:-1';
   });
 
@@ -171,7 +173,7 @@ export function useSiteSeo() {
     titleTemplate: t => withSiteName(t),
     // A storefront page without its own useHead title still gets its name.
     title: () => (productSlug.value || ownHead.value ? undefined : seo.value?.title),
-    link: () => (isPrivate.value || ownHead.value ? [] : [{ rel: 'canonical', href: url.value }]),
+    link: () => (isPrivate.value || isStudio.value || ownHead.value ? [] : [{ rel: 'canonical', href: url.value }]),
     script: () => structured.value.length
       ? [{ type: 'application/ld+json', key: 'site-ld', innerHTML: ldJson(structured.value) }]
       : [],

@@ -2,8 +2,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 // Fonts for text layers in the Studio. Kept in sync with FONTS in
 // app/lib/design/document.ts and the backend's app/schemas/design.py:
-// self-hosted at build time, Latin + Cyrillic, injected globally because
-// canvas text doesn't count as "usage" for the fonts module.
+// self-hosted at build time, Latin + Cyrillic. Not global: their @font-face
+// rules go into app/assets/css/design-fonts.css, which app/lib/design/fonts.ts
+// loads when a design is drawn (the Studio, 3D previews, the mobile engine),
+// so storefront pages don't block on them.
 const DESIGN_FONTS = [
   'Montserrat', 'Roboto', 'Open Sans', 'Rubik', 'Oswald', 'Lora', 'Playfair Display', 'PT Serif', 'Comfortaa',
   'Caveat', 'Lobster', 'Pacifico',
@@ -138,8 +140,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // The editor is canvas/WebGL only.
-    ...everyLocale('/studio/**', { ssr: false }),
+    // The editor is canvas/WebGL only: an empty shell to a crawler, so kept
+    // out of search (the product's page, /products/<slug>, is the one to index).
+    ...everyLocale('/studio/**', { ssr: false, headers: { 'X-Robots-Tag': 'noindex, follow' } }),
     // The mobile app's rendering engine and its test harness
     // (docs/EMBED_ENGINE.md): WebGL only, never in search.
     ...everyLocale('/embed/**', { ssr: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } }),
@@ -212,7 +215,7 @@ export default defineNuxtConfig({
       // The Dizzo wordmark next to the logo (font-brand).
       { name: 'Nunito', provider: 'google', global: true, weights: [900], subsets: ['latin'] },
       ...DESIGN_FONTS.map(name => ({
-        name, provider: 'google', global: true, preload: false,
+        name, provider: 'google', global: false, preload: false,
         weights: [400, 700], styles: ['normal', 'italic'] as ('normal' | 'italic')[], subsets: ['latin', 'latin-ext', 'cyrillic'],
       })),
     ],

@@ -1,0 +1,21 @@
+/*
+ * The Studio's text-layer fonts (FONTS in app/lib/design/document.ts).
+ * Not part of the global CSS: this file is imported on demand by
+ * app/lib/design/fonts.ts (the Studio, the gallery's 3D previews, the
+ * mobile engine) so the storefront's first paint doesn't wait for ~135
+ * @font-face rules. Naming each family here is what makes @nuxt/fonts add
+ * its self-hosted @font-face rules (weights/styles/subsets from
+ * nuxt.config.ts) to this stylesheet.
+ */
+.design-font-montserrat { font-family: 'Montserrat', sans-serif; }
+.design-font-roboto { font-family: 'Roboto', sans-serif; }
+.design-font-open-sans { font-family: 'Open Sans', sans-serif; }
+.design-font-rubik { font-family: 'Rubik', sans-serif; }
+.design-font-oswald { font-family: 'Oswald', sans-serif; }
+.design-font-lora { font-family: 'Lora', serif; }
+.design-font-playfair-display { font-family: 'Playfair Display', serif; }
+.design-font-pt-serif { font-family: 'PT Serif', serif; }
+.design-font-comfortaa { font-family: 'Comfortaa', sans-serif; }
+.design-font-caveat { font-family: 'Caveat', cursive; }
+.design-font-lobster { font-family: 'Lobster', cursive; }
+.design-font-pacifico { font-family: 'Pacifico', cursive; }

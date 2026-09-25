@@ -68,8 +68,10 @@ function handleLogout() {
         :aria-label="t('storefront.nav.homeAria')"
       >
         <img
-          src="/brand/dizzo-mark-144.png"
-          alt=""
+          src="/brand/dizzo-mark-80.webp"
+          width="40"
+          height="40"
+          alt="Dizzo"
           class="h-9 w-9 object-contain lg:h-10 lg:w-10"
         >
         <span class="font-brand text-[1.4rem] font-black tracking-tight text-dizzo lg:text-2xl">Dizzo</span>
@@ -260,7 +262,9 @@ function handleLogout() {
         <UiSheetHeader class="border-b border-line px-5 py-4">
           <UiSheetTitle class="flex items-center gap-1">
             <img
-              src="/brand/dizzo-mark-144.png"
+              src="/brand/dizzo-mark-80.webp"
+              width="40"
+              height="40"
               alt=""
               class="h-8 w-8 object-contain"
             >

@@ -32,10 +32,10 @@ const visible = computed({
 
         <div class="text-center">
           <img
-            src="/brand/dizzo-mark-144.png"
-            width="144"
-            height="144"
-            alt=""
+            src="/brand/dizzo-mark-96.webp"
+            width="48"
+            height="48"
+            alt="Dizzo"
             class="mx-auto h-11 w-11 rounded-[10px] object-contain"
           >
           <DialogTitle class="mt-3 text-xl font-extrabold tracking-tight text-slate-900">
