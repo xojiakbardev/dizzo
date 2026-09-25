@@ -37,3 +37,7 @@ ios/Pods/
 
 # Backups of git
 **/.git.sub/
+
+# Knowledge graph / local tools
+graphify-out/
+
