@@ -11,6 +11,7 @@ import { drawDial, faceOf } from '~/lib/design/dial';
 import { drawGraphic, resolveGraphic } from '~/lib/design/graphics';
 import { ensureStickers, isMonoSticker, stickerUrl } from '~/lib/design/stickers';
 import { i18nT } from '~/lib/i18n';
+import { loadFontFace } from '~/lib/design/fonts';
 import { isLowEndDevice } from '~/lib/device';
 
 const LINE_HEIGHT = 1.2;
@@ -116,7 +117,7 @@ function pictureUrl(layer: Layer): string | null {
 async function loadFont(font: string, sample: string) {
   const key = `${font}|${sample}`;
   if (loadedFonts.has(key)) return;
-  await document.fonts.load(font, sample);
+  await loadFontFace(font, sample);
   loadedFonts.add(key);
 }
 

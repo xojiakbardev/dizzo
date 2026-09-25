@@ -70,8 +70,10 @@ watch(() => route.path, () => main.value?.scrollTo({ top: 0 }));
             :aria-label="t('storefront.common.home')"
           >
             <img
-              src="/brand/dizzo-mark-144.png"
-              alt=""
+              src="/brand/dizzo-mark-80.webp"
+              width="40"
+              height="40"
+              alt="Dizzo"
               class="h-9 w-9 object-contain"
             >
           </NuxtLink>

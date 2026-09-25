@@ -28,6 +28,7 @@ import type { SyncOption } from '~/components/studio/StudioSyncDialog.vue';
 import StudioSyncDialog from '~/components/studio/StudioSyncDialog.vue';
 import type { TemplateForm } from '~/components/studio/StudioTemplateSave.vue';
 import { fontString, layoutText, loadImage } from '~/lib/design/render';
+import { loadDesignFonts, loadFontFace } from '~/lib/design/fonts';
 import StudioTemplateSave from '~/components/studio/StudioTemplateSave.vue';
 import StudioTopbar from '~/components/studio/StudioTopbar.vue';
 import { getApiErrorMessage } from '~/composables/useApi';
@@ -187,6 +188,8 @@ const imagesForPanel = computed(() => {
 });
 
 onMounted(async () => {
+  // The font pickers and layer list show each font by name in that font.
+  void loadDesignFonts();
   try {
     await studio.load();
     await templatesQuery.suspense();
@@ -357,7 +360,7 @@ async function addText(preset: TextPreset) {
     content: preset.content, font: preset.font, color: t.ink, align: 'center' as const, bold: preset.bold, italic: preset.italic,
     size_mm: Math.max(minFont, TEXT_SIZE_MM),
   };
-  await document.fonts.load(fontString(text, 64), text.content);
+  await loadFontFace(fontString(text, 64), text.content);
   let layout = layoutText(text);
   const room = (t.zone.x1 - t.zone.x0) * 0.9;
   if (layout.w_mm > room) {

@@ -77,8 +77,11 @@ function openAt(index: number) {
           <img
             v-bind="thumbAttrs(item.preview_image_url, '(min-width: 1024px) 25vw, 50vw')"
             :alt="item.title || item.product_name"
+            width="480"
+            height="480"
             class="aspect-square w-full object-cover transition duration-300 hover:scale-[1.03]"
             loading="lazy"
+            decoding="async"
           >
         </button>
       </li>

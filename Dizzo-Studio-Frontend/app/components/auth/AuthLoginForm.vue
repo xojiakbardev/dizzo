@@ -70,7 +70,7 @@ async function handleLogin() {
     <button
       type="submit"
       :disabled="loginMutation.isPending.value"
-      class="flex h-11 w-full items-center justify-center rounded-xl bg-[#ed5123] px-4 text-sm font-semibold text-white shadow-md shadow-[#ed5123]/25 hover:bg-[#d94418] active:scale-[0.99] transition disabled:cursor-not-allowed disabled:opacity-60"
+      class="flex h-11 w-full items-center justify-center rounded-xl bg-cta px-4 text-sm font-semibold text-white shadow-md shadow-cta/25 hover:bg-cta-hover active:scale-[0.99] transition disabled:cursor-not-allowed disabled:opacity-60"
     >
       {{ loginMutation.isPending.value ? t('storefront.auth.checking') : t('storefront.auth.signInLink') }}
     </button>

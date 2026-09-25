@@ -34,10 +34,10 @@ const retry = () => reloadNuxtApp({ persistState: false });
         @click.prevent="go('/')"
       >
         <img
-          src="/brand/dizzo-mark-144.png"
-          width="144"
-          height="144"
-          alt=""
+          src="/brand/dizzo-mark-80.webp"
+          width="40"
+          height="40"
+          alt="Dizzo"
           class="h-9 w-9 object-contain"
         >
         <span class="font-brand text-[1.4rem] font-black tracking-tight text-dizzo">Dizzo</span>

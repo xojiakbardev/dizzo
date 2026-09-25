@@ -207,8 +207,11 @@ onMounted(() => {
                 <img
                   v-bind="thumbAttrs(item.preview_image_url, '(min-width: 1024px) 25vw, 50vw')"
                   :alt="heading(item)"
+                  width="480"
+                  height="480"
                   class="aspect-square w-full object-cover transition duration-300 group-hover:scale-[1.03]"
                   loading="lazy"
+                  decoding="async"
                 >
               </span>
               <span class="mt-2 block truncate text-[15px] font-semibold text-ink">{{ heading(item) }}</span>

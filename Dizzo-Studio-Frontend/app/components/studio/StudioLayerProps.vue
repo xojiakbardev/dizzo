@@ -7,6 +7,7 @@ import { areaMethod, clampIntoZone, FONTS, layerBox, layerLabel, placeInZone, st
 import { useStudioContext } from '~/composables/useStudio';
 import { graphicLabel } from '~/lib/design/graphics';
 import { fontString, imageDpi, layoutText, LOW_DPI } from '~/lib/design/render';
+import { loadFontFace } from '~/lib/design/fonts';
 import { isMonoSticker, loadStickerIndex } from '~/lib/design/stickers';
 import type { PrintArea } from '~/types/catalog';
 
@@ -62,7 +63,7 @@ const { layers: allLayers } = useStudioContext();
  * minimum) and stays in it with the area's other layers. */
 async function textPatch(changes: Partial<TextSource>): Promise<Partial<Layer>> {
   let text = { ...props.layer.text!, ...changes };
-  await document.fonts.load(fontString(text, 64), text.content);
+  await loadFontFace(fontString(text, 64), text.content);
   let layout = layoutText(text);
   const m = method.value;
   const width = m ? stripWidth(m) : null;
@@ -91,7 +92,7 @@ async function typeText(content: string) {
 /** Clock numerals: the font and look change; the layout follows the face. */
 async function setDial(changes: Partial<DialSource>) {
   const dial = { ...props.layer.dial!, ...changes };
-  await document.fonts.load(fontString(dial, 64), '0123456789XIV');
+  await loadFontFace(fontString(dial, 64), '0123456789XIV');
   emit('update', { dial });
 }
 const maxDialSize = computed(() => Math.max(minFont.value, Math.round(Math.min(props.layer.w_mm, props.layer.h_mm) * 0.16)));

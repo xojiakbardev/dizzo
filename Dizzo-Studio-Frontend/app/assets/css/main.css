@@ -30,10 +30,11 @@
   --color-brand-border: #dbc2b0;
 
   /* Storefront: ink for text, one deep orange for every button that carries
-     white text (#ed5123 itself is 3.6:1 on white, this one passes AA), a
+     white text (#ed5123 itself is 3.5:1 against the buttons' #fafafa text;
+     this one is 4.8:1 — 5.0:1 on pure white — so it passes WCAG AA), a
      warm hairline and the warm plate products sit on. */
   --color-ink: #0f172a;
-  --color-cta: #d24419;
+  --color-cta: #c93f14;
   --color-cta-hover: #b53a13;
   --color-line: #ebe3dc;
   --color-plate: #f3eee9;

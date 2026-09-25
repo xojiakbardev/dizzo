@@ -34,7 +34,9 @@ defineEmits<{
         >
           <!-- The same mark and size as the site's navbar and the Studio. -->
           <img
-            src="/brand/dizzo-mark.webp"
+            src="/brand/dizzo-mark-80.webp"
+            width="40"
+            height="40"
             alt="Dizzo"
             class="h-9 w-9 shrink-0 object-contain lg:h-10 lg:w-10"
           >

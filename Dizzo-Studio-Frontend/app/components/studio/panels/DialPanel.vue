@@ -3,6 +3,7 @@ import type { DialSource, Font, Layer } from '~/lib/design/document';
 import { FONTS } from '~/lib/design/document';
 import type { PrintArea } from '~/types/catalog';
 import { fontString } from '~/lib/design/render';
+import { loadFontFace } from '~/lib/design/fonts';
 
 const props = defineProps<{
   dialLayer: Layer | null;
@@ -34,7 +35,7 @@ const maxSize = computed(() => {
 async function setDial(changes: Partial<DialSource>) {
   if (!dial.value) return;
   const next = { ...dial.value, ...changes };
-  await document.fonts.load(fontString(next, 64), '0123456789XIV');
+  await loadFontFace(fontString(next, 64), '0123456789XIV');
   emit('update', changes);
 }
 </script>

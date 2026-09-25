@@ -18,10 +18,10 @@ const redirectTarget = computed(() => (/^\/(ru|en)(\/|\?|$)/.test(redirectTo.val
     <div class="text-center">
       <div class="mx-auto mb-2 flex items-center justify-center">
         <img
-          src="/brand/dizzo-mark-144.png"
-          width="144"
-          height="144"
-          alt="Dizzo Studio"
+          src="/brand/dizzo-mark-96.webp"
+          width="48"
+          height="48"
+          alt="Dizzo"
           class="h-12 w-12 object-contain"
         >
       </div>

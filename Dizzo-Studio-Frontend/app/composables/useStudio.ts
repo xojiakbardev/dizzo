@@ -18,6 +18,7 @@ import { measureAreas, printJobs, usedAreas } from '~/lib/design/output';
 import { queryKeys } from '~/lib/queryKeys';
 import type { AdminTemplate, CatalogMethod, PrintArea, PublicProductDetail, PublicTemplate, Quote } from '~/types/catalog';
 import { fontString, layoutText, prepareAssets, renderPrintFile } from '~/lib/design/render';
+import { loadFontFace } from '~/lib/design/fonts';
 import { isPlacedModelAnchor, METHOD_LABELS } from '~/types/catalog';
 import { faceOf, isDialArea, newDialLayer } from '~/lib/design/dial';
 
@@ -410,7 +411,7 @@ export function useStudio(slug: Ref<string>) {
     if (next.text) {
       const min = target.min_font_mm ? Number(target.min_font_mm) : 0;
       const text = { ...next.text, size_mm: Number(Math.max(min, next.text.size_mm * f).toFixed(2)) };
-      await document.fonts.load(fontString(text, 64), text.content);
+      await loadFontFace(fontString(text, 64), text.content);
       const layout = layoutText(text);
       next = { ...next, text, w_mm: layout.w_mm, h_mm: layout.h_mm };
     }

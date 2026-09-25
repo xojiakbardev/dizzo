@@ -54,8 +54,10 @@ onMounted(() => {
       :aria-label="$t('studio.topbar.home')"
     >
       <img
-        src="/brand/dizzo-mark.webp"
-        alt=""
+        src="/brand/dizzo-mark-80.webp"
+        width="40"
+        height="40"
+        alt="Dizzo"
         class="h-9 w-9 object-contain lg:h-10 lg:w-10"
       >
       <span class="flex items-baseline gap-1.5 font-brand text-[1.4rem] font-black tracking-tight lg:text-2xl">
