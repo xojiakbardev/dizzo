@@ -1,0 +1,90 @@
+name: Sync Monorepo to Standalone Repos
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: sync-standalone
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: "!contains(github.event.head_commit.message, '[skip-sync]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout monorepo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          token: ${{ secrets.SYNC_PAT }}
+
+      - name: Setup Git identity
+        run: |
+          git config --global user.name "Dizzo Sync Bot"
+          git config --global user.email "sync-bot@dizzo.local"
+
+      - name: Sync Backend
+        env:
+          SYNC_PAT: ${{ secrets.SYNC_PAT }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          echo "=== Checking Backend changes ==="
+          git clone "https://x-access-token:${SYNC_PAT}@github.com/dizzo-org/Dizzo-Studio-Backend.git" target_backend
+          rsync -av --delete --exclude='.git' Dizzo-Studio-Backend/ target_backend/
+          cd target_backend
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes in Backend to sync."
+          else
+            MSG="${COMMIT_MSG:-Auto-sync from dizzo monorepo} [skip-sync]"
+            git commit -m "$MSG"
+            git push origin main
+            echo "Successfully synced to dizzo-org/Dizzo-Studio-Backend"
+            git push "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/Dizzo-Studio-Backend.git" main || true
+          fi
+          cd ..
+
+      - name: Sync Frontend
+        env:
+          SYNC_PAT: ${{ secrets.SYNC_PAT }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          echo "=== Checking Frontend changes ==="
+          git clone "https://x-access-token:${SYNC_PAT}@github.com/dizzo-org/Dizzo-Studio-Frontend.git" target_frontend
+          rsync -av --delete --exclude='.git' Dizzo-Studio-Frontend/ target_frontend/
+          cd target_frontend
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes in Frontend to sync."
+          else
+            MSG="${COMMIT_MSG:-Auto-sync from dizzo monorepo} [skip-sync]"
+            git commit -m "$MSG"
+            git push origin main
+            echo "Successfully synced to dizzo-org/Dizzo-Studio-Frontend"
+            git push "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/Dizzo-Studio-Frontend.git" main || true
+          fi
+          cd ..
+
+      - name: Sync Mobile
+        env:
+          SYNC_PAT: ${{ secrets.SYNC_PAT }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          echo "=== Checking Mobile changes ==="
+          git clone "https://x-access-token:${SYNC_PAT}@github.com/dizzo-org/Dizzo-Studio-Mobile.git" target_mobile
+          rsync -av --delete --exclude='.git' Dizzo-Studio-Mobile/ target_mobile/
+          cd target_mobile
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes in Mobile to sync."
+          else
+            MSG="${COMMIT_MSG:-Auto-sync from dizzo monorepo} [skip-sync]"
+            git commit -m "$MSG"
+            git push origin main
+            echo "Successfully synced to dizzo-org/Dizzo-Studio-Mobile"
+            git push "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/Dizzo-Studio-Mobile.git" main || true
+          fi
+          cd ..

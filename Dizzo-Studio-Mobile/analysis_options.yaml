@@ -1,0 +1,17 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+  exclude:
+    - build/**
+
+linter:
+  rules:
+    - prefer_single_quotes
+    - unawaited_futures
+    - avoid_print
+    - prefer_final_fields
+    - use_super_parameters
+    - directives_ordering
+    - sort_child_properties_last

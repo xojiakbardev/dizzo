@@ -1,0 +1,6 @@
+# Copy to android/key.properties (git-ignored) and fill in. RELEASE.md has the steps.
+# storeFile: an absolute path (keep the keystore outside the repo), or relative to android/.
+storeFile=D:/Hojiakbar/keys/dizzo-upload.jks
+storePassword=CHANGE_ME
+keyAlias=upload
+keyPassword=CHANGE_ME

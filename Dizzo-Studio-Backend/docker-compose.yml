@@ -1,0 +1,91 @@
+name: dizzo
+
+# restart: unless-stopped on every service — without it a host reboot left the
+# whole stack down (2026-09-12: API returned 502 for ~8 hours).
+
+# Container logs rotate at 10 MB × 3 files per service instead of growing
+# until the disk is full.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+# Memory: the host has 7.8 GB shared with another project. The backend's
+# biggest spike is checking a print file (up to ~500 MB for a 40 MP PNG,
+# app/services/print_files.py); the bot is a small aiogram process.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    logging: *logging
+    environment:
+      POSTGRES_DB: dizzo_db
+      POSTGRES_USER: dizzo_user
+      # Used only when the volume is initialised, but required then — without
+      # it a fresh volume never starts. Hex only: it is embedded in a URL below.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dizzo_user -d dizzo_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    logging: *logging
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: .
+    restart: unless-stopped
+    logging: *logging
+    mem_limit: 1536m
+    memswap_limit: 1536m
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://dizzo_user:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/dizzo_db
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./app:/app/app
+      - ./bot:/app/bot
+      - ./migrations:/app/migrations
+      - media_files:/app/media
+    ports:
+      - "127.0.0.1:${PORT:-8001}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health/')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bot:
+    build: .
+    restart: unless-stopped
+    logging: *logging
+    mem_limit: 256m
+    memswap_limit: 256m
+    env_file: .env
+    command: ["python", "-m", "bot"]
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  media_files:

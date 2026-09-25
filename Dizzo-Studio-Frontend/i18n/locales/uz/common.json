@@ -1,0 +1,117 @@
+{
+  "common": {
+    "language": {
+      "choose": "Tilni tanlash",
+      "label": "Til"
+    },
+    "ui": {
+      "breadcrumb": "Sahifa yo‘li",
+      "more": "Yana",
+      "morePages": "Boshqa sahifalar",
+      "close": "Yopish",
+      "previousSlide": "Oldingisi",
+      "nextSlide": "Keyingisi",
+      "pagination": {
+        "first": "Birinchi",
+        "last": "Oxirgi",
+        "previous": "Oldingi",
+        "next": "Keyingi",
+        "previousPage": "Oldingi sahifa",
+        "nextPage": "Keyingi sahifa",
+        "pageOf": "{page} / {pages}-sahifa",
+        "total": "jami {count} ta"
+      },
+      "table": {
+        "empty": "Hozircha hech qanday maʼlumot mavjud emas"
+      }
+    },
+    "errors": {
+      "network": "Serverga ulanib bo‘lmadi. Internet aloqasini tekshirib, qayta urinib ko‘ring.",
+      "server": "Serverda xatolik yuz berdi. Birozdan so‘ng qayta urinib ko‘ring.",
+      "requestFailed": "So‘rov bajarilmadi (xato {status}).",
+      "googleScript": "Google skripti yuklanmadi",
+      "googleSignIn": "Google orqali kirishda xatolik yuz berdi.",
+      "imageOpen": "Rasmni ochib bo'lmadi.",
+      "canvasUnavailable": "Canvas mavjud emas.",
+      "imageCompress": "Rasmni siqib bo'lmadi.",
+      "fileSave": "Faylni saqlab bo'lmadi ({status}). Qayta urinib ko'ring.",
+      "saveFailed": "Saqlab bo‘lmadi",
+      "uploadFailed": "Yuklab bo‘lmadi"
+    },
+    "pictures": {
+      "maxCount": "Ko‘pi bilan {count} ta rasm",
+      "uploadOneFailed": "Rasmni yuklab bo‘lmadi",
+      "uploadManyFailed": "Rasmlarni yuklab bo‘lmadi",
+      "renderEmpty": "3D shakldan rasm chiqmadi",
+      "renderFailed": "Rasm yaratib bo‘lmadi",
+      "coverFailed": "Muqovani yaratib bo‘lmadi"
+    },
+    "reviewStatus": {
+      "pending": "Tekshirilmoqda",
+      "approved": "Saytda ko‘rinadi",
+      "rejected": "Rad etilgan"
+    },
+    "cabinetNav": {
+      "cart": "Savat",
+      "orders": "Buyurtmalarim",
+      "feedback": "Fikrlarim",
+      "designs": "Dizaynlarim",
+      "profile": "Mening profilim"
+    },
+    "adminNav": {
+      "dashboard": "Boshqaruv paneli",
+      "orders": "Buyurtmalar",
+      "products": "Mahsulotlar",
+      "categories": "Kategoriyalar",
+      "reviews": "Fikrlar",
+      "gallery": "Shablonlar",
+      "gallerySubmit": "Galereya",
+      "tutorials": "Video darsliklar",
+      "users": "Foydalanuvchilar",
+      "profile": "Mening profilim"
+    },
+    "catalog": {
+      "method": {
+        "uv": "Rangli bosma",
+        "engrave": "Lazer o‘yma"
+      },
+      "methodInfo": {
+        "uv": {
+          "short": "Rangli, fotosurat",
+          "details": "Rasm va matn to‘liq rangda bosiladi: fotosurat, rangli logotip va naqshlar uchun. Narxi bosilgan yuzaga (cm²) qarab hisoblanadi."
+        },
+        "engrave": {
+          "short": "Bir rangli, o‘chmaydi",
+          "details": "Lazer sirtni o‘yib chizadi: bir rangli, o‘chmaydi va yuvilmaydi. Matn, logotip va oddiy chizmalar uchun; fotosurat va juda mayda detallar yaxshi chiqmaydi. Rang tanlanmaydi."
+        }
+      },
+      "kind": {
+        "cylinder": "Silindr (krujka, stakan)",
+        "plane": "Tekislik (vizitka, bloknot)",
+        "disc": "Disk (soat, nishon)",
+        "model": "3D model (futbolka, hudi)"
+      },
+      "material": {
+        "ceramic_glossy": "Keramika, yaltiroq",
+        "ceramic_matte": "Keramika, matoviy",
+        "glass_clear": "Shisha, tiniq",
+        "glass_frosted": "Shisha, matoviy",
+        "fabric": "Mato",
+        "paper": "Qog‘oz",
+        "plastic": "Plastik",
+        "metal": "Metall",
+        "wood": "Yog‘och"
+      }
+    },
+    "video": {
+      "play": "Ijro etish",
+      "pause": "Pauza",
+      "seek": "Videoni aylantirish",
+      "mute": "Ovozni o‘chirish",
+      "unmute": "Ovozni yoqish",
+      "fullscreen": "To‘liq ekran",
+      "loading": "Video yuklanmoqda…",
+      "error": "Videoni ochib bo‘lmadi. Birozdan keyin qayta urinib ko‘ring."
+    }
+  }
+}

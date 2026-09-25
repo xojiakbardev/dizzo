@@ -1,0 +1,43 @@
+name: Sync to Dizzo Monorepo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: sync-to-monorepo
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: "!contains(github.event.head_commit.message, '[skip-sync]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout backend repo
+        uses: actions/checkout@v4
+
+      - name: Setup Git identity
+        run: |
+          git config --global user.name "Dizzo Sync Bot"
+          git config --global user.email "sync-bot@dizzo.local"
+
+      - name: Push changes to Monorepo
+        env:
+          SYNC_PAT: ${{ secrets.SYNC_PAT }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          git clone "https://x-access-token:${SYNC_PAT}@github.com/xojiakbardev/dizzo.git" monorepo
+          rsync -av --delete --exclude='.git' ./ monorepo/Dizzo-Studio-Backend/
+          cd monorepo
+          git add Dizzo-Studio-Backend/
+          if git diff --staged --quiet; then
+            echo "No changes to sync to monorepo."
+          else
+            MSG="sync(backend): ${COMMIT_MSG:-Update from standalone backend repo} [skip-sync]"
+            git commit -m "$MSG"
+            git pull --rebase origin main || true
+            git push origin main
+            echo "Successfully synced backend changes to monorepo!"
+          fi

@@ -1,0 +1,11 @@
+#include "Generated.xcconfig"
+
+// Defaults, overridden by DartDefines.xcconfig (generated from
+// --dart-define values by scripts/dart_defines_to_xcconfig.sh).
+// Google Sign-In: the iOS client id and its REVERSED form (URL scheme).
+GOOGLE_IOS_CLIENT_ID = 859762564989-g7knvm4031i5deop6dn8u19hhlksme7k.apps.googleusercontent.com
+GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.859762564989-g7knvm4031i5deop6dn8u19hhlksme7k
+// Telegram login universal link host (Associated Domains).
+TELEGRAM_LOGIN_HOST = app2398820989-login.tg.dev
+
+#include? "DartDefines.xcconfig"

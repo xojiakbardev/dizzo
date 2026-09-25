@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Telegram login returns through this universal link domain.
+	     TELEGRAM_LOGIN_HOST comes from TELEGRAM_(IOS_)REDIRECT_URI, see
+	     Flutter/Release.xcconfig and scripts/dart_defines_to_xcconfig.sh. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:$(TELEGRAM_LOGIN_HOST)</string>
+		<!-- dizzo.uz links (Routes.fromWeb); needs
+		     https://dizzo.uz/.well-known/apple-app-site-association (RELEASE.md). -->
+		<string>applinks:dizzo.uz</string>
+		<string>applinks:www.dizzo.uz</string>
+	</array>
+</dict>
+</plist>

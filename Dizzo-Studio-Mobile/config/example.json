@@ -1,0 +1,9 @@
+{
+  "API_BASE_URL": "https://api.dizzo.uz/api",
+  "SITE_URL": "https://dizzo.uz",
+  "GOOGLE_SERVER_CLIENT_ID": "859762564989-9clcipm8jl4j2siv76og5brii5soimat.apps.googleusercontent.com",
+  "GOOGLE_IOS_CLIENT_ID": "859762564989-g7knvm4031i5deop6dn8u19hhlksme7k.apps.googleusercontent.com",
+  "TELEGRAM_CLIENT_ID": "8249953132",
+  "TELEGRAM_REDIRECT_URI": "https://app2398820989-login.tg.dev/tglogin",
+  "TELEGRAM_IOS_REDIRECT_URI": ""
+}

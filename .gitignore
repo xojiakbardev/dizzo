@@ -1,0 +1,39 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual Environments & Python
+.venv*/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+:memory:.ses
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Node / JS
+node_modules/
+.npm/
+.next/
+dist/
+build/
+.cache/
+
+# Mobile / Flutter / iOS / Android
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/
+*.ipa
+*.apk
+ios/Pods/
+.gradle/
+
+# Backups of git
+**/.git.sub/

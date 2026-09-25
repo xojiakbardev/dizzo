@@ -1,0 +1,909 @@
+{
+  "@@locale": "uz",
+  "appTitle": "Dizzo",
+  "authEmail": "Email",
+  "authEmailInvalid": "Email noto‘g‘ri",
+  "authEmailRequired": "Emailni kiriting",
+  "authFirstName": "Ism",
+  "authFirstNameRequired": "Ismingizni kiriting",
+  "authGoogleFailed": "Google orqali kirib bo‘lmadi",
+  "authGoogleNoAccount": "Qurilmada Google hisobi topilmadi",
+  "authGoogleNoResponse": "Google javob bermadi",
+  "authGoogleNotConfigured": "Google orqali kirish hali sozlanmagan",
+  "authGoogleUnsupported": "Google orqali kirish bu qurilmada ishlamaydi",
+  "authGoogleWindowFailed": "Google oynasini ochib bo‘lmadi",
+  "authHaveAccount": "Hisobim bor",
+  "authLater": "Keyinroq",
+  "authOr": "yoki",
+  "@authOr": {
+    "description": "Divider between the social sign-in buttons and email sign-in."
+  },
+  "authPassword": "Parol",
+  "authPasswordHide": "Yashirish",
+  "authPasswordRequired": "Parolni kiriting",
+  "authPasswordShow": "Ko‘rsatish",
+  "authPasswordTooShort": "{count, plural, one{Kamida {count} ta belgi} other{Kamida {count} ta belgi}}",
+  "@authPasswordTooShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "authPrivacyNotice": "Davom etish orqali siz maxfiylik siyosatini qabul qilasiz",
+  "authRegisterSubmit": "Ro‘yxatdan o‘tish",
+  "@authRegisterSubmit": {
+    "description": "Submit button of the sign-up form."
+  },
+  "authRegisterSwitch": "Ro‘yxatdan o‘tish",
+  "@authRegisterSwitch": {
+    "description": "Link under the sign-in form that switches to sign-up."
+  },
+  "authRegisterTitle": "Ro‘yxatdan o‘tish",
+  "@authRegisterTitle": {
+    "description": "Heading of the sign-up form."
+  },
+  "authSignIn": "Kirish",
+  "authSignInEmail": "Email orqali kirish",
+  "authSignInFailed": "Kirishda xatolik",
+  "authSignInGoogle": "Google orqali kirish",
+  "authSignInTelegram": "Telegram orqali kirish",
+  "authSignInTitle": "Hisobingizga kiring",
+  "authTelegramConfirm": "Telegramda tasdiqlang",
+  "authTelegramFailed": "Telegram orqali kirib bo‘lmadi",
+  "authTelegramReopen": "Qayta ochish",
+  "authTelegramVerifying": "Tekshirilmoqda",
+  "authWelcomeHeadline": "O‘z dizayningizni\nyarating",
+  "cartBrowseProducts": "Mahsulot tanlash",
+  "cartCheckout": "Rasmiylashtirish",
+  "cartClear": "Tozalash",
+  "cartClearConfirm": "Savatni tozalaysizmi?",
+  "cartDecrease": "Kamaytirish",
+  "cartEditItem": "Tahrirlash",
+  "cartEmpty": "Savat bo‘sh",
+  "cartImageLabel": "Rasm {index} / {count}",
+  "@cartImageLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cartIncrease": "Ko‘paytirish",
+  "cartItemActions": "Amallar",
+  "cartItemRemoved": "{name} olib tashlandi",
+  "@cartItemRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartItemUnavailable": "Sotuvda yo‘q",
+  "cartItemsCount": "{count, plural, one{{count} ta mahsulot} other{{count} ta mahsulot}}",
+  "@cartItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cartPrintArea": "{method} · {area} cm²",
+  "@cartPrintArea": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "cartQuantity": "Miqdor",
+  "cartQuantityPieces": "Dona",
+  "@cartQuantityPieces": {
+    "description": "Label of the quantity input"
+  },
+  "cartQuantityRange": "{min} dan {max} gacha",
+  "@cartQuantityRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "cartSignInPrompt": "Savatni ko‘rish uchun kiring",
+  "cartSomeUnavailable": "Ba’zi mahsulotlar sotuvda yo‘q",
+  "cartTitle": "Savat",
+  "cartTotal": "Jami",
+  "cartUndo": "Qaytarish",
+  "cartUnitPrice": "1 dona: {price}",
+  "@cartUnitPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogAllCategories": "Barchasi",
+  "@catalogAllCategories": {
+    "description": "Category chip that shows every category"
+  },
+  "catalogClearFilter": "Filtrni tozalash",
+  "catalogNothingFound": "Hech narsa topilmadi",
+  "catalogPopularBadge": "Ommabop",
+  "@catalogPopularBadge": {
+    "description": "Badge on a featured product card"
+  },
+  "catalogSearchClear": "Tozalash",
+  "catalogSearchHint": "Qidirish",
+  "catalogTitle": "Mahsulotlar",
+  "checkoutAddressHint": "Ko‘cha, uy, xonadon",
+  "checkoutAddressLabel": "Manzil",
+  "checkoutAddressRequired": "Manzilni kiriting",
+  "checkoutCartEmpty": "Savat bo‘sh",
+  "checkoutChangeLocation": "O‘zgartirish",
+  "checkoutChooseProduct": "Mahsulot tanlash",
+  "checkoutConfirm": "Tasdiqlash",
+  "checkoutContactTitle": "Aloqa",
+  "checkoutDelivery": "Yetkazib berish",
+  "checkoutFree": "Bepul",
+  "checkoutHome": "Bosh sahifa",
+  "checkoutItemsCount": "{count, plural, one{{count} ta} other{{count} ta}}",
+  "@checkoutItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkoutLocationDenied": "Joylashuvga ruxsat berilmadi",
+  "checkoutLocationFailed": "Joylashuvni aniqlab bo‘lmadi",
+  "checkoutLocationOff": "Joylashuv xizmati o‘chiq",
+  "checkoutMapTitle": "Manzilni belgilash",
+  "checkoutMethodTitle": "Qabul qilish usuli",
+  "checkoutMyLocation": "Joylashuvim",
+  "checkoutNameLabel": "Ism va familiya",
+  "checkoutNameRequired": "Ismingizni kiriting",
+  "checkoutNoteLabel": "Izoh (ixtiyoriy)",
+  "checkoutNoteTitle": "Izoh",
+  "checkoutOperatorQuotes": "Operator aytadi",
+  "checkoutOrderNumber": "Buyurtma raqami",
+  "checkoutPhoneIncomplete": "Telefon raqamini to‘liq kiriting",
+  "checkoutPhoneLabel": "Telefon",
+  "checkoutPickOnMap": "Xaritadan belgilash",
+  "checkoutPickup": "Olib ketish",
+  "checkoutPickupAddress": "Toshkent shahri, Yunusobod tumani",
+  "checkoutPickupHours": "Dushanba–Shanba, 09:00–20:00",
+  "checkoutPickupName": "Dizzo ishlab chiqarish markazi",
+  "checkoutPlaceOrder": "Buyurtma berish",
+  "checkoutProducts": "Mahsulotlar",
+  "checkoutQuantity": "{count, plural, one{{count} dona} other{{count} dona}}",
+  "@checkoutQuantity": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkoutSignInPrompt": "Buyurtma berish uchun kiring",
+  "checkoutSomeUnavailable": "Ba’zi mahsulotlar sotuvda yo‘q",
+  "checkoutStatus": "Holat",
+  "checkoutSuccessTitle": "Buyurtma qabul qilindi",
+  "checkoutSummaryTitle": "Buyurtma tarkibi",
+  "checkoutTitle": "Rasmiylashtirish",
+  "checkoutTotal": "Jami",
+  "checkoutViewOrder": "Buyurtmani ko‘rish",
+  "commonBack": "Orqaga",
+  "commonCancel": "Bekor qilish",
+  "commonClose": "Yopish",
+  "commonComingSoon": "Tez orada",
+  "commonCustomer": "Mijoz",
+  "@commonCustomer": {
+    "description": "Name shown for a signed-in user with no name."
+  },
+  "commonDelete": "O‘chirish",
+  "commonDone": "Tayyor",
+  "commonLoading": "Yuklanmoqda",
+  "commonNo": "Yo‘q",
+  "commonOk": "OK",
+  "commonRetry": "Qayta urinish",
+  "commonSave": "Saqlash",
+  "commonYes": "Ha",
+  "currencySum": "so‘m",
+  "@currencySum": {
+    "description": "Currency word after an amount: 149 000 so‘m."
+  },
+  "designsActions": "Amallar",
+  "designsCreate": "Dizayn yaratish",
+  "designsDeleteConfirm": "Dizaynni o‘chirasizmi?",
+  "designsDeleted": "Dizayn o‘chirildi",
+  "designsEdit": "Tahrirlash",
+  "designsEmpty": "Hali dizayn yo‘q",
+  "designsNew": "Yangi dizayn",
+  "designsSignIn": "Dizaynlaringiz shu yerda saqlanadi",
+  "editorCanvasSizeAngleBadge": "{w} × {h} mm · {angle}°",
+  "@editorCanvasSizeAngleBadge": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      },
+      "h": {
+        "type": "String"
+      },
+      "angle": {
+        "type": "String"
+      }
+    }
+  },
+  "editorCanvasSizeBadge": "{w} × {h} mm",
+  "@editorCanvasSizeBadge": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      },
+      "h": {
+        "type": "String"
+      }
+    }
+  },
+  "editorCropFree": "Erkin",
+  "editorCropOriginal": "Asli",
+  "editorCropTitle": "Kesish",
+  "editorCropZone": "Zona",
+  "@editorCropZone": {
+    "description": "Crop aspect matching the print zone"
+  },
+  "editorDomainIconLabel": "{name, select, heart{Yurak} heart_straight{Yurakcha} heart_half{Yarim yurak} heart_break{Singan yurak} heartbeat{Yurak urishi} calendar_heart{Sevgi kuni} gift{Sovg‘a} confetti{Konfetti} balloon{Havo shari} cake{Tort} champagne{Shampan} cheers{Qadahlar} crown{Toj} crown_simple{Oddiy toj} sparkle{Uchqun} star{Yulduz} shooting_star{Uchar yulduz} flower_tulip{Lola} envelope_simple{Maktub} disco_ball{Disko shar} bell_ringing{Qo‘ng‘iroq} baby{Chaqaloq} magic_wand{Sehrli tayoqcha} treasure_chest{Xazina sandig‘i} sun{Quyosh} sun_horizon{Quyosh chiqishi} moon{Oy} moon_stars{Oy va yulduzlar} cloud{Bulut} cloud_sun{Bulutli quyosh} cloud_rain{Yomg‘ir} cloud_lightning{Momaqaldiroq} snowflake{Qor parchasi} rainbow{Kamalak} lightning{Chaqmoq} drop{Tomchi} fire{Olov} leaf{Barg} tree{Daraxt} tree_evergreen{Archa} tree_palm{Palma} plant{Nihol} cactus{Kaktus} flower{Gul} flower_lotus{Nilufar} clover{Beda} mountains{Tog‘lar} waves{To‘lqinlar} cat{Mushuk} dog{It} paw_print{Panja izi} bird{Qush} fish{Baliq} fish_simple{Baliqcha} butterfly{Kapalak} horse{Ot} rabbit{Quyon} cow{Sigir} bug{Hasharot} bug_beetle{Qo‘ng‘iz} shrimp{Krevetka} feather{Pat} bone{Suyak} coffee{Qahva} tea_bag{Choy} bowl_steam{Issiq kosa} cooking_pot{Qozon} fork_knife{Vilka va pichoq} chef_hat{Oshpaz qalpog‘i} pizza{Pitsa} hamburger{Gamburger} bread{Non} egg{Tuxum} ice_cream{Muzqaymoq} popsicle{Eskimo} cookie{Pechenye} popcorn{Popkorn} cherries{Gilos} orange_slice{Apelsin bo‘lagi} avocado{Avokado} carrot{Sabzi} pepper{Qalampir} wine{Vino} beer_stein{Pivo krujkasi} martini{Kokteyl} soccer_ball{Futbol to‘pi} basketball{Basketbol} volleyball{Voleybol} tennis_ball{Tennis to‘pi} ping_pong{Stol tennisi} football{Regbi} bowling_ball{Bouling} golf{Golf} hockey{Xokkey} boxing_glove{Boks qo‘lqopi} barbell{Shtanga} trophy{Kubok} medal{Medal} flag_checkered{Marra bayrog‘i} sneaker{Krossovka} person_simple_run{Yuguruvchi} person_simple_swim{Suzuvchi} person_simple_ski{Chang‘ichi} bicycle{Velosiped} game_controller{O‘yin pulti} puzzle_piece{Boshqotirma} dice_five{O‘yin soqqasi} airplane{Samolyot} car{Mashina} jeep{Jip} taxi{Taksi} bus{Avtobus} train{Poyezd} motorcycle{Mototsikl} boat{Kema} sailboat{Yelkanli qayiq} anchor{Langar} lighthouse{Mayoq} globe_hemisphere_east{Yer shari} map_pin{Manzil} map_trifold{Xarita} compass{Kompas} suitcase_rolling{Chamadon} backpack{Ryukzak} tent{Chodir} campfire{Gulxan} island{Orol} sunglasses{Quyosh ko‘zoynagi} city{Shahar} house{Uy} music_note{Nota} music_notes{Notalar} headphones{Quloqchin} guitar{Gitara} microphone{Mikrofon} microphone_stage{Sahna mikrofoni} piano_keys{Pianino} vinyl_record{Plastinka} cassette_tape{Kasseta} radio{Radio} palette{Palitra} paint_brush{Mo‘yqalam} pen_nib{Pero} camera{Fotoapparat} video_camera{Videokamera} film_strip{Kinolenta} film_slate{Kino xlopushkasi} ticket{Chipta} mask_happy{Kulgili niqob} mask_sad{G‘amgin niqob} book{Kitob} book_open{Ochiq kitob} books{Kitoblar} notebook{Daftar} graduation_cap{Bitiruv qalpog‘i} student{O‘quvchi} chalkboard_teacher{O‘qituvchi} pencil{Qalam} pencil_ruler{Qalam va chizg‘ich} briefcase{Portfel} laptop{Noutbuk} lightbulb{Lampochka} rocket{Raketa} target{Nishon} chart_line_up{O‘sish grafigi} calendar{Kalendar} clock{Soat} hourglass{Qum soat} atom{Atom} flask{Kolba} globe_stand{Globus} code{Kod} handshake{Qo‘l siqish} stethoscope{Stetoskop} check_circle{Tasdiq} x_circle{Bekor qilish} arrow_fat_right{Strelka} infinity{Cheksizlik} peace{Tinchlik} yin_yang{In-yan} smiley{Tabassum} smiley_wink{Ko‘z qisish} smiley_sad{Xafa smayl} smiley_angry{Jahldor smayl} smiley_melting{Eriyotgan smayl} thumbs_up{Layk} thumbs_down{Dizlayk} hand_heart{Qo‘ldagi yurak} hand_peace{G‘alaba ishorasi} hand_waving{Salom} hands_clapping{Qarsak} flag{Bayroq} shield{Qalqon} star_four{To‘rt qirrali yulduz} asterisk{Yulduzcha} quotes{Qo‘shtirnoq} hash{Xeshteg} at{Kuchukcha} circle{Doira} square{Kvadrat} triangle{Uchburchak} hexagon{Oltiburchak} diamond{Romb} ghost{Arvoh} alien{O‘zga sayyoralik} robot{Robot} other{-}}",
+  "@editorDomainIconLabel": {
+    "description": "Name of a bundled icon, selected by its id with - replaced by _ (a lone - means unknown)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainLayerElement": "Element",
+  "editorDomainLayerIcon": "Ikonka",
+  "editorDomainLayerShape": "Shakl",
+  "editorDomainMaxHeight": "bo‘yi {max} mm dan oshmasin",
+  "@editorDomainMaxHeight": {
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainMaxWidth": "eni {max} mm dan oshmasin",
+  "@editorDomainMaxWidth": {
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainMinFont": "shrift kamida {min} mm bo‘lsin",
+  "@editorDomainMinFont": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainNoArea": "“{area}” hududi bu turda yo‘q",
+  "@editorDomainNoArea": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainNoColor": "bu usulda rang bo‘lmaydi",
+  "editorDomainNoMethod": "“{area}” hududida bu usul yo‘q",
+  "@editorDomainNoMethod": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainOneMethod": "dizayn bitta usulda bosiladi — bu element boshqa usulda",
+  "editorDomainOutOfZone": "bosma zonasidan chiqib ketgan",
+  "editorDomainProblemAt": "{area}: {problem}",
+  "@editorDomainProblemAt": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
+  },
+  "editorDomainShapeLabel": "{name, select, square{Kvadrat} rounded{Yumaloq burchakli} circle{Doira} triangle{Uchburchak} star{Yulduz} heart{Yurak} hexagon{Oltiburchak} diamond{Romb} burst{Nishon} semicircle{Yarim doira} bubble{Nutq pufagi} arrow{Strelka} plus{Plyus} ring{Halqa} frame{Ramka} frame_round{Yumaloq ramka} line{Chiziq} line_double{Qo‘sh chiziq} other{-}}",
+  "@editorDomainShapeLabel": {
+    "description": "Name of a bundled shape, selected by its id with - replaced by _ (a lone - means unknown)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorElementsAll": "Hammasi",
+  "editorElementsClear": "Tozalash",
+  "editorElementsIcons": "Ikonkalar",
+  "editorElementsLoadFailed": "Elementlarni yuklab bo‘lmadi",
+  "editorElementsNothingFound": "Hech narsa topilmadi",
+  "editorElementsPopular": "Ommabop",
+  "editorElementsSearch": "Qidirish",
+  "editorElementsShapes": "Shakllar",
+  "editorFontSample": "Salom",
+  "@editorFontSample": {
+    "description": "Sample word written in each font"
+  },
+  "editorImageCamera": "Kamera",
+  "editorImageGallery": "Galereya",
+  "editorImageOpenFailed": "Rasmni ochib bo‘lmadi",
+  "editorImageUnsupported": "Faqat PNG, JPG yoki WEBP rasm yuklash mumkin",
+  "editorImageUploadFailed": "Rasmni yuklab bo‘lmadi",
+  "editorLayersEmpty": "Bu tomonda hali element yo‘q",
+  "editorLayersHidden": "Yashirilgan",
+  "editorLayersHide": "Yashirish",
+  "editorLayersLock": "Qulflash",
+  "editorLayersOpen": "Ochish",
+  "editorLayersShow": "Ko‘rsatish",
+  "editorLayersSyncedWith": "“{area}” bilan sinxron",
+  "@editorLayersSyncedWith": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorLayersUnlock": "Qulfdan chiqarish",
+  "editorMain3dFailed": "3D ko‘rinishni ochib bo‘lmadi",
+  "editorMain3dLoading": "3D model yuklanmoqda…",
+  "editorMain3dView": "3D ko‘rinish",
+  "editorMainActions": "Amallar",
+  "editorMainAddSomethingFirst": "Avval rasm yoki matn qo‘shing",
+  "editorMainAddToCart": "Savatga",
+  "editorMainAddToCartFailed": "Savatga qo‘shib bo‘lmadi",
+  "editorMainAreaNoMethod": "“{area}” hududida bu usul yo‘q",
+  "@editorMainAreaNoMethod": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainAreaNoMethodClear": "“{area}” hududida bu usul yo‘q: u yerdagi elementlarni olib tashlang",
+  "@editorMainAreaNoMethodClear": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainAreaSynced": "Bu tomon boshqa tomon bilan sinxron",
+  "editorMainAreaSyncedWith": "Bu tomon “{area}” bilan sinxron: “{area}”da tahrirlang",
+  "@editorMainAreaSyncedWith": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainBadImage": "Rasm noto‘g‘ri",
+  "editorMainBringForward": "Oldinga",
+  "editorMainCannotAddHere": "Bu hududga qo‘shib bo‘lmaydi",
+  "editorMainCapture": "Rasmga olish",
+  "editorMainCenter": "Markaz",
+  "editorMainCopy": "Nusxa",
+  "editorMainCroppedBadge": "{count, plural, one{{count} ta kesiladi} other{{count} ta kesiladi}}",
+  "@editorMainCroppedBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorMainDuplicate": "Nusxa olish",
+  "editorMainEditTextShort": "Matn",
+  "@editorMainEditTextShort": {
+    "description": "Selection bar: edit the selected text"
+  },
+  "editorMainEngineBroken": "3D ko‘rinish ishlamayapti",
+  "editorMainEngineClosed": "Yopildi",
+  "editorMainEngineConnectFailed": "3D ko‘rinishga ulanib bo‘lmadi",
+  "editorMainEngineLoadFailed": "3D ko‘rinish yuklanmadi",
+  "editorMainEngineNoAnswer": "3D ko‘rinish javob bermadi",
+  "editorMainEngineNotReady": "3D ko‘rinish hali tayyor emas",
+  "editorMainEngineReloaded": "3D ko‘rinish qayta yuklandi",
+  "editorMainEngineStartFailed": "3D ko‘rinishni ishga tushirib bo‘lmadi",
+  "editorMainError": "Xato",
+  "editorMainErrorsBadge": "{count, plural, one{{count} ta xato} other{{count} ta xato}}",
+  "@editorMainErrorsBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorMainFileSaveFailed": "Faylni saqlab bo‘lmadi ({status}). Qayta urinib ko‘ring.",
+  "@editorMainFileSaveFailed": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainFixRedItems": "Qizil belgilangan elementlarni tuzating",
+  "editorMainFlatView": "Tekis ko‘rinish",
+  "editorMainHide": "Yashirish",
+  "editorMainLock": "Qulflash",
+  "editorMainLocked": "Qulfli",
+  "editorMainMenuEditText": "Matnni o‘zgartirish",
+  "editorMainMethodSwitched": "Dizayn “{method}” usuliga o‘tkazildi",
+  "@editorMainMethodSwitched": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainNoPrintFile": "Bosma fayl chiqmadi",
+  "editorMainNoViews": "Ko‘rinish rasmlari olinmadi",
+  "editorMainNotSaved": "Saqlanmadi",
+  "editorMainPickSizeFirst": "Avval o‘lchamni tanlang",
+  "editorMainPickTool": "Asbobni tanlang",
+  "editorMainPriceRecalculated": "Narx qayta hisoblandi",
+  "editorMainProductColor": "Mahsulot rangi",
+  "editorMainProductColorBackground": "Mahsulot rangida fon",
+  "editorMainRedo": "Qaytarish",
+  "editorMainReloadedNewer": "Dizayn boshqa joyda o‘zgartirilgan edi: oxirgi holati yuklandi",
+  "editorMainResetView": "Ko‘rinishni tiklash",
+  "editorMainSaveFailed": "Saqlab bo‘lmadi",
+  "editorMainSaveFailedOffline": "Saqlab bo‘lmadi. Internetni tekshiring",
+  "editorMainSaved": "Dizayn saqlandi",
+  "editorMainSendBackward": "Orqaga",
+  "editorMainSettings": "Sozlash",
+  "editorMainStepAddingToCart": "Savatga qo‘shilmoqda…",
+  "editorMainStepPrintFiles": "Bosma fayllar tayyorlanmoqda…",
+  "editorMainStepSaving": "Dizayn saqlanmoqda…",
+  "editorMainStepUploading": "Yuklanmoqda… {current}/{total}",
+  "@editorMainStepUploading": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "editorMainStepViews": "Rasmlar olinmoqda…",
+  "editorMainSyncedFrom": "“{area}”dan sinxron",
+  "@editorMainSyncedFrom": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainTemplateApplied": "“{name}” shabloni qo‘yildi",
+  "@editorMainTemplateApplied": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorMainTextPlaceholder": "Matningiz shu yerda",
+  "editorMainTitle": "Dizayn yaratish",
+  "editorMainTooManyLayers": "{max, plural, one{Bitta dizaynda {max} tadan ko‘p element bo‘lmaydi} other{Bitta dizaynda {max} tadan ko‘p element bo‘lmaydi}}",
+  "@editorMainTooManyLayers": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "editorMainToolBackground": "Fon",
+  "editorMainToolElements": "Elementlar",
+  "editorMainToolGallery": "Galereya",
+  "editorMainToolImage": "Rasm",
+  "editorMainToolLayers": "Qatlamlar",
+  "editorMainToolText": "Matn",
+  "editorMainUndo": "Ortga qaytarish",
+  "editorMainUndoAction": "Ortga",
+  "editorMainUnknownError": "Noma’lum xato",
+  "editorMainUnlock": "Qulfdan chiqarish",
+  "editorMainVariantNoMethod": "Bu variantda bu usul yo‘q",
+  "editorMainVariantReplaced": "Oldin tanlangan variant hozir sotuvda yo‘q, boshqasi tanlandi",
+  "editorPropsAlignCenter": "Markazga",
+  "editorPropsAlignLeft": "Chapga",
+  "editorPropsAlignRight": "O‘ngga",
+  "editorPropsBackground": "Fon",
+  "editorPropsBold": "Qalin",
+  "editorPropsCenterX": "Markaz (eni)",
+  "editorPropsCenterY": "Markaz (bo‘yi)",
+  "editorPropsColor": "Rang",
+  "editorPropsCropped": "Zonadan chiqqan qismi bosilmaydi",
+  "editorPropsDialNumerals": "Soat raqamlari",
+  "editorPropsFontSize": "Shrift",
+  "editorPropsImage": "Rasm",
+  "editorPropsItalic": "Kursiv",
+  "editorPropsLowQuality": "Rasm sifati past",
+  "editorPropsMinuteTicks": "Daqiqa chiziqlari",
+  "editorPropsMm": "{value} mm",
+  "@editorPropsMm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editorPropsNumeralsNone": "Yo‘q",
+  "@editorPropsNumeralsNone": {
+    "description": "Clock face without numerals"
+  },
+  "editorPropsRemoveBackground": "Fonni olib tashlash",
+  "editorPropsRotation": "Burchak",
+  "editorPropsSize": "O‘lcham",
+  "editorPropsSticker": "Stiker",
+  "editorPropsStraighten": "Tekislash",
+  "editorSheet3dNotReady": "3D ko‘rinish hali tayyor emas",
+  "editorSheetAddAtPrice": "Shu narxda qo‘shish",
+  "editorSheetAddedToCart": "Savatga qo‘shildi",
+  "editorSheetCapture": "Rasmga olish",
+  "editorSheetCaptureFailed": "Rasmga olib bo‘lmadi",
+  "editorSheetClear": "Tozalash",
+  "editorSheetClearConfirm": "{count, plural, one{{area}dagi {count} ta element o‘chirilsinmi?} other{{area}dagi {count} ta element o‘chirilsinmi?}}",
+  "@editorSheetClearConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSheetClearSide": "Tomonni tozalash",
+  "editorSheetClearSideCount": "Tomonni tozalash ({count})",
+  "@editorSheetClearSideCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorSheetColorNamed": "Rang: {name}",
+  "@editorSheetColorNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSheetContinue": "Davom etish",
+  "editorSheetCurrentView": "Hozirgi ko‘rinish",
+  "editorSheetGalleryDenied": "Galereyaga ruxsat berilmadi",
+  "editorSheetGallerySaveFailed": "Galereyaga saqlab bo‘lmadi",
+  "editorSheetGoToCart": "Savatga o‘tish",
+  "editorSheetGrid": "To‘r",
+  "editorSheetImageSaved": "Rasm saqlandi",
+  "editorSheetImagesCount": "{count, plural, one{{count} ta rasm} other{{count} ta rasm}}",
+  "@editorSheetImagesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorSheetImagesSaved": "{count, plural, one{{count} ta rasm saqlandi} other{{count} ta rasm saqlandi}}",
+  "@editorSheetImagesSaved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorSheetLinkedElsewhere": "o‘zi boshqa tomonlarga ulangan",
+  "editorSheetLostElements": "{count, plural, one{{count} ta element bu turda joylashmaydi} other{{count} ta element bu turda joylashmaydi}}",
+  "@editorSheetLostElements": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorSheetMirrored": "{name} (ko‘zgu)",
+  "@editorSheetMirrored": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSheetOwnHidden": "{count, plural, one{{count} ta elementi yashiriladi} other{{count} ta elementi yashiriladi}}",
+  "@editorSheetOwnHidden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorSheetPrice": "Narxi",
+  "editorSheetPriceRecalculated": "Narx bosma fayllar bo‘yicha qayta hisoblandi",
+  "editorSheetPrintMethod": "Bosish usuli",
+  "editorSheetProduct": "Mahsulot",
+  "editorSheetReplace": "Almashtirish",
+  "editorSheetSelfSynced": "Bu tomon o‘zi boshqa tomondan sinxron",
+  "editorSheetShare": "Ulashish",
+  "editorSheetSides": "Tomonlar",
+  "editorSheetSize": "O‘lcham",
+  "editorSheetSnapping": "Yopishish",
+  "editorSheetSync": "Sinxronlash",
+  "editorSheetSyncedFrom": "“{area}”dan sinxron",
+  "@editorSheetSyncedFrom": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSheetSyncedTo": "{count, plural, one{{count} ta tomonga sinxron} other{{count} ta tomonga sinxron}}",
+  "@editorSheetSyncedTo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorSheetText": "Matn",
+  "editorSheetToGallery": "Galereyaga",
+  "editorSheetType": "Tur",
+  "@editorSheetType": {
+    "description": "Product variant (type) picker title"
+  },
+  "editorTemplatesEmpty": "Bu tur uchun shablon yo‘q",
+  "editorTextAdd": "Matn qo‘shish",
+  "editorTextBestDad": "Eng yaxshi dadam",
+  "editorTextBigHeading": "KATTA SARLAVHA",
+  "editorTextBirthday": "Tug‘ilgan kuning bilan!",
+  "editorTextCongrats": "Tabriklayman!",
+  "editorTextElegant": "Nafis sarlavha",
+  "editorTextFonts": "Shriftlar",
+  "editorTextGoodDays": "Yaxshi kunlar",
+  "editorTextHeading": "Sarlavha",
+  "editorTextPlaceholder": "Matningiz shu yerda",
+  "@editorTextPlaceholder": {
+    "description": "Default text of a new text layer"
+  },
+  "editorTextSubheading": "Kichik sarlavha",
+  "editorTextWithLove": "Sevgi bilan",
+  "errorCancelled": "Bekor qilindi",
+  "errorForbidden": "Ruxsat yo‘q",
+  "errorGeneric": "Nimadir xato ketdi",
+  "errorInsecure": "Xavfsiz ulanib bo‘lmadi",
+  "errorNoInternet": "Internet aloqasi yo‘q",
+  "errorNotFound": "Topilmadi",
+  "errorServer": "Serverda xatolik",
+  "errorSignInAgain": "Qaytadan kiring",
+  "errorTimeout": "Server javob bermadi",
+  "homeCategories": "Turkumlar",
+  "homeChooseProduct": "Mahsulot tanlang",
+  "homeCreateDesign": "Dizayn yaratish",
+  "homeGallery": "Galereya",
+  "homeHeroTitle": "Krujka, futbolka, soat —\no‘z dizayningiz bilan",
+  "homeNoProducts": "Mahsulotlar yo‘q",
+  "homeSearch": "Qidirish",
+  "homeSeeAll": "Barchasi",
+  "languageChoose": "Tilni tanlang",
+  "languageSystemHint": "Ilova tili",
+  "languageTitle": "Til",
+  "materialCeramicGlossy": "Keramika, yaltiroq",
+  "materialCeramicMatte": "Keramika, matoviy",
+  "materialFabric": "Mato",
+  "materialGlassClear": "Shisha, tiniq",
+  "materialGlassFrosted": "Shisha, matoviy",
+  "materialMetal": "Metall",
+  "materialPaper": "Qog‘oz",
+  "materialPlastic": "Plastik",
+  "materialWood": "Yog‘och",
+  "navCart": "Savat",
+  "navDesigns": "Dizaynlarim",
+  "navHome": "Asosiy",
+  "navProducts": "Mahsulotlar",
+  "navProfile": "Profil",
+  "orderNextInProduction": "Mahsulotingiz tayyorlanmoqda",
+  "orderNextNew": "Operator tez orada bog‘lanadi",
+  "orderNextPaid": "Tez orada ishlab chiqarishga beriladi",
+  "orderNextPaymentPending": "To‘lovingiz kutilmoqda",
+  "orderNextQualityCheck": "Sifati tekshirilmoqda",
+  "orderNextReadyForDelivery": "Tez orada yetkaziladi",
+  "orderNextReadyForPickup": "Olib ketishingiz mumkin",
+  "orderStatusCancelled": "Bekor qilingan",
+  "orderStatusCompleted": "Yakunlangan",
+  "orderStatusInProduction": "Ishlab chiqarilmoqda",
+  "orderStatusNew": "Yangi",
+  "orderStatusPaid": "To‘langan",
+  "orderStatusPaymentPending": "To‘lov kutilmoqda",
+  "orderStatusQualityCheck": "Sifat nazorati",
+  "orderStatusReadyForDelivery": "Yetkazishga tayyor",
+  "orderStatusReadyForPickup": "Olib ketishga tayyor",
+  "orderStatusReadyForProduction": "Ishlab chiqarishga tayyor",
+  "orderStepAccepted": "Qabul qilindi",
+  "orderStepDone": "Yakunlandi",
+  "orderStepPayment": "To‘lov",
+  "orderStepProduction": "Ishlab chiqarish",
+  "orderStepReady": "Tayyor",
+  "ordersAll": "Barcha buyurtmalar",
+  "ordersCancelAction": "Bekor qilish",
+  "ordersCancelConfirm": "Buyurtmani bekor qilasizmi?",
+  "ordersCancelKeep": "Yo‘q",
+  "ordersCancelled": "Buyurtma bekor qilindi",
+  "ordersCancelledBanner": "Buyurtma bekor qilingan",
+  "ordersChooseProduct": "Mahsulot tanlash",
+  "ordersDetailTitle": "Buyurtma №{number}",
+  "@ordersDetailTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "ordersDiscount": "Chegirma",
+  "ordersEmpty": "Hali buyurtma yo‘q",
+  "ordersFree": "Bepul",
+  "ordersItemCount": "{count, plural, one{{count} ta mahsulot} other{{count} ta mahsulot}}",
+  "@ordersItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ordersItems": "Mahsulotlar",
+  "ordersLeaveReview": "Fikr qoldirish",
+  "ordersMore": "Yana",
+  "ordersNotFound": "Buyurtma topilmadi",
+  "ordersNumber": "№{number}",
+  "@ordersNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "ordersOnlyNewCancellable": "Faqat yangi buyurtmani",
+  "ordersPayment": "To‘lov",
+  "ordersPickup": "Olib ketish",
+  "ordersPieces": "{count, plural, one{{count} dona} other{{count} dona}}",
+  "@ordersPieces": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ordersReviewSent": "Fikringiz yuborildi",
+  "ordersShipping": "Yetkazish",
+  "ordersShippingTbd": "Kelishiladi",
+  "ordersShowMore": "Yana ko‘rsatish",
+  "ordersSignInPrompt": "Buyurtmalarni ko‘rish uchun kiring",
+  "ordersStatAwaitingPayment": "To‘lov kutilmoqda",
+  "ordersStatInProduction": "Ishlab chiqarishda",
+  "ordersStatSpent": "Umumiy sarf",
+  "ordersStatTotal": "Jami buyurtma",
+  "ordersTelegram": "Telegram orqali yozish",
+  "ordersTitle": "Buyurtmalarim",
+  "ordersTotal": "Jami",
+  "paymentUnpaid": "To‘lanmagan",
+  "priceFrom": "{price} dan",
+  "@priceFrom": {
+    "description": "The cheapest option of a product; price already includes the currency.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "printMethodEngrave": "Lazer o‘yma",
+  "printMethodUv": "Rangli bosma",
+  "product3dLoading": "3D model yuklanmoqda…",
+  "product3dOpenFailed": "3D ko‘rinishni ochib bo‘lmadi",
+  "product3dResetView": "Ko‘rinishni tiklash",
+  "product3dView": "3D ko‘rinish",
+  "productChooseSize": "Tanlang",
+  "@productChooseSize": {
+    "description": "Hint next to the Size heading when a size is required"
+  },
+  "productChooseSizeSnack": "O‘lchamni tanlang",
+  "productColor": "Rang",
+  "productDescription": "Tavsif",
+  "productDesign": "Dizayn qilish",
+  "productPrintMethod": "Bosma usuli",
+  "productShare": "Ulashish",
+  "productShowLess": "Yig‘ish",
+  "productShowMore": "Batafsil",
+  "productSize": "O‘lcham",
+  "productSoldOut": "Tugagan",
+  "productSpecMaterial": "Material",
+  "productSpecs": "Xususiyatlari",
+  "productVariant": "Turi",
+  "productionPacked": "Qadoqlandi",
+  "productionPrinted": "Bosildi",
+  "productionPrinting": "Bosilmoqda",
+  "productionQueued": "Navbatda",
+  "profileDeleteAccount": "Hisobni o‘chirish",
+  "profileDeleteAccountBody": "Hisobingiz, saqlangan dizaynlaringiz va savatingiz o‘chiriladi. Yakunlangan buyurtmalar hisob-kitob uchun shaxsiy ma’lumotlaringizsiz saqlanib qoladi.\n\nBu amalni ortga qaytarib bo‘lmaydi.",
+  "profileDeleteAccountDone": "Hisobingiz o‘chirildi",
+  "profileDeleteAccountFailed": "Hisobni o‘chirib bo‘lmadi. Qayta urinib ko‘ring",
+  "profileDeleteAccountSubmit": "O‘chirish",
+  "profileDeleteAccountTitle": "Hisobni o‘chirasizmi?",
+  "profileEdit": "Tahrirlash",
+  "profileEditTitle": "Profilni tahrirlash",
+  "profileLastName": "Familiya",
+  "profileLinkOpenFailed": "Havolani ochib bo‘lmadi",
+  "profileMyOrders": "Buyurtmalarim",
+  "profilePhone": "Telefon",
+  "profilePhoneIncomplete": "Telefon raqamini to‘liq kiriting",
+  "profilePrivacyPolicy": "Maxfiylik siyosati",
+  "profileSaved": "Saqlandi",
+  "profileSignOut": "Chiqish",
+  "profileSignOutConfirm": "Hisobdan chiqasizmi?",
+  "profileTelegramConnected": "Telegram ulandi",
+  "profileTelegramLink": "Ulash",
+  "profileTelegramLinked": "Ulangan",
+  "profileTelegramNotConfigured": "Telegram bot sozlanmagan",
+  "profileTelegramNotConfirmed": "Ulanish tasdiqlanmadi",
+  "profileTelegramOpenFailed": "Telegram ochilmadi",
+  "profileTelegramRelink": "Qayta ulash",
+  "profileTelegramTitle": "Telegram xabarnomalari",
+  "profileTelegramUnlinked": "Ulanmagan",
+  "profileTelegramWaiting": "Kutilmoqda",
+  "reviewsCity": "Shahar",
+  "reviewsEmpty": "Hali fikr qoldirmagansiz",
+  "reviewsFormTitle": "Fikr qoldirish",
+  "reviewsPhotoTooLarge": "Surat {size} MB dan oshmasin",
+  "@reviewsPhotoTooLarge": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewsPhotosOpenFailed": "Suratlarni ochib bo‘lmadi",
+  "reviewsRatingLabel": "{value} / 5",
+  "@reviewsRatingLabel": {
+    "description": "Screen-reader label of the star rating.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewsSend": "Yuborish",
+  "reviewsSignIn": "Fikrlaringizni ko‘rish uchun kiring",
+  "reviewsStatusApproved": "Saytda ko‘rinadi",
+  "reviewsStatusPending": "Tekshirilmoqda",
+  "reviewsStatusRejected": "Rad etilgan",
+  "reviewsTextLabel": "Fikringiz",
+  "reviewsTextTooShort": "{count, plural, one{Kamida {count} ta belgi} other{Kamida {count} ta belgi}}",
+  "@reviewsTextTooShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewsTitle": "Fikrlarim"
+}

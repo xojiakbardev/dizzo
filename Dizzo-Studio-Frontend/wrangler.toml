@@ -1,0 +1,10 @@
+name = "dizzo-studio"
+compatibility_date = "2026-07-29"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+preview_urls = true
+
+# Workers Logs: requests, errors and console output in the Cloudflare dashboard.
+[observability]
+enabled = true
+head_sampling_rate = 1

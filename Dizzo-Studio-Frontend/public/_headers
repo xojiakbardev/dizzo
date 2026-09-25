@@ -1,0 +1,7 @@
+# Static files served straight by Cloudflare (Workers Static Assets); the
+# Worker's own responses get theirs from server/middleware/security-headers.ts.
+# Nitro appends the cache rules from nuxt.config.ts routeRules below.
+/*
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000
+  Referrer-Policy: strict-origin-when-cross-origin

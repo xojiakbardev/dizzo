@@ -1,0 +1,243 @@
+{
+  "storefront": {
+    "auth": {
+      "checking": "Tekshirilmoqda...",
+      "creating": "Yaratilmoqda...",
+      "emailLabel": "Elektron pochta*",
+      "emailPlaceholder": "Email manzilingizni kiriting",
+      "forgotPassword": "Parolni unutdingizmi?",
+      "fullNameLabel": "To‘liq ism*",
+      "fullNamePlaceholder": "Ismingizni kiriting",
+      "googleError": "Google orqali kirishda xatolik yuz berdi.",
+      "googleSignIn": "Google orqali kirish",
+      "googleUnavailable": "Google mavjud emas",
+      "haveAccount": "Allaqachon hisobingiz bormi?",
+      "haveAccountShort": "Hisobingiz bormi?",
+      "loginError": "Kirishda xatolik yuz berdi.",
+      "loginSubtitle": "Hisobingizga kiring",
+      "loginTitle": "Dizzo Studio-ga xush kelibsiz",
+      "modalLogin": "Hisobga kirish",
+      "newPasswordPlaceholder": "Parol yarating (kamida 8 belgi)",
+      "noAccount": "Hisobingiz yo‘qmi?",
+      "orEmail": "yoki email orqali",
+      "orWithEmail": "yoki email bilan",
+      "passwordLabel": "Parol*",
+      "passwordPlaceholder": "Parolingizni kiriting",
+      "phoneLabel": "Telefon raqam*",
+      "register": "Ro‘yxatdan o‘tish",
+      "registerError": "Ro'yxatdan o'tishda xatolik yuz berdi.",
+      "registerSubtitle": "Ijodiy makonga qo‘shiling",
+      "registerTitle": "Dizzo Studio-da hisob yarating",
+      "rememberMe": "Meni eslab qol",
+      "signInLink": "Kirish",
+      "signUpLink": "Ro‘yxatdan o‘ting",
+      "telegramError": "Telegram orqali kirishda xatolik yuz berdi.",
+      "telegramSignIn": "Telegram orqali kirish",
+      "telegramUnavailable": "Telegram mavjud emas"
+    },
+    "cabinet": {
+      "backToStudio": "Studio’ga qaytish",
+      "chooseWhere": "Qayerga o‘tishni tanlang",
+      "closeSidebar": "Sidebarni yopish",
+      "continueDesign": "Oxirgi dizaynni davom ettirish",
+      "openSidebar": "Sidebarni ochish",
+      "profile": "Profil",
+      "sections": "Profil bo‘limlari",
+      "toggleSidebar": "Sidebarni almashtirish"
+    },
+    "catalog": {
+      "empty": "Katalog hozircha bo‘sh",
+      "loadError": "Mahsulotlarni yuklab bo‘lmadi",
+      "nextPage": "Keyingi sahifa",
+      "notFound": "Mahsulot topilmadi",
+      "pagination": "Sahifalar",
+      "prevPage": "Oldingi sahifa",
+      "search": "Mahsulot qidirish",
+      "title": "Mahsulotlar"
+    },
+    "common": {
+      "close": "Yopish",
+      "createDesign": "Dizayn yaratish",
+      "home": "Bosh sahifa",
+      "loading": "Yuklanmoqda",
+      "products": "Mahsulotlar",
+      "retry": "Qayta urinish",
+      "showAll": "Hammasini ko‘rsatish"
+    },
+    "error": {
+      "failedText": "Sahifani ochishda xatolik yuz berdi. Birozdan so‘ng qayta urinib ko‘ring.",
+      "failedTitle": "Nimadir noto‘g‘ri ketdi",
+      "notFoundText": "Bu manzil mavjud emas yoki mahsulot sotuvdan olingan. Bosh sahifaga qayting yoki mahsulotlarni ko‘ring.",
+      "notFoundTitle": "Sahifa topilmadi"
+    },
+    "faq": {
+      "cancel": {
+        "a": "Buyurtma hali tasdiqlanmagan bo‘lsa, “Buyurtmalarim” sahifasidan bekor qilasiz. Tayyorlash boshlangach, operatorimizga yozing.",
+        "q": "Buyurtmani bekor qilish mumkinmi?"
+      },
+      "delivery": {
+        "a": "Ha, O‘zbekiston bo‘ylab yetkazamiz, narxini operator manzilingizga qarab aytadi. Markazimizdan bepul olib ketish ham mumkin: {address}, {hours}.",
+        "q": "Yetkazib berish bormi?"
+      },
+      "images": {
+        "a": "JPG, PNG yoki WEBP. Rasm qancha katta va tiniq bo‘lsa, shuncha sifatli chiqadi. Sifat past bo‘lsa, Studio ogohlantiradi.",
+        "q": "Qanday rasm yuklash mumkin?"
+      },
+      "payment": {
+        "a": "Buyurtma yuborilgach, operatorimiz siz bilan bog‘lanib, buyurtmani tasdiqlaydi va to‘lovni kelishib oladi.",
+        "q": "To‘lov qanday amalga oshiriladi?"
+      },
+      "time": {
+        "a": "Odatda 2–4 ish kuni. Aniq muddatni operatorimiz buyurtmani tasdiqlashda aytadi.",
+        "q": "Buyurtma qancha vaqtda tayyor bo‘ladi?"
+      },
+      "what": {
+        "a": "Faqat telefon yoki kompyuter. Mahsulotni tanlang, rasm yuklang, matn yozing yoki tayyor shablondan boshlang.",
+        "q": "Dizayn yaratish uchun nima kerak?"
+      }
+    },
+    "footer": {
+      "allProducts": "Barcha mahsulotlar",
+      "contact": "Aloqa",
+      "faq": "Ko‘p beriladigan savollar",
+      "help": "Yordam",
+      "myOrders": "Buyurtmalarim",
+      "rights": "Barcha huquqlar himoyalangan.",
+      "privacy": "Maxfiylik siyosati"
+    },
+    "gallery": {
+      "empty": "Galereya hozircha bo‘sh",
+      "enlarge": "{name} — kattalashtirish",
+      "loadError": "Galereyani yuklab bo‘lmadi",
+      "notFound": "Hech narsa topilmadi",
+      "title": "Galereya"
+    },
+    "hero": {
+      "benefitDelivery": "Yetkazib berish",
+      "benefitPreview": "3D preview",
+      "benefitPrint": "Sifatli bosma",
+      "browseProducts": "Mahsulotlarni ko‘rish",
+      "imageAlt": "Bir dizayn krujka, futbolka va telefondagi preview’da",
+      "subtitle": "Rasmingizni yuklang, dizayn yarating va buyurtma bering.",
+      "title": "O‘zingizning dizayningizni yarating."
+    },
+    "landing": {
+      "finalTitle": "O‘z dizayningizni yarating.",
+      "productsEmpty": "Katalog hozircha bo‘sh. Yangi mahsulotlar tez orada qo‘shiladi.",
+      "productsError": "Mahsulotlarni yuklab bo‘lmadi. Internetni tekshirib, qayta urinib ko‘ring.",
+      "productsTitle": "Mahsulot tanlang",
+      "reviewsTitle": "Mijozlarimiz nima deydi?",
+      "seeAll": "Hammasini ko‘rish"
+    },
+    "licenses": {
+      "models": "3D modellar",
+      "title": "Litsenziyalar"
+    },
+    "nav": {
+      "adminPanel": "Admin panel",
+      "faq": "FAQ",
+      "gallery": "Galereya",
+      "homeAria": "Dizzo, bosh sahifa",
+      "logout": "Chiqish",
+      "main": "Asosiy",
+      "menuDescription": "Sayt bo‘limlari va hisobingiz",
+      "openMenu": "Menyuni ochish",
+      "products": "Mahsulotlar",
+      "profile": "Profil",
+      "profileMenu": "Profil menyusi, {name}",
+      "signIn": "Kirish",
+      "startDesign": "Dizayn yaratishni boshlash",
+      "tutorials": "Video darsliklar"
+    },
+    "picker": {
+      "fromPrice": "{price} dan",
+      "notFound": "“{query}” bo‘yicha mahsulot topilmadi.",
+      "search": "Mahsulotni qidirish",
+      "title": "Qaysi mahsulot uchun dizayn yaratasiz?"
+    },
+    "product": {
+      "about": "Mahsulot haqida",
+      "breadcrumb": "Yo‘l",
+      "color": "Rang",
+      "design": "Dizayn qilish",
+      "fallbackName": "Mahsulot",
+      "imageAlt": "{name} — {n}-rasm",
+      "imageN": "{n}-rasm",
+      "imagesRole": "rasmlar",
+      "loadError": "Mahsulotni yuklab bo‘lmadi",
+      "model3dDescription": "Mahsulotni aylantirib ko‘ring",
+      "model3dError": "3D ko‘rinishni ochib bo‘lmadi",
+      "model3dHint": "Aylantirish uchun suring",
+      "model3dLoading": "3D model yuklanmoqda…",
+      "nextImage": "Keyingi rasm",
+      "notFound": "Mahsulot topilmadi",
+      "prevImage": "Oldingi rasm",
+      "printMethod": "Bosish usuli",
+      "samePrice": "Shu narxda",
+      "size": "O‘lcham",
+      "sizeLater": "O‘lchamni keyin ham tanlash mumkin",
+      "sizeNotChosen": "tanlanmagan",
+      "soldOut": "{size} — tugagan",
+      "specs": "Xususiyatlari",
+      "variant": "Variant",
+      "view3dLoading": "3D ko‘rinish yuklanmoqda…",
+      "zoomHint": "Rasmni bosib kattalashtiring"
+    },
+    "productCard": {
+      "details": "Batafsil"
+    },
+    "profile": {
+      "botMissing": "Telegram bot sozlanmagan.",
+      "confirmInTelegram": "Telegram’da tasdiqlang…",
+      "connect": "Ulash",
+      "connected": "Ulangan",
+      "firstName": "Ism",
+      "firstNamePlaceholder": "Ismingizni kiriting",
+      "lastName": "Familiya",
+      "lastNamePlaceholder": "Familiyangizni kiriting",
+      "linkError": "Telegram havolasini olib bo‘lmadi.",
+      "linkTimeout": "Ulanish tasdiqlanmadi. Qaytadan urinib ko‘ring.",
+      "namePlaceholder": "Ism Familiya",
+      "phone": "Telefon raqami",
+      "reconnect": "Qayta ulash",
+      "save": "O‘zgarishlarni saqlash",
+      "saveError": "Saqlashda xatolik yuz berdi.",
+      "saved": "Profil ma'lumotlari muvaffaqiyatli saqlandi."
+    },
+    "richText": {
+      "bold": "Qalin",
+      "bulletList": "Ro‘yxat",
+      "heading": "Sarlavha",
+      "italic": "Qiya",
+      "link": "Havola",
+      "linkPrompt": "Havola (https://…)",
+      "orderedList": "Raqamli ro‘yxat",
+      "quote": "Iqtibos",
+      "redo": "Oldinga",
+      "strike": "Ustidan chiziq",
+      "subheading": "Kichik sarlavha",
+      "text": "Matn",
+      "toolbar": "Matn formati",
+      "underline": "Tagiga chiziq",
+      "undo": "Ortga"
+    },
+    "shelves": {
+      "all": "Barchasi",
+      "label": "Bo‘limlar"
+    },
+    "tutorials": {
+      "soon": "Tez orada",
+      "watch": "{title} — videoni ko‘rish"
+    },
+    "viewer": {
+      "next": "Keyingi ish",
+      "picture": "Rasm",
+      "pictures": "Rasmlar",
+      "prev": "Oldingi ish",
+      "useAsSample": "Namuna sifatida foydalanish"
+    },
+    "reviews": {
+      "anonymous": "Dizzo mijozi"
+    }
+  }
+}

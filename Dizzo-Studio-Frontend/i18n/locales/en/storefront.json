@@ -1,0 +1,243 @@
+{
+  "storefront": {
+    "auth": {
+      "checking": "Checking...",
+      "creating": "Creating...",
+      "emailLabel": "Email*",
+      "emailPlaceholder": "Enter your email address",
+      "forgotPassword": "Forgot your password?",
+      "fullNameLabel": "Full name*",
+      "fullNamePlaceholder": "Enter your name",
+      "googleError": "Something went wrong signing in with Google.",
+      "googleSignIn": "Sign in with Google",
+      "googleUnavailable": "Google unavailable",
+      "haveAccount": "Already have an account?",
+      "haveAccountShort": "Have an account?",
+      "loginError": "We couldn’t sign you in.",
+      "loginSubtitle": "Sign in to your account",
+      "loginTitle": "Welcome to Dizzo Studio",
+      "modalLogin": "Sign in to your account",
+      "newPasswordPlaceholder": "Create a password (at least 8 characters)",
+      "noAccount": "Don’t have an account?",
+      "orEmail": "or with email",
+      "orWithEmail": "or with email",
+      "passwordLabel": "Password*",
+      "passwordPlaceholder": "Enter your password",
+      "phoneLabel": "Phone number*",
+      "register": "Sign up",
+      "registerError": "We couldn’t create your account.",
+      "registerSubtitle": "Join the creative space",
+      "registerTitle": "Create your Dizzo Studio account",
+      "rememberMe": "Remember me",
+      "signInLink": "Sign in",
+      "signUpLink": "Sign up",
+      "telegramError": "Something went wrong signing in with Telegram.",
+      "telegramSignIn": "Sign in with Telegram",
+      "telegramUnavailable": "Telegram unavailable"
+    },
+    "cabinet": {
+      "backToStudio": "Back to Studio",
+      "chooseWhere": "Choose where to go",
+      "closeSidebar": "Close sidebar",
+      "continueDesign": "Continue your last design",
+      "openSidebar": "Open sidebar",
+      "profile": "Profile",
+      "sections": "Profile sections",
+      "toggleSidebar": "Toggle sidebar"
+    },
+    "catalog": {
+      "empty": "The catalogue is empty for now",
+      "loadError": "We couldn’t load the products",
+      "nextPage": "Next page",
+      "notFound": "No products found",
+      "pagination": "Pages",
+      "prevPage": "Previous page",
+      "search": "Search products",
+      "title": "Products"
+    },
+    "common": {
+      "close": "Close",
+      "createDesign": "Create a design",
+      "home": "Home",
+      "loading": "Loading",
+      "products": "Products",
+      "retry": "Try again",
+      "showAll": "Show all"
+    },
+    "error": {
+      "failedText": "We couldn’t open this page. Please try again in a moment.",
+      "failedTitle": "Something went wrong",
+      "notFoundText": "This page doesn’t exist, or the product is no longer on sale. Head back home or browse our products.",
+      "notFoundTitle": "Page not found"
+    },
+    "faq": {
+      "cancel": {
+        "a": "While your order is still unconfirmed, you can cancel it from the “My orders” page. Once production has started, just message our operator.",
+        "q": "Can I cancel my order?"
+      },
+      "delivery": {
+        "a": "Yes, we deliver across Uzbekistan; the operator will quote the cost based on your address. You can also collect your order free of charge from our centre: {address}, {hours}.",
+        "q": "Do you deliver?"
+      },
+      "images": {
+        "a": "JPG, PNG or WEBP. The larger and sharper the image, the better the print. If the quality is too low, Studio will let you know.",
+        "q": "What kind of images can I upload?"
+      },
+      "payment": {
+        "a": "Once you place your order, our operator will get in touch to confirm it and arrange payment.",
+        "q": "How do I pay?"
+      },
+      "time": {
+        "a": "Usually 2–4 working days. Our operator will give you the exact timing when confirming your order.",
+        "q": "How long does an order take?"
+      },
+      "what": {
+        "a": "Just a phone or a computer. Pick a product, upload an image, add some text or start from a ready-made template.",
+        "q": "What do I need to create a design?"
+      }
+    },
+    "footer": {
+      "allProducts": "All products",
+      "contact": "Contact",
+      "faq": "Frequently asked questions",
+      "help": "Help",
+      "myOrders": "My orders",
+      "rights": "All rights reserved.",
+      "privacy": "Privacy policy"
+    },
+    "gallery": {
+      "empty": "The gallery is empty for now",
+      "enlarge": "{name} — view larger",
+      "loadError": "We couldn’t load the gallery",
+      "notFound": "Nothing found",
+      "title": "Gallery"
+    },
+    "hero": {
+      "benefitDelivery": "Delivery",
+      "benefitPreview": "3D preview",
+      "benefitPrint": "Quality printing",
+      "browseProducts": "Browse products",
+      "imageAlt": "One design on a mug, a T-shirt and in the phone preview",
+      "subtitle": "Upload your photo, create a design and place your order.",
+      "title": "Design something that’s truly yours."
+    },
+    "landing": {
+      "finalTitle": "Create your own design.",
+      "productsEmpty": "The catalogue is empty for now. New products are coming soon.",
+      "productsError": "We couldn’t load the products. Check your connection and try again.",
+      "productsTitle": "Choose a product",
+      "reviewsTitle": "What our customers say",
+      "seeAll": "View all"
+    },
+    "licenses": {
+      "models": "3D models",
+      "title": "Licences"
+    },
+    "nav": {
+      "adminPanel": "Admin panel",
+      "faq": "FAQ",
+      "gallery": "Gallery",
+      "homeAria": "Dizzo, home page",
+      "logout": "Sign out",
+      "main": "Main",
+      "menuDescription": "Site sections and your account",
+      "openMenu": "Open menu",
+      "products": "Products",
+      "profile": "Profile",
+      "profileMenu": "Profile menu, {name}",
+      "signIn": "Sign in",
+      "startDesign": "Start designing",
+      "tutorials": "Video tutorials"
+    },
+    "picker": {
+      "fromPrice": "from {price}",
+      "notFound": "No products match “{query}”.",
+      "search": "Search products",
+      "title": "What would you like to design?"
+    },
+    "product": {
+      "about": "About the product",
+      "breadcrumb": "Breadcrumb",
+      "color": "Colour",
+      "design": "Design it",
+      "fallbackName": "Product",
+      "imageAlt": "{name} — image {n}",
+      "imageN": "Image {n}",
+      "imagesRole": "images",
+      "loadError": "We couldn’t load this product",
+      "model3dDescription": "Spin the product to see it from every angle",
+      "model3dError": "We couldn’t open the 3D view",
+      "model3dHint": "Drag to rotate",
+      "model3dLoading": "Loading the 3D model…",
+      "nextImage": "Next image",
+      "notFound": "Product not found",
+      "prevImage": "Previous image",
+      "printMethod": "Printing method",
+      "samePrice": "Same price",
+      "size": "Size",
+      "sizeLater": "You can choose the size later",
+      "sizeNotChosen": "not selected",
+      "soldOut": "{size} — sold out",
+      "specs": "Specifications",
+      "variant": "Style",
+      "view3dLoading": "Loading the 3D view…",
+      "zoomHint": "Click the image to zoom in"
+    },
+    "productCard": {
+      "details": "Details"
+    },
+    "profile": {
+      "botMissing": "The Telegram bot isn’t set up.",
+      "confirmInTelegram": "Confirm in Telegram…",
+      "connect": "Connect",
+      "connected": "Connected",
+      "firstName": "First name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Enter your last name",
+      "linkError": "We couldn’t get the Telegram link.",
+      "linkTimeout": "The connection wasn’t confirmed. Please try again.",
+      "namePlaceholder": "Full Name",
+      "phone": "Phone number",
+      "reconnect": "Reconnect",
+      "save": "Save changes",
+      "saveError": "We couldn’t save your changes.",
+      "saved": "Your profile has been saved."
+    },
+    "richText": {
+      "bold": "Bold",
+      "bulletList": "Bulleted list",
+      "heading": "Heading",
+      "italic": "Italic",
+      "link": "Link",
+      "linkPrompt": "Link (https://…)",
+      "orderedList": "Numbered list",
+      "quote": "Quote",
+      "redo": "Redo",
+      "strike": "Strikethrough",
+      "subheading": "Subheading",
+      "text": "Text",
+      "toolbar": "Text formatting",
+      "underline": "Underline",
+      "undo": "Undo"
+    },
+    "shelves": {
+      "all": "All",
+      "label": "Categories"
+    },
+    "tutorials": {
+      "soon": "Coming soon",
+      "watch": "{title} — watch the video"
+    },
+    "viewer": {
+      "next": "Next piece",
+      "picture": "Photo",
+      "pictures": "Photos",
+      "prev": "Previous piece",
+      "useAsSample": "Use as a starting point"
+    },
+    "reviews": {
+      "anonymous": "Dizzo customer"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "common": {
+    "language": {
+      "choose": "Choose language",
+      "label": "Language"
+    },
+    "ui": {
+      "breadcrumb": "Breadcrumb",
+      "more": "More",
+      "morePages": "More pages",
+      "close": "Close",
+      "previousSlide": "Previous slide",
+      "nextSlide": "Next slide",
+      "pagination": {
+        "first": "First",
+        "last": "Last",
+        "previous": "Previous",
+        "next": "Next",
+        "previousPage": "Previous page",
+        "nextPage": "Next page",
+        "pageOf": "Page {page} of {pages}",
+        "total": "{count} total"
+      },
+      "table": {
+        "empty": "Nothing here yet"
+      }
+    },
+    "errors": {
+      "network": "Couldn't reach the server. Check your internet connection and try again.",
+      "server": "Something went wrong on the server. Please try again in a moment.",
+      "requestFailed": "The request failed (error {status}).",
+      "googleScript": "Couldn't load the Google script",
+      "googleSignIn": "Couldn't sign in with Google.",
+      "imageOpen": "Couldn't open the image.",
+      "canvasUnavailable": "Canvas isn't available in this browser.",
+      "imageCompress": "Couldn't compress the image.",
+      "fileSave": "Couldn't save the file ({status}). Please try again.",
+      "saveFailed": "Couldn't save",
+      "uploadFailed": "Upload failed"
+    },
+    "pictures": {
+      "maxCount": "Up to {count} image | Up to {count} images",
+      "uploadOneFailed": "Couldn't upload the image",
+      "uploadManyFailed": "Couldn't upload the images",
+      "renderEmpty": "The 3D shape produced no image",
+      "renderFailed": "Couldn't create the image",
+      "coverFailed": "Could not make the cover"
+    },
+    "reviewStatus": {
+      "pending": "Under review",
+      "approved": "Shown on the site",
+      "rejected": "Rejected"
+    },
+    "cabinetNav": {
+      "cart": "Cart",
+      "orders": "My orders",
+      "feedback": "My reviews",
+      "designs": "My designs",
+      "profile": "My profile"
+    },
+    "adminNav": {
+      "dashboard": "Dashboard",
+      "orders": "Orders",
+      "products": "Products",
+      "categories": "Categories",
+      "reviews": "Reviews",
+      "gallery": "Gallery",
+      "gallerySubmit": "Gallery",
+      "tutorials": "Video tutorials",
+      "users": "Users",
+      "profile": "My profile"
+    },
+    "catalog": {
+      "method": {
+        "uv": "Colour print",
+        "engrave": "Laser engraving"
+      },
+      "methodInfo": {
+        "uv": {
+          "short": "Full colour, photos",
+          "details": "Images and text are printed in full colour — ideal for photos, colour logos and patterns. The price depends on the printed area (cm²)."
+        },
+        "engrave": {
+          "short": "Single colour, permanent",
+          "details": "The laser etches the design into the surface: single colour, it won't fade or wash off. Best for text, logos and simple drawings; photos and very fine details don't come out well. No colour choice."
+        }
+      },
+      "kind": {
+        "cylinder": "Cylinder (mug, tumbler)",
+        "plane": "Flat (business card, notebook)",
+        "disc": "Disc (clock, badge)",
+        "model": "3D model (T-shirt, hoodie)"
+      },
+      "material": {
+        "ceramic_glossy": "Ceramic, glossy",
+        "ceramic_matte": "Ceramic, matte",
+        "glass_clear": "Glass, clear",
+        "glass_frosted": "Glass, frosted",
+        "fabric": "Fabric",
+        "paper": "Paper",
+        "plastic": "Plastic",
+        "metal": "Metal",
+        "wood": "Wood"
+      }
+    },
+    "video": {
+      "play": "Play",
+      "pause": "Pause",
+      "seek": "Seek",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "fullscreen": "Full screen",
+      "loading": "Loading the video…",
+      "error": "Couldn’t open the video. Please try again in a moment."
+    }
+  }
+}
