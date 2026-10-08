@@ -76,7 +76,10 @@ async function executeTokenRefresh(apiUrl: string): Promise<boolean> {
     }
     catch (error: unknown) {
       const status = (error as { response?: { status?: number } }).response?.status ?? 0;
-      if (status >= 400 && status < 500) {
+      // Only a refused refresh token ends the session. A 429 from the rate
+      // limiter (many customers share one carrier IP) or any other hiccup
+      // keeps the user signed in; the next request simply tries again.
+      if (status === 401 || status === 403) {
         setSignedInFlag(false);
         syncAuthState(false);
         try {

@@ -105,9 +105,9 @@ async def delete_account(
     await session.execute(delete(SocialConnection).where(SocialConnection.user_id == user.id))
     await session.execute(delete(TelegramAppLogin).where(TelegramAppLogin.user_id == user.id))
     await session.execute(delete(TelegramLinkToken).where(TelegramLinkToken.user_id == user.id))
-    await session.execute(delete(Design).where(Design.user_id == user.id))
+    await session.execute(delete(Design).where(Design.owner_id == user.id))
     await session.execute(delete(Cart).where(Cart.customer_id == user.id))
-    await session.execute(update(Review).where(Review.author_id == user.id).values(author_id=None))
+    await session.execute(update(Review).where(Review.user_id == user.id).values(user_id=None))
     await revoke_all_tokens(session, user)
     user.email = None
     user.password_hash = None

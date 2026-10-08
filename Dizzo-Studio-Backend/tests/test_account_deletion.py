@@ -42,7 +42,7 @@ async def test_an_order_in_progress_blocks_deletion(
 
     blocked = await client.delete("/api/users/profile/me/", headers={"Accept-Language": "en"})
     assert blocked.status_code == 409
-    assert "order in progress" in blocked.json()["detail"]
+    assert "active order" in blocked.json()["detail"]
 
 
 @pytest.mark.asyncio

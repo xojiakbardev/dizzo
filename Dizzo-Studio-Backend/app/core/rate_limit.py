@@ -80,7 +80,9 @@ LIMITS: dict[str, tuple[Limit, Limit]] = {
     # stranger can't lock the owner out by trying.
     "login": (Limit(30, 300), Limit(10, 900)),
     "register": (Limit(10, 3600), Limit(5, 3600)),
-    "refresh": (Limit(120, 300), Limit(30, 300)),
+    # Per IP is loose: a whole mobile carrier NAT shares one address, and a
+    # refresh needs a valid token anyway, so the per-account cap does the work.
+    "refresh": (Limit(600, 300), Limit(30, 300)),
     "oauth": (Limit(30, 300), Limit(10, 300)),
     "password": (Limit(20, 900), Limit(5, 900)),
 }

@@ -17,6 +17,15 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            set -e
             cd /opt/dizzo/backend
-            git pull origin main
+            # A hand edit on the server used to make `git pull` abort while the
+            # job still reported success, so production silently stayed on old
+            # code. Keep any such edit in the stash, then match origin exactly.
+            if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+              git stash push -m "deploy-autostash $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            fi
+            git fetch origin main
+            git reset --hard origin/main
             docker compose up -d --build
+            docker compose ps
