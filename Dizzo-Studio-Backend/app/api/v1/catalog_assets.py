@@ -147,7 +147,7 @@ async def create_asset(
     """Insert a single asset."""
     media = (await session.execute(select(Media).where(Media.id == body.media_id))).scalar_one_or_none()
     if not media:
-        raise not_found("Media topilmadi")
+        raise not_found("Fayl")
 
     asset = DesignAsset(
         media_id=body.media_id,
@@ -210,7 +210,7 @@ async def update_asset(
     """Update an asset's details or toggle active status (Show/Hide)."""
     asset = (await session.execute(select(DesignAsset).where(DesignAsset.id == id))).scalar_one_or_none()
     if not asset:
-        raise not_found("Asset topilmadi")
+        raise not_found("Element")
 
     if body.name is not None:
         asset.name = body.name.strip()
@@ -237,7 +237,7 @@ async def delete_asset(
     """Delete an asset."""
     asset = (await session.execute(select(DesignAsset).where(DesignAsset.id == id))).scalar_one_or_none()
     if not asset:
-        raise not_found("Asset topilmadi")
+        raise not_found("Element")
 
     await session.delete(asset)
     await session.commit()

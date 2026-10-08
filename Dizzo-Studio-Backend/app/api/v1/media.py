@@ -8,6 +8,7 @@ user's own prefix after login.
 """
 
 import io
+import logging
 import struct
 import warnings
 from dataclasses import dataclass
@@ -26,9 +27,11 @@ from app.db.session import get_db
 from app.models.media import Media
 from app.models.user import User
 from app.schemas.media import ClaimRequest, MediaOut, UploadRequest, UploadTicket
+from app.services.model_compression import draco_compress
 from app.services.storage import IMMUTABLE_CACHE_CONTROL, PRESIGN_TTL_SECONDS, R2Storage, get_storage
 from app.services.thumbnails import make_thumbnails, wants_thumbnails
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/media", tags=["media"])
 
 settings = get_settings()
@@ -251,12 +254,28 @@ async def complete_upload(
         await storage.delete(media.key)
         raise HTTPException(status_code=422, detail=problem)
 
+    if media.purpose == "model":
+        await compress_model(media, storage)
     media.status = "ready"
     await session.commit()
     # Phones get the catalog's pictures as small WebP copies (after the answer).
     if wants_thumbnails(media.key, media.content_type):
         background.add_task(make_thumbnails, storage, media.key)
     return media_out(media, storage)
+
+
+async def compress_model(media: Media, storage: R2Storage) -> None:
+    """Swaps an uploaded GLB for its Draco-compressed copy under the same key.
+    Any failure keeps the upload as it was: a slow model beats a lost one."""
+    try:
+        compressed = await draco_compress(await storage.read(media.key))
+        if compressed is None:
+            return
+        await storage.put_bytes(media.key, compressed, media.content_type)
+    except Exception:
+        logger.exception("could not compress model %s", media.key)
+        return
+    media.size_bytes = len(compressed)
 
 
 @router.post("/claim/", response_model=list[MediaOut])

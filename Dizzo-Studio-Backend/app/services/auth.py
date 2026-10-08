@@ -386,4 +386,5 @@ async def set_credentials(session: AsyncSession, user: User, email: str, passwor
     user.password_hash = hash_password(password)
     await revoke_all_tokens(session, user)
     await session.commit()
+    await session.refresh(user)  # updated_at is set by the database on flush
     return await tokens(session, user)

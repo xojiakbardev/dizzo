@@ -21,7 +21,7 @@ async def admin_mug(client: httpx.AsyncClient, storage: FakeStorage, session_fac
 def image_layer(media_id: str) -> dict:
     return {
         "id": "img", "area": "wrap", "method": "uv", "kind": "image", "x_mm": 170, "y_mm": 40, "w_mm": 40, "h_mm": 40,
-        "image": {"media_id": media_id, "url": "", "px_w": 10, "px_h": 10},
+        "image": {"media_id": media_id, "url": "", "px_w": 4000, "px_h": 4000},
     }
 
 

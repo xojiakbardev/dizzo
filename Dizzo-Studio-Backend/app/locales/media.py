@@ -21,6 +21,7 @@ MESSAGES: dict[str, dict[str, str]] = {
         "en": "Too many files uploaded. Please try again in an hour.",
     },
     "Fayl topilmadi": {"ru": "Файл не найден", "en": "File not found"},
+    "Element topilmadi": {"ru": "Элемент не найден", "en": "Element not found"},
     "Fayl hali yuklanmagan": {"ru": "Файл ещё не загружен", "en": "The file hasn't been uploaded yet"},
     "Yuklangan fayl so'ralgan fayl bilan mos kelmadi": {
         "ru": "Загруженный файл не совпадает с заявленным",

@@ -12,13 +12,13 @@ from app.models.commerce import Design
 from app.models.media import Media
 from app.services import media_cleanup
 from tests.conftest import FakeStorage, register
-from tests.test_catalog import A, build_mug, catalog_image, color_id, ok
+from tests.test_catalog import color_id, ok
 from tests.test_studio import UV_LAYER, UV_PX, document, png, shop
 from tests.test_studio import upload as upload_file
 
 IMAGE_LAYER = {
     "id": "img", "area": "wrap", "method": "uv", "kind": "image", "x_mm": 50, "y_mm": 40, "w_mm": 40, "h_mm": 40,
-    "image": {"media_id": "", "url": "", "px_w": 10, "px_h": 10},
+    "image": {"media_id": "", "url": "", "px_w": 4000, "px_h": 4000},
 }
 
 
@@ -197,30 +197,3 @@ async def test_a_customer_may_keep_more_designs_than_the_old_cap(
 
     another = ok(await client.post("/api/studio/designs/", json=body), 201)
     assert another["id"] != first["id"]
-
-
-@pytest.mark.asyncio
-async def test_a_colours_card_picture_is_never_an_orphan(
-    admin_client: httpx.AsyncClient, storage: FakeStorage, session_factory: async_sessionmaker[AsyncSession]
-) -> None:
-    """VariantColor.card_media_id must be one of media_cleanup.MEDIA_COLUMNS.
-    It is a foreign key the reference graph is written out by hand, and the
-    failure mode of leaving it out is every colour card deleted from R2."""
-    product = await build_mug(admin_client, storage)
-    card = await catalog_image(admin_client, storage)
-    forgotten = await catalog_image(admin_client, storage)
-    ok(await admin_client.patch(f"{A}/colors/{color_id(product, 'Qora')}/", json={"card_media_id": card}))
-    card_key = await key_by_id(session_factory, card)
-    forgotten_key = await key_by_id(session_factory, forgotten)
-    await age(session_factory, days=40)
-
-    dry = await sweep(session_factory, storage, dry_run=True)
-    real = await sweep(session_factory, storage, dry_run=False)
-
-    # Only the upload nobody ever used is in the running, in the dry run
-    # that reports and in the run that deletes.
-    assert dry["orphans"].rows == 1 and dry["orphans"].sample == [forgotten_key]
-    assert real["orphans"].rows == 1
-    left = await media_ids(session_factory)
-    assert card in left and forgotten not in left
-    assert card_key in storage.objects

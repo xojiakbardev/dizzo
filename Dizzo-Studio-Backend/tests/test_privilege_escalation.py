@@ -313,7 +313,7 @@ def test_production_refuses_the_placeholder_jwt_secret() -> None:
         Settings(**{**safe, "debug": True})
 
     # Development is left alone: the placeholder is what a local run uses.
-    assert Settings(environment="development").jwt_secret_key == "change-me-in-local"
+    assert Settings(_env_file=None, environment="development").jwt_secret_key == "change-me-in-local"
 
 
 # ── Telegram: a worker's own name reaches the moderators as text ──

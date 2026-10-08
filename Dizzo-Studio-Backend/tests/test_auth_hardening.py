@@ -203,10 +203,16 @@ async def test_tokens_from_before_the_upgrade_work_until_refreshed(
 
 
 @pytest.mark.asyncio
-async def test_new_password_signs_other_sessions_out(client: httpx.AsyncClient) -> None:
-    await register(client, "pw@example.com")
+async def test_new_password_signs_other_sessions_out(
+    client: httpx.AsyncClient, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    user = await register(client, "pw@example.com")
     other = (await login(client, "pw@example.com")).json()
     this = (await login(client, "pw@example.com")).json()
+    # set-credentials is for accounts without a password (Google/Telegram sign-ups).
+    async with session_factory() as session:
+        (await session.get(User, user["id"])).password_hash = None
+        await session.commit()
 
     changed = await client.post(
         "/api/auth/set-credentials/",
@@ -234,14 +240,14 @@ async def test_role_change_and_deactivation_revoke_tokens(
     worker_access = (await login(client, "worker@example.com")).json()["access_token"]
 
     promoted = await client.patch(
-        f"/api/users/admin/{worker['id']}/role/", json={"role": "production_manager"}, headers=bearer(boss_access)
+        f"/api/users/admin/{worker['id']}/role/", json={"role": "moderator"}, headers=bearer(boss_access)
     )
     assert promoted.status_code == 200
     assert (await client.get("/api/auth/me", headers=bearer(worker_access))).status_code == 401
 
     worker_access = (await login(client, "worker@example.com")).json()["access_token"]
     unchanged = await client.patch(
-        f"/api/users/admin/{worker['id']}/role/", json={"role": "production_manager"}, headers=bearer(boss_access)
+        f"/api/users/admin/{worker['id']}/role/", json={"role": "moderator"}, headers=bearer(boss_access)
     )
     assert unchanged.status_code == 200
     assert (await client.get("/api/auth/me", headers=bearer(worker_access))).status_code == 200  # nothing changed
@@ -267,19 +273,21 @@ async def test_an_admin_cannot_grant_admin_rights(
     assert (await client.patch(role_url, json={"role": "super_admin"}, headers=headers)).status_code == 403
     assert (await client.patch(role_url, json={"role": "admin"}, headers=headers)).status_code == 403
     assert (await client.patch(role_url, json={"is_staff": True}, headers=headers)).status_code == 403
-    assert (await client.patch(role_url, json={"role": "wizard"}, headers=headers)).status_code == 422
+    # An unknown role is refused like any role an admin may not grant.
+    assert (await client.patch(role_url, json={"role": "wizard"}, headers=headers)).status_code == 403
     boss_url = f"/api/users/admin/{boss['id']}/role/"
     assert (await client.patch(boss_url, json={"is_active": False}, headers=headers)).status_code == 403
     assert (await client.post("/api/users/admin/create/", json={**new_user, "role": "super_admin"}, headers=headers)).status_code == 403
-    # What an admin may do.
-    assert (await client.patch(role_url, json={"role": "production_admin"}, headers=headers)).status_code == 200
+    # Only the super admin changes roles and creates staff.
+    assert (await client.patch(role_url, json={"role": "moderator"}, headers=headers)).status_code == 403
+    boss_headers = bearer((await login(client, "boss2@example.com")).json()["access_token"])
+    assert (await client.patch(role_url, json={"role": "moderator"}, headers=boss_headers)).status_code == 200
     created = await client.post(
-        "/api/users/admin/create/", json={**new_user, "email": "New@Example.com", "role": "production_manager"},
-        headers=headers,
+        "/api/users/admin/create/", json={**new_user, "email": "New@Example.com", "role": "moderator"},
+        headers=boss_headers,
     )
     assert created.status_code == 201 and created.json()["email"] == "new@example.com"
 
-    boss_headers = bearer((await login(client, "boss2@example.com")).json()["access_token"])
     assert (await client.patch(role_url, json={"role": "admin"}, headers=boss_headers)).status_code == 200
 
 
