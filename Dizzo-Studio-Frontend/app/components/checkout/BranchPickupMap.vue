@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { loadYandexMaps } from '~/utils/yandexMaps';
 import { useBranches } from '~/composables/queries/useBranches';
 import type { Branch } from '~/types/commerce';
 
@@ -18,6 +19,8 @@ const yandexApiKey = runtimeConfig.public.yandexMapsApiKey as string | undefined
 const { data: branches, isLoading } = useBranches(true);
 
 const mapEl = ref<HTMLDivElement | null>(null);
+// No map (Yandex blocked or slow): the branch list below still works alone.
+const mapFailed = ref(false);
 let mapInstance: any = null;
 const markersMap = new Map<number, any>();
 
@@ -62,25 +65,7 @@ function selectBranch(branch: Branch) {
 }
 
 async function ensureYandexMaps() {
-  if ((window as any).ymaps) return;
-  if (!yandexApiKey) throw new Error('missing-yandex-api-key');
-
-  await new Promise<void>((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = `https://api-maps.yandex.ru/2.1/?apikey=${encodeURIComponent(yandexApiKey)}&lang=uz_UZ`;
-    script.async = true;
-    script.defer = true;
-    script.dataset.yandexMaps = 'true';
-    script.onload = () => {
-      if ((window as any).ymaps) {
-        (window as any).ymaps.ready(() => resolve());
-        return;
-      }
-      reject(new Error('yandex-maps-script-failed'));
-    };
-    script.onerror = () => reject(new Error('yandex-maps-script-failed'));
-    document.head.appendChild(script);
-  });
+  await loadYandexMaps(yandexApiKey);
 }
 
 async function initMap() {
@@ -114,7 +99,7 @@ async function initMap() {
     }
   }
   catch {
-    // Silently fail; branch selection still works without a map render.
+    mapFailed.value = true;
   }
 }
 
@@ -172,6 +157,7 @@ onBeforeUnmount(() => {
 
       <!-- Map Canvas -->
       <div
+        v-show="!mapFailed"
         ref="mapEl"
         class="h-72 w-full sm:h-80"
       />

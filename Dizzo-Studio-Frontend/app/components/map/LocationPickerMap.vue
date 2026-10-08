@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { loadYandexMaps } from '~/utils/yandexMaps';
 interface SearchResult {
   place_id: string;
   formatted_address: string;
@@ -86,32 +87,7 @@ function applySelection(lat: number, lon: number, shouldCenter = true) {
 }
 
 async function ensureYandexMaps() {
-  if ((window as any).ymaps) return;
-  if (!yandexApiKey) throw new Error('missing-yandex-api-key');
-
-  await new Promise<void>((resolve, reject) => {
-    const existing = document.querySelector('script[data-yandex-maps="true"]');
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true });
-      existing.addEventListener('error', () => reject(new Error('yandex-maps-script-failed')), { once: true });
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = `https://api-maps.yandex.ru/2.1/?apikey=${encodeURIComponent(yandexApiKey)}&lang=uz_UZ`;
-    script.async = true;
-    script.defer = true;
-    script.dataset.yandexMaps = 'true';
-    script.onload = () => {
-      if ((window as any).ymaps) {
-        (window as any).ymaps.ready(() => resolve());
-        return;
-      }
-      reject(new Error('yandex-maps-script-failed'));
-    };
-    script.onerror = () => reject(new Error('yandex-maps-script-failed'));
-    document.head.appendChild(script);
-  });
+  await loadYandexMaps(yandexApiKey);
 }
 
 async function initializeYandexMap() {
