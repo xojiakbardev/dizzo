@@ -1,6 +1,6 @@
 """Yandex Delivery B2B API integration service.
 
-Uses Yandex Delivery B2B check-price/calculate API (host: https://b2b.taxi.yandex.net)
+Uses Yandex Delivery B2B check-price API (POST /b2b/cargo/integration/v2/check-price on https://b2b.taxi.yandex.net)
 to calculate real-time delivery quotes within Tashkent city.
 """
 
@@ -103,7 +103,7 @@ class YandexDeliveryService:
 
         try:
             async with httpx.AsyncClient(timeout=6.0) as client:
-                resp = await client.post(f"{self.base_url}/b2b/taxi/check-price", headers=headers, json=payload)
+                resp = await client.post(f"{self.base_url}/b2b/cargo/integration/v2/check-price", headers=headers, json=payload)
                 if resp.status_code == 200:
                     data = resp.json()
                     price = float(data.get("price", self.settings.yandex_delivery_default_cost))
