@@ -336,6 +336,11 @@ function onKey(event: KeyboardEvent) {
 }
 
 onMounted(async () => {
+  // Fetch the model alongside three.js instead of after the scene is built.
+  if (props.shape.kind === 'model' && props.shape.model_url) {
+    const url = props.shape.model_url;
+    void import('~/lib/three/modelLoader').then(m => m.preloadModel(url));
+  }
   const [studio, materials] = await Promise.all([
     import('~/lib/three/studioScene'), import('~/lib/three/materials'),
   ]);

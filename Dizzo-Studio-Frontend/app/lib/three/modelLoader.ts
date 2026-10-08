@@ -28,15 +28,26 @@ function gltfLoader(): GLTFLoader {
   return loader;
 }
 
-/** Loads a model once per URL; every caller gets its own copy of the scene. */
-export async function loadModel(url: string): Promise<THREE.Group> {
+function fetchModel(url: string): Promise<GLTF> {
   let pending = cache.get(url);
   if (!pending) {
     pending = gltfLoader().loadAsync(url);
     cache.set(url, pending);
     pending.catch(() => cache.delete(url));
   }
-  return (await pending).scene.clone(true);
+  return pending;
+}
+
+/** Starts the download early (e.g. while the 3D scene is still being set up). */
+export function preloadModel(url: string): void {
+  fetchModel(url).catch(() => {
+    // The real loadModel call reports the failure.
+  });
+}
+
+/** Loads a model once per URL; every caller gets its own copy of the scene. */
+export async function loadModel(url: string): Promise<THREE.Group> {
+  return (await fetchModel(url)).scene.clone(true);
 }
 
 export interface ModelStats {
