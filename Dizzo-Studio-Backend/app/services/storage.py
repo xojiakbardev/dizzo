@@ -17,6 +17,8 @@ from botocore.exceptions import ClientError
 from app.core.config import get_settings
 
 PRESIGN_TTL_SECONDS = get_settings().presign_ttl_seconds
+# Every key holds a fresh UUID, so an object never changes once written.
+IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable"
 
 
 @dataclass(frozen=True)
@@ -42,7 +44,13 @@ class R2Storage:
         # Signing only — no network round trip.
         return self._client.generate_presigned_url(
             "put_object",
-            Params={"Bucket": self._bucket, "Key": key, "ContentType": content_type, "ContentLength": size_bytes},
+            Params={
+                "Bucket": self._bucket,
+                "Key": key,
+                "ContentType": content_type,
+                "ContentLength": size_bytes,
+                "CacheControl": IMMUTABLE_CACHE_CONTROL,
+            },
             ExpiresIn=PRESIGN_TTL_SECONDS,
         )
 
@@ -69,7 +77,14 @@ class R2Storage:
         return await asyncio.to_thread(response["Body"].read)
 
     async def put_bytes(self, key: str, body: bytes, content_type: str) -> None:
-        await asyncio.to_thread(self._client.put_object, Bucket=self._bucket, Key=key, Body=body, ContentType=content_type)
+        await asyncio.to_thread(
+            self._client.put_object,
+            Bucket=self._bucket,
+            Key=key,
+            Body=body,
+            ContentType=content_type,
+            CacheControl=IMMUTABLE_CACHE_CONTROL,
+        )
 
     async def copy(self, source_key: str, target_key: str) -> None:
         await asyncio.to_thread(

@@ -26,7 +26,7 @@ from app.db.session import get_db
 from app.models.media import Media
 from app.models.user import User
 from app.schemas.media import ClaimRequest, MediaOut, UploadRequest, UploadTicket
-from app.services.storage import PRESIGN_TTL_SECONDS, R2Storage, get_storage
+from app.services.storage import IMMUTABLE_CACHE_CONTROL, PRESIGN_TTL_SECONDS, R2Storage, get_storage
 from app.services.thumbnails import make_thumbnails, wants_thumbnails
 
 router = APIRouter(prefix="/media", tags=["media"])
@@ -222,7 +222,7 @@ async def create_upload(
     return UploadTicket(
         id=media.id,
         upload_url=storage.presign_put(media.key, content_type=media.content_type, size_bytes=media.size_bytes),
-        upload_headers={"Content-Type": media.content_type},
+        upload_headers={"Content-Type": media.content_type, "Cache-Control": IMMUTABLE_CACHE_CONTROL},
         url=storage.public_url(media.key),
         expires_in=PRESIGN_TTL_SECONDS,
     )
