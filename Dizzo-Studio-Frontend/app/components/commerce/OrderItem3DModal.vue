@@ -13,6 +13,7 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean];
 }>();
 
+const { t } = useI18n();
 const productSlug = computed(() => props.item.product_slug || '');
 const productQuery = useProductDetail(productSlug);
 const product = computed(() => productQuery.data.value ?? null);
@@ -122,7 +123,7 @@ function resetView() {
               name="lucide:loader-2"
               class="size-8 animate-spin text-primary"
             />
-            <span class="text-sm font-medium">3D model yuklanmoqda...</span>
+            <span class="text-sm font-medium">{{ t('user.order.loading3d') }}</span>
           </div>
         </div>
 
@@ -137,10 +138,10 @@ function resetView() {
               class="size-10 text-muted-foreground/40"
             />
             <p class="text-sm font-medium">
-              Bu buyurtma qilingan shakl katalogda endi yo'q
+              {{ t('user.order.shapeGone') }}
             </p>
             <p class="max-w-xs text-xs">
-              Buyurtmangiz o'zgarmadi — pastdagi rasmlar buyurtma berilgan paytdagi holatni ko'rsatadi.
+              {{ t('user.order.shapeGoneHint') }}
             </p>
           </div>
         </div>
@@ -164,7 +165,7 @@ function resetView() {
               name="lucide:orbit"
               class="size-3.5 text-primary"
             />
-            <span>360° aylantirish uchun suring</span>
+            <span>{{ t('user.order.dragToRotate') }}</span>
           </div>
 
           <!-- Floating controls toolbar at the bottom -->
@@ -194,7 +195,7 @@ function resetView() {
               variant="ghost"
               size="icon-xs"
               class="size-7 rounded-lg"
-              title="Kattalashtirish"
+              :title="t('user.order.zoomIn')"
               @click="previewRef?.zoomBy(1.2)"
             >
               <Icon
@@ -206,7 +207,7 @@ function resetView() {
               variant="ghost"
               size="icon-xs"
               class="size-7 rounded-lg"
-              title="Kichraytirish"
+              :title="t('user.order.zoomOut')"
               @click="previewRef?.zoomBy(0.8)"
             >
               <Icon
@@ -218,7 +219,7 @@ function resetView() {
               variant="ghost"
               size="icon-xs"
               class="size-7 rounded-lg"
-              title="Qayta tiklash"
+              :title="t('user.order.resetView')"
               @click="resetView"
             >
               <Icon

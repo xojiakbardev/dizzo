@@ -131,7 +131,7 @@ function locateMe() {
     },
     () => {
       isLocating.value = false;
-      geocodeError.value = 'Joylashuv aniqlanmadi. Ruxsatlarni tekshiring.';
+      geocodeError.value = t('user.map.locateFailed');
     },
     { enableHighAccuracy: true, timeout: 8000 },
   );
@@ -168,7 +168,7 @@ onMounted(async () => {
   }
   catch (err) {
     console.error('Map init error:', err);
-    geocodeError.value = 'Xaritani yuklashda xatolik yuz berdi.';
+    geocodeError.value = t('user.map.loadFailed');
   }
   // A pin with no name yet (coordinates only) gets one.
   if (props.latitude != null && props.longitude != null && !props.address) {
@@ -247,8 +247,8 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="rounded-xl border border-dashed border-border bg-muted/40 p-3">
-      <p class="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Tanlangan manzil</p>
-      <p class="mt-1 text-sm font-medium text-foreground">{{ selectedAddress || 'Manzil tanlanmagan' }}</p>
+      <p class="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{{ t('user.map.selectedAddress') }}</p>
+      <p class="mt-1 text-sm font-medium text-foreground">{{ selectedAddress || t('user.map.noAddress') }}</p>
       <p v-if="selectedCity" class="mt-1 text-xs text-muted-foreground">{{ selectedCity }}</p>
     </div>
 
@@ -258,7 +258,7 @@ onBeforeUnmount(() => {
         {{ t('user.map.geocoding') }}
       </p>
       <p v-else-if="geocodeError" class="text-xs text-amber-700">{{ geocodeError }}</p>
-      <span v-else class="text-xs text-muted-foreground">Xaritadan tanlash uchun ustiga bosing yoki belgini suring.</span>
+      <span v-else class="text-xs text-muted-foreground">{{ t('user.map.clickHint') }}</span>
 
       <UiButton type="button" variant="default" class="ml-auto" @click="confirmSelection">
         {{ t('user.common.confirm') }}

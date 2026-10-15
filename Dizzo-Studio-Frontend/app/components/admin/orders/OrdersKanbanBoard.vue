@@ -13,10 +13,12 @@ const emit = defineEmits<{
 }>();
 
 const localePath = useLocalePath();
+const { t } = useI18n();
 const updateOrderMutation = useUpdateAdminOrder();
 
 interface KanbanColumn {
   key: string;
+  /** i18n key of the column heading */
   title: string;
   icon: string;
   colorClass: string;
@@ -28,7 +30,7 @@ interface KanbanColumn {
 const columns: KanbanColumn[] = [
   {
     key: 'new',
-    title: 'Yangi buyurtmalar',
+    title: 'admin.orders.board.colNew',
     icon: 'lucide:inbox',
     colorClass: 'border-blue-500/30 bg-blue-500/5',
     badgeClass: 'bg-blue-500/15 text-blue-600 dark:text-blue-400',
@@ -37,7 +39,7 @@ const columns: KanbanColumn[] = [
   },
   {
     key: 'in_production',
-    title: 'Ishlab chiqarishda',
+    title: 'admin.orders.board.colInProduction',
     icon: 'lucide:printer',
     colorClass: 'border-amber-500/30 bg-amber-500/5',
     badgeClass: 'bg-amber-500/15 text-amber-600 dark:text-amber-400',
@@ -46,7 +48,7 @@ const columns: KanbanColumn[] = [
   },
   {
     key: 'quality_check',
-    title: 'Sifat nazorati',
+    title: 'admin.orders.board.colQualityCheck',
     icon: 'lucide:check-circle',
     colorClass: 'border-purple-500/30 bg-purple-500/5',
     badgeClass: 'bg-purple-500/15 text-purple-600 dark:text-purple-400',
@@ -55,7 +57,7 @@ const columns: KanbanColumn[] = [
   },
   {
     key: 'ready',
-    title: 'Tayyor / Olib ketish',
+    title: 'admin.orders.board.colReady',
     icon: 'lucide:package-check',
     colorClass: 'border-emerald-500/30 bg-emerald-500/5',
     badgeClass: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
@@ -64,7 +66,7 @@ const columns: KanbanColumn[] = [
   },
   {
     key: 'completed',
-    title: 'Yakunlangan',
+    title: 'admin.orders.board.colCompleted',
     icon: 'lucide:archive',
     colorClass: 'border-zinc-500/30 bg-zinc-500/5',
     badgeClass: 'bg-zinc-500/15 text-zinc-600 dark:text-zinc-400',
@@ -137,7 +139,7 @@ async function moveOrderToStatus(order: OrderSummary, targetStatus: OrderStatus)
     });
     emit('refresh');
   } catch (err: any) {
-    errorMessage.value = err?.data?.detail || 'Buyurtma holatini o\'zgartirishda xatolik yuz berdi';
+    errorMessage.value = err?.data?.detail || t('admin.orders.board.statusFailed');
     setTimeout(() => {
       errorMessage.value = null;
     }, 4000);
@@ -158,7 +160,7 @@ async function handleDrop(event: DragEvent, col: KanbanColumn) {
 function formatPrice(amount: string | number) {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
   if (isNaN(num)) return '0';
-  return num.toLocaleString('uz-UZ') + ' so\'m';
+  return num.toLocaleString('uz-UZ') + ' ' + t('admin.common.sum');
 }
 
 function formatTime(dateStr: string) {
@@ -240,7 +242,7 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
               />
             </div>
             <h3 class="text-sm font-semibold text-foreground">
-              {{ col.title }}
+              {{ t(col.title) }}
             </h3>
           </div>
           <span
@@ -261,8 +263,8 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
               name="lucide:inbox"
               class="size-8 opacity-40 mb-1.5"
             />
-            <p>Hozircha buyurtma yo'q</p>
-            <p class="text-[11px] opacity-75 mt-0.5">Ushbu ustunga buyurtmani surib o'tkazishingiz mumkin</p>
+            <p>{{ t('admin.orders.board.empty') }}</p>
+            <p class="text-[11px] opacity-75 mt-0.5">{{ t('admin.orders.board.emptyHint') }}</p>
           </div>
 
           <div
@@ -293,7 +295,7 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
                   name="lucide:store"
                   class="size-3"
                 />
-                Olib ketish
+                {{ t('admin.orders.board.pickup') }}
               </span>
               <span
                 v-else
@@ -303,7 +305,7 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
                   name="lucide:truck"
                   class="size-3"
                 />
-                Yetkazish
+                {{ t('admin.orders.board.delivery') }}
               </span>
             </div>
 
@@ -313,7 +315,7 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
                 name="lucide:user"
                 class="size-3.5 text-muted-foreground shrink-0"
               />
-              <span class="truncate">{{ order.customer_name || 'Mijoz' }}</span>
+              <span class="truncate">{{ order.customer_name || t('admin.orders.board.customer') }}</span>
             </div>
 
             <!-- Items count / preview -->
@@ -323,7 +325,7 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
                   name="lucide:package"
                   class="size-3.5 text-foreground/60"
                 />
-                {{ order.item_count || 1 }} ta mahsulot
+                {{ t('admin.orders.board.itemCount', order.item_count || 1) }}
               </span>
               <span class="font-semibold text-foreground">
                 {{ formatPrice(order.total_amount) }}
@@ -345,7 +347,7 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
                 <button
                   v-if="getAdjacentStatus(order.status, 'prev', order)"
                   type="button"
-                  title="Oldingi bosqichga qaytarish"
+                  :title="t('admin.orders.board.prevStep')"
                   class="flex size-6 items-center justify-center rounded-md border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted"
                   @click.stop="moveOrderToStatus(order, getAdjacentStatus(order.status, 'prev', order)!)"
                 >
@@ -359,11 +361,11 @@ function getAdjacentStatus(currentStatus: OrderStatus, direction: 'next' | 'prev
                 <button
                   v-if="getAdjacentStatus(order.status, 'next', order)"
                   type="button"
-                  title="Keyingi bosqichga o'tkazish"
+                  :title="t('admin.orders.board.nextStep')"
                   class="flex items-center gap-1 rounded-md bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary hover:bg-primary/20"
                   @click.stop="moveOrderToStatus(order, getAdjacentStatus(order.status, 'next', order)!)"
                 >
-                  Oldinga
+                  {{ t('admin.orders.board.forward') }}
                   <Icon
                     name="lucide:chevron-right"
                     class="size-3"

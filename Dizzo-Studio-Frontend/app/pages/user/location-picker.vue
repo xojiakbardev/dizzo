@@ -6,6 +6,7 @@ import LocationPickerMap from '~/components/map/LocationPickerMap.vue';
 const route = useRoute();
 const localePath = useLocalePath();
 const router = useRouter();
+const { t } = useI18n();
 
 definePageMeta({ layout: 'cabinet', ssr: false });
 
@@ -31,11 +32,11 @@ function handleConfirm(value: { latitude: number; longitude: number; address: st
   <div class="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
     <div class="mb-6 flex items-center justify-between gap-3">
       <div>
-        <h1 class="text-2xl font-bold text-foreground">Yetkazish manzilini tanlang</h1>
+        <h1 class="text-2xl font-bold text-foreground">{{ t('user.map.pickDeliveryAddress') }}</h1>
       </div>
       <UiButton type="button" variant="outline" @click="router.back()">
         <Icon name="lucide:arrow-left" class="size-4" />
-        Orqaga
+        {{ t('user.common.back') }}
       </UiButton>
     </div>
 

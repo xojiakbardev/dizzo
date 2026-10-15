@@ -14,6 +14,7 @@ const emit = defineEmits<{
   'select': [branch: Branch];
 }>();
 
+const { t } = useI18n();
 const { data: branches, isLoading } = useBranches(true);
 
 const mapEl = ref<HTMLDivElement | null>(null);
@@ -109,7 +110,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <p class="mt-3 text-xs font-medium text-muted-foreground animate-pulse">
-          Filiallar xaritasi yuklanmoqda...
+          {{ t('user.pickup.mapLoading') }}
         </p>
       </div>
 
@@ -123,7 +124,7 @@ onBeforeUnmount(() => {
       <!-- Dizzo Branding Badge on Map -->
       <div class="pointer-events-none absolute top-3 left-3 z-[400] flex items-center gap-2 rounded-xl bg-background/90 px-3 py-1.5 shadow-md backdrop-blur-md border border-border/60">
         <span class="size-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span class="text-[11px] font-semibold tracking-wide text-foreground">Dizzo Filiallari</span>
+        <span class="text-[11px] font-semibold tracking-wide text-foreground">{{ t('user.pickup.branchesBadge') }}</span>
       </div>
     </div>
 
@@ -160,7 +161,7 @@ onBeforeUnmount(() => {
                 name="lucide:check"
                 class="size-3"
               />
-              Tanlangan
+              {{ t('user.pickup.selected') }}
             </span>
           </div>
 

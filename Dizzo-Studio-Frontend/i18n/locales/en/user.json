@@ -24,7 +24,8 @@
       "products": "Products",
       "status": "Status",
       "notOnSale": "Currently unavailable",
-      "orderNumber": "Order number"
+      "orderNumber": "Order number",
+      "back": "Back"
     },
     "method": {
       "uv": "Colour print",
@@ -79,7 +80,10 @@
     "pickup": {
       "name": "Dizzo production centre",
       "address": "Yunusabad district, Tashkent",
-      "hours": "Monday–Saturday, 09:00–20:00"
+      "hours": "Monday–Saturday, 09:00–20:00",
+      "mapLoading": "Loading the branch map...",
+      "branchesBadge": "Dizzo branches",
+      "selected": "Selected"
     },
     "cart": {
       "loadError": "Couldn't load your cart.",
@@ -146,14 +150,23 @@
       "payLater": "Pay later",
       "payLaterHint": "Order is created directly, pay later in your cabinet",
       "payWithClick": "Pay with Click",
-      "payWithClickNow": "Pay with Click now"
+      "payWithClickNow": "Pay with Click now",
+      "pickupNearby": "Pick up from a branch near you",
+      "pickupBranchRequired": "Choose a branch for pickup",
+      "serviceNotDelivering": "The selected service doesn't deliver to this address"
     },
     "map": {
       "geocodeError": "Couldn't find the address — you can edit it by hand.",
       "hint": "Tap the map or drag the pin — we'll fill in the address automatically.",
       "locate": "Use my location",
       "geocoding": "Finding the address...",
-      "openInMap": "Open in maps"
+      "openInMap": "Open in maps",
+      "selectedAddress": "Selected address",
+      "noAddress": "No address selected",
+      "clickHint": "Tap the map or drag the pin to pick a spot.",
+      "locateFailed": "Couldn't detect your location. Check your permissions.",
+      "loadFailed": "The map failed to load.",
+      "pickDeliveryAddress": "Choose a delivery address"
     },
     "gallery": {
       "enlargeView": "{alt}: enlarge view {n}",
@@ -197,7 +210,14 @@
       "reviewDescription": "Rating, review and photos",
       "payWithClick": "Pay with Click",
       "clickPaymentSuccess": "Payment successfully accepted!",
-      "paymentHistory": "Payment history"
+      "paymentHistory": "Payment history",
+      "loading3d": "Loading the 3D model...",
+      "shapeGone": "The shape from this order is no longer in the catalog",
+      "shapeGoneHint": "Your order hasn't changed — the pictures below show it as it was placed.",
+      "dragToRotate": "Drag to rotate 360°",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "resetView": "Reset view"
     },
     "review": {
       "badFile": "“{name}”: JPG, PNG or WEBP only, up to {mb} MB.",

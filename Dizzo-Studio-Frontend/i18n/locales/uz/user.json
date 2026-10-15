@@ -24,7 +24,8 @@
       "products": "Mahsulotlar",
       "status": "Holat",
       "notOnSale": "Hozir sotuvda yo‘q",
-      "orderNumber": "Buyurtma raqami"
+      "orderNumber": "Buyurtma raqami",
+      "back": "Orqaga"
     },
     "method": {
       "uv": "Rangli bosma",
@@ -79,7 +80,10 @@
     "pickup": {
       "name": "Dizzo ishlab chiqarish markazi",
       "address": "Toshkent shahri, Yunusobod tumani",
-      "hours": "Dushanba–Shanba, 09:00–20:00"
+      "hours": "Dushanba–Shanba, 09:00–20:00",
+      "mapLoading": "Filiallar xaritasi yuklanmoqda...",
+      "branchesBadge": "Dizzo Filiallari",
+      "selected": "Tanlangan"
     },
     "cart": {
       "loadError": "Savatchani yuklashda xatolik yuz berdi.",
@@ -146,14 +150,23 @@
       "payLater": "Keyinroq to‘lash",
       "payLaterHint": "Buyurtma yaratiladi, to‘lovni shaxsiy kabinetdan to‘lashingiz mumkin",
       "payWithClick": "Click orqali to‘lash",
-      "payWithClickNow": "Hozir Click orqali to‘lash"
+      "payWithClickNow": "Hozir Click orqali to‘lash",
+      "pickupNearby": "O'zingizga yaqin filialdan olib ketish",
+      "pickupBranchRequired": "Olib ketish uchun filialni tanlang",
+      "serviceNotDelivering": "Tanlangan xizmat bu manzilga yetkazib bermaydi"
     },
     "map": {
       "geocodeError": "Manzilni aniqlab bo'lmadi — qo'lda tuzatishingiz mumkin.",
       "hint": "Xaritada bosing yoki belgini suring — manzil shu joydan avtomatik aniqlanadi.",
       "locate": "Joylashuvimni aniqlash",
       "geocoding": "Manzil aniqlanmoqda...",
-      "openInMap": "Xaritada ochish"
+      "openInMap": "Xaritada ochish",
+      "selectedAddress": "Tanlangan manzil",
+      "noAddress": "Manzil tanlanmagan",
+      "clickHint": "Xaritadan tanlash uchun ustiga bosing yoki belgini suring.",
+      "locateFailed": "Joylashuv aniqlanmadi. Ruxsatlarni tekshiring.",
+      "loadFailed": "Xaritani yuklashda xatolik yuz berdi.",
+      "pickDeliveryAddress": "Yetkazish manzilini tanlang"
     },
     "gallery": {
       "enlargeView": "{alt}: {n}-ko‘rinishni kattalashtirish",
@@ -197,7 +210,14 @@
       "reviewDescription": "Baho, fikr va suratlar",
       "payWithClick": "Click orqali to‘lash",
       "clickPaymentSuccess": "To‘lov muvaffaqiyatli qabul qilindi!",
-      "paymentHistory": "To‘lov tarixi"
+      "paymentHistory": "To‘lov tarixi",
+      "loading3d": "3D model yuklanmoqda...",
+      "shapeGone": "Bu buyurtma qilingan shakl katalogda endi yo'q",
+      "shapeGoneHint": "Buyurtmangiz o'zgarmadi — pastdagi rasmlar buyurtma berilgan paytdagi holatni ko'rsatadi.",
+      "dragToRotate": "360° aylantirish uchun suring",
+      "zoomIn": "Kattalashtirish",
+      "zoomOut": "Kichraytirish",
+      "resetView": "Qayta tiklash"
     },
     "review": {
       "badFile": "“{name}”: faqat JPG, PNG yoki WEBP, {mb} MB gacha.",

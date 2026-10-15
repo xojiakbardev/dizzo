@@ -36,7 +36,7 @@ const assetsQuery = usePublicDesignAssets(categoryParam);
 const filteredAssets = computed(() => {
   if (activeCategory.value === 'uploads') return [];
   const hasBackend = assetsQuery.data.value && assetsQuery.data.value.length > 0;
-  let list = hasBackend ? assetsQuery.data.value! : CURATED_ASSETS;
+  let list: Array<(typeof CURATED_ASSETS)[number] | NonNullable<typeof assetsQuery.data.value>[number]> = hasBackend ? assetsQuery.data.value! : CURATED_ASSETS;
 
   if (activeCategory.value !== 'all') {
     list = list.filter(item => item.category === activeCategory.value);

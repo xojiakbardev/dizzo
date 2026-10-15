@@ -356,7 +356,7 @@ async def order_detail(
 ):
     query = select(Order).options(selectinload(Order.items)).where(
         Order.customer_id == user.id,
-        (Order.order_number == lookup) | (Order.id == int(lookup) if lookup.isdigit() else False),
+        (Order.order_number == lookup) | (Order.id == int(lookup) if lookup.isdigit() and len(lookup) <= 9 else False),
     )
     order = (await session.execute(query)).scalar_one_or_none()
     if not order:

@@ -77,7 +77,12 @@ def design_out(design: Design, storage: R2Storage, size: str | None = None) -> D
     issues = document_problems(document, design.variant, size_scale(chosen), label)
     price = None
     if sellable(design.variant, design.color, label):
-        price = quote(design.variant, design.color, 1, areas, label or None)
+        # A draft may use a print method the variant has since dropped: it
+        # still opens, with the reason it can't be priced, so it can be fixed.
+        try:
+            price = quote(design.variant, design.color, 1, areas, label or None)
+        except HTTPException as exc:
+            issues.insert(0, str(exc.detail))
     else:
         issues.insert(0, _("Tanlangan variant yoki rang hozir sotuvda emas"))
     return DesignOut(

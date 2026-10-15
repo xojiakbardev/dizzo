@@ -121,7 +121,7 @@ async function saveAssetChanges() {
     detailModalOpen.value = false;
   }
   catch (e) {
-    error.value = getApiErrorMessage(e, 'O‘zgarishlarni saqlashda xatolik yuz berdi');
+    error.value = getApiErrorMessage(e, t('admin.assets.saveFailed'));
   }
   finally {
     saving.value = false;
@@ -136,7 +136,7 @@ async function deleteActiveAsset() {
     detailModalOpen.value = false;
   }
   catch (e) {
-    error.value = getApiErrorMessage(e, 'Assetni o‘chirishda xatolik yuz berdi');
+    error.value = getApiErrorMessage(e, t('admin.assets.deleteFailed'));
   }
   finally {
     deleting.value = false;
@@ -218,7 +218,7 @@ async function startBulkUpload() {
     bulkModalOpen.value = false;
   }
   catch (e) {
-    error.value = getApiErrorMessage(e, 'Fayllarni yuklashda xatolik yuz berdi');
+    error.value = getApiErrorMessage(e, t('admin.assets.uploadFailed'));
   }
   finally {
     isUploading.value = false;
@@ -286,9 +286,9 @@ async function startBulkUpload() {
           class="size-6"
         />
       </div>
-      <h3 class="text-sm font-semibold text-foreground">Hozircha hech qanday rasm yoki icon topilmadi</h3>
+      <h3 class="text-sm font-semibold text-foreground">{{ t('admin.assets.emptyTitle') }}</h3>
       <p class="mt-1 max-w-xs text-xs text-muted-foreground">
-        Yuqoridagi "Rasm & Icon yuklash" tugmasi orqali yangilarini qo‘shishingiz mumkin
+        {{ t('admin.assets.emptyHint') }}
       </p>
       <UiButton
         variant="outline"
@@ -299,7 +299,7 @@ async function startBulkUpload() {
           name="lucide:upload"
           class="h-3.5 w-3.5"
         />
-        Rasm yuklash
+        {{ t('admin.assets.upload') }}
       </UiButton>
     </div>
 
@@ -330,7 +330,7 @@ async function startBulkUpload() {
         <!-- Status Indicator: Simple Absolute Dot (Green = Active / Red = Hidden) -->
         <div
           class="absolute top-2.5 right-2.5 flex items-center justify-center"
-          :title="asset.is_active ? 'Ko‘rinadigan (Faol)' : 'Yashiringan (Nofaol)'"
+          :title="asset.is_active ? t('admin.assets.visibleActive') : t('admin.assets.hiddenInactive')"
         >
           <span
             class="relative flex size-3 rounded-full ring-2 ring-black/40 shadow-md"
@@ -362,7 +362,7 @@ async function startBulkUpload() {
               name="lucide:image"
               class="h-5 w-5 text-primary"
             />
-            Rasm / Icon tafsilotlari
+            {{ t('admin.assets.detailsTitle') }}
           </UiDialogTitle>
         </UiDialogHeader>
 
@@ -383,7 +383,7 @@ async function startBulkUpload() {
                 class="size-2 rounded-full"
                 :class="editForm.is_active ? 'bg-emerald-500' : 'bg-rose-500'"
               />
-              {{ editForm.is_active ? 'Ko‘rinadigan' : 'Yashirilgan' }}
+              {{ editForm.is_active ? t('admin.assets.visible') : t('admin.assets.hidden') }}
             </div>
           </div>
 
@@ -393,19 +393,19 @@ async function startBulkUpload() {
             @submit.prevent="saveAssetChanges"
           >
             <!-- Asset Name -->
-            <UiField label="Nomi / Tavsifi">
+            <UiField :label="t('admin.assets.nameLabel')">
               <UiInput
                 v-model="editForm.name"
                 type="text"
                 class="rounded-xl"
-                placeholder="Masalan: Qizil yurakli mushukcha"
+                :placeholder="t('admin.assets.namePlaceholder')"
                 required
               />
             </UiField>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <!-- Category Selector (Localized 3 languages) -->
-              <UiField label="Kategoriya">
+              <UiField :label="t('admin.assets.category')">
                 <select
                   v-model="editForm.category"
                   class="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -421,7 +421,7 @@ async function startBulkUpload() {
               </UiField>
 
               <!-- Type Selector (Localized) -->
-              <UiField label="Turi">
+              <UiField :label="t('admin.assets.type')">
                 <select
                   v-model="editForm.type"
                   class="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -440,8 +440,8 @@ async function startBulkUpload() {
             <!-- Active / Hidden Switch -->
             <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-border bg-card/40 p-3.5 transition-colors hover:bg-muted/40">
               <div class="space-y-0.5">
-                <div class="text-xs sm:text-sm font-medium text-foreground">Mijozlarga ko‘rsatilsin</div>
-                <div class="text-xs text-muted-foreground">O‘chirib qo‘yilsa, Studioda iconlar orasida ko‘rinmaydi</div>
+                <div class="text-xs sm:text-sm font-medium text-foreground">{{ t('admin.assets.showToCustomers') }}</div>
+                <div class="text-xs text-muted-foreground">{{ t('admin.assets.showToCustomersHint') }}</div>
               </div>
               <UiSwitch v-model="editForm.is_active" />
             </label>
@@ -451,8 +451,8 @@ async function startBulkUpload() {
               v-if="showDeleteConfirm"
               class="rounded-2xl border border-destructive/30 bg-destructive/10 p-3.5 text-xs text-destructive"
             >
-              <div class="font-semibold">Haqiqatan ham ushbu elementni o‘chirmoqchimisiz?</div>
-              <p class="mt-1 text-muted-foreground">Bu amalni ortga qaytarib bo‘lmaydi.</p>
+              <div class="font-semibold">{{ t('admin.assets.deleteConfirm') }}</div>
+              <p class="mt-1 text-muted-foreground">{{ t('admin.assets.deleteIrreversible') }}</p>
               <div class="mt-3 flex items-center gap-2">
                 <UiButton
                   type="button"
@@ -467,7 +467,7 @@ async function startBulkUpload() {
                     name="lucide:loader-2"
                     class="size-3.5 animate-spin"
                   />
-                  Ha, o‘chirilsin
+                  {{ t('admin.assets.yesDelete') }}
                 </UiButton>
                 <UiButton
                   type="button"
@@ -476,7 +476,7 @@ async function startBulkUpload() {
                   class="rounded-xl text-xs"
                   @click="showDeleteConfirm = false"
                 >
-                  Bekor qilish
+                  {{ t('admin.common.cancel') }}
                 </UiButton>
               </div>
             </div>
@@ -494,7 +494,7 @@ async function startBulkUpload() {
                   name="lucide:trash-2"
                   class="mr-1.5 h-3.5 w-3.5"
                 />
-                O‘chirish
+                {{ t('admin.common.delete') }}
               </UiButton>
               <div v-else />
 
@@ -505,7 +505,7 @@ async function startBulkUpload() {
                   class="rounded-xl text-xs"
                   @click="detailModalOpen = false"
                 >
-                  Yopish
+                  {{ t('admin.common.close') }}
                 </UiButton>
                 <UiButton
                   type="submit"
@@ -517,7 +517,7 @@ async function startBulkUpload() {
                     name="lucide:loader-2"
                     class="mr-1.5 h-3.5 w-3.5 animate-spin"
                   />
-                  Saqlash
+                  {{ t('admin.common.save') }}
                 </UiButton>
               </div>
             </UiDialogFooter>
@@ -535,14 +535,14 @@ async function startBulkUpload() {
               name="lucide:upload-cloud"
               class="h-5 w-5 text-primary"
             />
-            Rasm va Iconlarni ommaviy yuklash
+            {{ t('admin.assets.bulkTitle') }}
           </UiDialogTitle>
         </UiDialogHeader>
 
         <div class="space-y-4 pt-2">
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <!-- Target Category -->
-            <UiField label="Yuklanadigan kategoriya">
+            <UiField :label="t('admin.assets.targetCategory')">
               <select
                 v-model="bulkCategory"
                 class="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -558,7 +558,7 @@ async function startBulkUpload() {
             </UiField>
 
             <!-- Target Type -->
-            <UiField label="Turi">
+            <UiField :label="t('admin.assets.type')">
               <select
                 v-model="bulkType"
                 class="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -590,8 +590,8 @@ async function startBulkUpload() {
                 class="size-6"
               />
             </div>
-            <p class="text-sm font-semibold text-foreground">Bir nechta rasm yoki iconlarni tanlang</p>
-            <p class="mt-1 text-xs text-muted-foreground">PNG, JPG yoki WEBP formatda. Bir vaqtning o‘zida o‘nlab fayllar</p>
+            <p class="text-sm font-semibold text-foreground">{{ t('admin.assets.pickFiles') }}</p>
+            <p class="mt-1 text-xs text-muted-foreground">{{ t('admin.assets.pickFilesHint') }}</p>
           </label>
 
           <!-- Files Queue Grid -->
@@ -600,13 +600,13 @@ async function startBulkUpload() {
             class="space-y-2"
           >
             <div class="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-              <span>Tanlangan fayllar: {{ bulkFiles.length }} ta</span>
+              <span>{{ t('admin.assets.selectedFiles', { n: bulkFiles.length }) }}</span>
               <button
                 type="button"
                 class="text-destructive hover:underline"
                 @click="bulkFiles = []"
               >
-                Hammasini tozalash
+                {{ t('admin.assets.clearAll') }}
               </button>
             </div>
 
@@ -626,7 +626,7 @@ async function startBulkUpload() {
                   v-model="item.name"
                   type="text"
                   class="mt-1.5 w-full rounded border border-border/60 bg-background px-1 py-0.5 text-center text-[10px] text-foreground focus:border-primary"
-                  placeholder="Nomi"
+                  :placeholder="t('admin.common.name')"
                 >
                 <button
                   type="button"
@@ -648,7 +648,7 @@ async function startBulkUpload() {
             class="space-y-1.5 pt-2"
           >
             <div class="flex items-center justify-between text-xs text-muted-foreground">
-              <span>Cloudflare R2 ga yuklanmoqda...</span>
+              <span>{{ t('admin.assets.uploading') }}</span>
               <span>{{ uploadProgress }}%</span>
             </div>
             <div class="h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -668,7 +668,7 @@ async function startBulkUpload() {
               :disabled="isUploading"
               @click="bulkModalOpen = false"
             >
-              Bekor qilish
+              {{ t('admin.common.cancel') }}
             </UiButton>
             <UiButton
               type="button"
@@ -686,7 +686,7 @@ async function startBulkUpload() {
                 name="lucide:check"
                 class="h-3.5 w-3.5"
               />
-              Hammasini saqlash ({{ bulkFiles.length }})
+              {{ t('admin.assets.saveAll', { n: bulkFiles.length }) }}
             </UiButton>
           </UiDialogFooter>
         </div>

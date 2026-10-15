@@ -20,6 +20,8 @@ async function handleLogin() {
     error.value = getApiErrorMessage(authError, t('storefront.auth.loginError'));
   }
 }
+
+const showForgotHint = ref(false);
 </script>
 
 <template>
@@ -66,14 +68,25 @@ async function handleLogin() {
       >
     </div>
 
-    <div class="flex justify-end pt-0.5 pb-1 text-xs">
-      <a
-        href="#"
-        class="font-semibold text-[#ed5123] hover:underline"
-        @click.prevent
+    <!-- No password reset by email yet: the link used to go nowhere, so it
+         says how to get back in instead. -->
+    <div class="pt-0.5 pb-1 text-xs">
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="font-semibold text-[#ed5123] hover:underline"
+          :aria-expanded="showForgotHint"
+          @click="showForgotHint = !showForgotHint"
+        >
+          {{ t('storefront.auth.forgotPassword') }}
+        </button>
+      </div>
+      <p
+        v-if="showForgotHint"
+        class="mt-1.5 rounded-lg bg-orange-50 px-3 py-2 text-gray-700"
       >
-        {{ t('storefront.auth.forgotPassword') }}
-      </a>
+        {{ t('storefront.auth.forgotPasswordHint') }}
+      </p>
     </div>
 
     <button

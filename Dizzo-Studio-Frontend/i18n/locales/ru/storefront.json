@@ -6,6 +6,7 @@
       "emailLabel": "Электронная почта*",
       "emailPlaceholder": "Введите ваш email",
       "forgotPassword": "Забыли пароль?",
+      "forgotPasswordHint": "Войдите через Telegram или Google — откроется аккаунт с тем же email или телефоном. Если не получится, напишите нам, и мы восстановим пароль.",
       "fullNameLabel": "Имя и фамилия*",
       "fullNamePlaceholder": "Введите ваше имя",
       "googleError": "Не удалось войти через Google.",

@@ -33,11 +33,11 @@ watch([search, statusFilter, page], () => {
   router.replace({ query });
 });
 
-const FILTERS = [
-  { value: 'all', label: 'Barchasi' },
-  { value: 'active', label: 'Faol' },
-  { value: 'inactive', label: 'Nofaol' },
-] as const;
+const FILTERS = computed(() => [
+  { value: 'all', label: t('admin.branches.filterAll') },
+  { value: 'active', label: t('admin.branches.active') },
+  { value: 'inactive', label: t('admin.branches.inactive') },
+] as const);
 
 const filteredBranches = computed(() => {
   if (!branches.value) return [];
@@ -71,13 +71,13 @@ watch([search, statusFilter], () => {
 });
 
 const columns = computed<DataTableColumn[]>(() => [
-  { key: 'name', header: 'Filial nomi' },
-  { key: 'branch_type', header: 'Turi' },
-  { key: 'city', header: 'Shahar' },
-  { key: 'address', header: 'Manzil' },
-  { key: 'capacity_days', header: 'Yuklama / Muddat', className: 'hidden md:table-cell' },
-  { key: 'phone', header: 'Telefon', className: 'hidden lg:table-cell' },
-  { key: 'is_active', header: 'Holati' },
+  { key: 'name', header: t('admin.branches.col.name') },
+  { key: 'branch_type', header: t('admin.branches.col.type') },
+  { key: 'city', header: t('admin.branches.col.city') },
+  { key: 'address', header: t('admin.branches.col.address') },
+  { key: 'capacity_days', header: t('admin.branches.col.capacity'), className: 'hidden md:table-cell' },
+  { key: 'phone', header: t('admin.branches.col.phone'), className: 'hidden lg:table-cell' },
+  { key: 'is_active', header: t('admin.branches.col.status') },
   { key: 'actions', header: '', className: 'text-right' },
 ]);
 
@@ -249,7 +249,7 @@ function onNameInput() {
 
 async function handleSave() {
   if (!form.name || !form.address) {
-    formError.value = 'Nomi va manzili kiritilishi shart';
+    formError.value = t('admin.branches.requiredFields');
     return;
   }
   isSubmitting.value = true;
@@ -280,19 +280,19 @@ async function handleSave() {
     isDialogOpen.value = false;
     queryClient.invalidateQueries({ queryKey: ['branches'] });
   } catch (err: any) {
-    formError.value = err?.data?.detail || 'Filialni saqlashda xatolik yuz berdi';
+    formError.value = err?.data?.detail || t('admin.branches.saveFailed');
   } finally {
     isSubmitting.value = false;
   }
 }
 
 async function handleDelete(branch: Branch) {
-  if (!confirm(`"${branch.name}" filialini o'chirishni tasdiqlaysizmi?`)) return;
+  if (!confirm(t('admin.branches.deleteConfirm', { name: branch.name }))) return;
   try {
     await api.delete(`/branches/${branch.id}`);
     queryClient.invalidateQueries({ queryKey: ['branches'] });
   } catch (err: any) {
-    alert(err?.data?.detail || 'O\'chirishda xatolik yuz berdi');
+    alert(err?.data?.detail || t('admin.branches.deleteFailed'));
   }
 }
 
@@ -314,7 +314,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
   <div class="space-y-5">
     <AdminPageHeader
       v-model:search="search"
-      placeholder="Filiallarni qidirish..."
+      :placeholder="t('admin.branches.searchPlaceholder')"
       :refreshing="isLoading"
       @refresh="refetch()"
     >
@@ -341,7 +341,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
           v-if="roles?.isSuperAdmin || roles?.role === 'admin'"
           size="sm"
           class="h-9 px-3 gap-2 flex items-center justify-center"
-          title="Yangi filial"
+          :title="t('admin.branches.new')"
           @click="openNew"
         >
           <Icon
@@ -358,7 +358,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
       :data="pageRows"
       :is-loading="isLoading"
       :row-key="(row: Branch) => row.id"
-      empty-text="Filiallar topilmadi"
+      :empty-text="t('admin.branches.empty')"
       empty-icon="lucide:store"
       clickable
       @row-click="openEdit"
@@ -386,14 +386,14 @@ function formatDateTime(dateStr: string | null | undefined): string {
           variant="secondary"
           class="text-xs"
         >
-          Dizzo do'kon
+          {{ t('admin.branches.typeDizzo') }}
         </UiBadge>
       </template>
 
       <template #cell-capacity_days="{ row }">
         <div class="text-xs whitespace-nowrap">
-          <span class="font-medium text-foreground">{{ row.daily_order_capacity || 50 }} ta/kun</span>
-          <span class="text-muted-foreground ml-1">· {{ row.estimated_delivery_days || `${row.delivery_days || 3} kun` }}</span>
+          <span class="font-medium text-foreground">{{ t('admin.branches.perDay', { n: row.daily_order_capacity || 50 }) }}</span>
+          <span class="text-muted-foreground ml-1">· {{ row.estimated_delivery_days || t('admin.branches.days', { n: row.delivery_days || 3 }) }}</span>
         </div>
       </template>
 
@@ -420,7 +420,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
 
       <template #cell-is_active="{ row }">
         <UiStatusBadge :tone="row.is_active ? 'success' : 'neutral'">
-          {{ row.is_active ? 'Faol' : 'Nofaol' }}
+          {{ row.is_active ? t('admin.branches.active') : t('admin.branches.inactive') }}
         </UiStatusBadge>
       </template>
 
@@ -442,7 +442,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
             variant="ghost"
             size="icon-sm"
             class="hover:text-destructive"
-            title="O'chirish"
+            :title="t('admin.common.delete')"
             @click="handleDelete(row)"
           >
             <Icon
@@ -466,7 +466,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
       <UiDialogContent class="sm:max-w-lg max-h-[92vh] overflow-y-auto">
         <UiDialogHeader>
           <UiDialogTitle>
-            {{ editingBranch ? 'Filialni tahrirlash' : 'Yangi filial qo\'shish' }}
+            {{ editingBranch ? t('admin.branches.editTitle') : t('admin.branches.newTitle') }}
           </UiDialogTitle>
         </UiDialogHeader>
 
@@ -479,7 +479,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               <label
                 for="branch-name"
                 class="text-xs font-medium text-foreground"
-              >Filial nomi *</label>
+              >{{ t('admin.branches.nameLabel') }} *</label>
               <UiInput
                 id="branch-name"
                 v-model="form.name"
@@ -492,7 +492,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               <label
                 for="branch-slug"
                 class="text-xs font-medium text-foreground"
-              >Slug (identifikator) *</label>
+              >{{ t('admin.branches.slugLabel') }} *</label>
               <UiInput
                 id="branch-slug"
                 v-model="form.slug"
@@ -507,7 +507,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               <label
                 for="branch-city"
                 class="text-xs font-medium text-foreground"
-              >Shahar *</label>
+              >{{ t('admin.branches.cityLabel') }} *</label>
               <UiInput
                 id="branch-city"
                 v-model="form.city"
@@ -519,7 +519,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               <label
                 for="branch-phone"
                 class="text-xs font-medium text-foreground"
-              >Telefon raqami</label>
+              >{{ t('admin.branches.phoneLabel') }}</label>
               <UiInput
                 id="branch-phone"
                 v-model="form.phone"
@@ -530,7 +530,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               <label
                 for="branch-hours"
                 class="text-xs font-medium text-foreground"
-              >Ish vaqti</label>
+              >{{ t('admin.branches.hoursLabel') }}</label>
               <UiInput
                 id="branch-hours"
                 v-model="form.work_hours"
@@ -541,7 +541,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
 
           <div class="space-y-1.5">
             <label class="text-xs font-medium text-foreground">
-              Filial joylashuvi *
+              {{ t('admin.branches.locationLabel') }} *
             </label>
             <button
               type="button"
@@ -554,7 +554,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               />
               <span class="min-w-0 flex-1">
                 <span class="block text-sm font-medium text-foreground">
-                  {{ form.address || 'Xaritadan tanlang' }}
+                  {{ form.address || t('admin.branches.pickOnMap') }}
                 </span>
                 <span class="mt-0.5 block text-xs text-muted-foreground">
                   {{ form.city }} · {{ form.latitude.toFixed(5) }}, {{ form.longitude.toFixed(5) }}
@@ -571,11 +571,11 @@ function formatDateTime(dateStr: string | null | undefined): string {
             <label
               for="branch-address"
               class="text-xs font-medium text-foreground"
-            >Aniq manzil *</label>
+            >{{ t('admin.branches.addressLabel') }} *</label>
             <UiInput
               id="branch-address"
               v-model="form.address"
-              placeholder="Amir Temur ko'chasi, 107B"
+              :placeholder="t('admin.branches.addressPlaceholder')"
               required
             />
           </div>
@@ -583,25 +583,25 @@ function formatDateTime(dateStr: string | null | undefined): string {
           <!-- Filial turi va yetkazib berish parametrlari (Vazifa 2 talabi) -->
           <div class="rounded-xl border border-border/80 bg-muted/30 p-3.5 space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-semibold text-foreground">Yetkazib berish va filial parametrlari</span>
-              <span class="text-[11px] text-muted-foreground">BTS & Dastavka hisoblash uchun</span>
+              <span class="text-xs font-semibold text-foreground">{{ t('admin.branches.deliveryParams') }}</span>
+              <span class="text-[11px] text-muted-foreground">{{ t('admin.branches.deliveryParamsHint') }}</span>
             </div>
 
             <div class="grid gap-3 sm:grid-cols-2">
               <div class="space-y-1.5">
-                <label for="branch-type" class="text-xs font-medium text-foreground">Filial turi *</label>
+                <label for="branch-type" class="text-xs font-medium text-foreground">{{ t('admin.branches.typeLabel') }} *</label>
                 <select
                   id="branch-type"
                   v-model="form.branch_type"
                   class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  <option value="DIZZO">Dizzo (Olib ketish nuqtasi)</option>
-                  <option value="BTS">BTS Pochta filiali</option>
+                  <option value="DIZZO">{{ t('admin.branches.optionDizzo') }}</option>
+                  <option value="BTS">{{ t('admin.branches.optionBts') }}</option>
                 </select>
               </div>
 
               <div class="space-y-1.5">
-                <label for="branch-cost" class="text-xs font-medium text-foreground">Baza yetkazish narxi (so'm)</label>
+                <label for="branch-cost" class="text-xs font-medium text-foreground">{{ t('admin.branches.baseCost') }}</label>
                 <UiInput
                   id="branch-cost"
                   v-model.number="form.base_shipping_cost"
@@ -616,7 +616,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
             <div class="grid gap-3 sm:grid-cols-2">
               <div class="space-y-1.5">
                 <label for="branch-capacity" class="text-xs font-medium text-foreground">
-                  Kuniga o'rtacha nechta buyurtma qayta ishlaydi *
+                  {{ t('admin.branches.capacityLabel') }} *
                 </label>
                 <UiInput
                   id="branch-capacity"
@@ -630,7 +630,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
 
               <div class="space-y-1.5">
                 <label for="branch-delivery-days" class="text-xs font-medium text-foreground">
-                  Shu miqdorni necha kunda yetkazadi *
+                  {{ t('admin.branches.deliveryDaysLabel') }} *
                 </label>
                 <UiInput
                   id="branch-delivery-days"
@@ -649,8 +649,8 @@ function formatDateTime(dateStr: string | null | undefined): string {
             >
               <Icon name="lucide:calculator" class="size-4 shrink-0 text-primary" />
               <span>
-                Navbatdagi buyurtmalar: <strong class="text-foreground">{{ editingBranch.current_pending_orders ?? 0 }} ta</strong> ·
-                Dinamik muddat: <strong class="text-foreground">{{ editingBranch.estimated_delivery_days || `${editingBranch.delivery_days} kun` }}</strong>
+                {{ t('admin.branches.pendingOrders') }} <strong class="text-foreground">{{ t('admin.branches.pendingCount', { n: editingBranch.current_pending_orders ?? 0 }) }}</strong> ·
+                {{ t('admin.branches.dynamicDays') }} <strong class="text-foreground">{{ editingBranch.estimated_delivery_days || t('admin.branches.days', { n: editingBranch.delivery_days }) }}</strong>
               </span>
             </div>
           </div>
@@ -666,7 +666,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               for="branch-active"
               class="text-xs font-medium text-foreground cursor-pointer"
             >
-              Filial faol (mijozlar buyurtma bera oladi)
+              {{ t('admin.branches.activeLabel') }}
             </label>
           </div>
 
@@ -684,7 +684,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
               variant="outline"
               @click="isDialogOpen = false"
             >
-              Bekor qilish
+              {{ t('admin.common.cancel') }}
             </UiButton>
             <UiButton
               type="submit"
@@ -695,7 +695,7 @@ function formatDateTime(dateStr: string | null | undefined): string {
                 name="lucide:loader-2"
                 class="mr-2 size-4 animate-spin"
               />
-              Saqlash
+              {{ t('admin.common.save') }}
             </UiButton>
           </UiDialogFooter>
         </form>

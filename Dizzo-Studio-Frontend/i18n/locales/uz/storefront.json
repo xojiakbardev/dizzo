@@ -6,6 +6,7 @@
       "emailLabel": "Elektron pochta*",
       "emailPlaceholder": "Email manzilingizni kiriting",
       "forgotPassword": "Parolni unutdingizmi?",
+      "forgotPasswordHint": "Telegram yoki Google orqali kiring — hisobingiz o‘sha email yoki telefon bilan ochiladi. Bo‘lmasa, biz bilan bog‘laning, parolni tiklab beramiz.",
       "fullNameLabel": "To‘liq ism*",
       "fullNamePlaceholder": "Ismingizni kiriting",
       "googleError": "Google orqali kirishda xatolik yuz berdi.",

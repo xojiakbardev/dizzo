@@ -8,10 +8,11 @@ definePageMeta({ layout: 'admin', ssr: false });
 const route = useRoute();
 const router = useRouter();
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 useAdminCrumbs(() => [
-  { label: 'Filiallar', to: '/admin/branches' },
-  { label: 'Joylashuv' },
+  { label: t('admin.branches.crumb'), to: '/admin/branches' },
+  { label: t('admin.branches.locationCrumb') },
 ]);
 
 const initialAddress = computed(() => typeof route.query.address === 'string' ? route.query.address : '');
@@ -43,10 +44,10 @@ function handleConfirm(value: { latitude: number; longitude: number; address: st
     <div class="flex items-start justify-between gap-3">
       <div>
         <h1 class="text-xl font-bold tracking-tight text-foreground">
-          Filial joylashuvi
+          {{ t('admin.branches.locationTitle') }}
         </h1>
         <p class="mt-1 text-sm text-muted-foreground">
-          Xarita ustiga bosing yoki qidiring, keyin tasdiqlang.
+          {{ t('admin.branches.locationHint') }}
         </p>
       </div>
       <UiButton
@@ -58,7 +59,7 @@ function handleConfirm(value: { latitude: number; longitude: number; address: st
           name="lucide:arrow-left"
           class="size-4"
         />
-        Orqaga
+        {{ t('admin.common.back') }}
       </UiButton>
     </div>
 

@@ -19,7 +19,7 @@ const route = useRoute();
 
 const methods = computed<Array<{ value: DeliveryMethod; label: string; hint: string; icon: string }>>(() => [
   { value: 'DELIVERY', label: t('user.common.delivery'), hint: t('user.checkout.deliveryHint'), icon: 'lucide:truck' },
-  { value: 'PICKUP', label: t('user.checkout.pickupLabel'), hint: 'O\'zingizga yaqin filialdan olib ketish', icon: 'lucide:store' },
+  { value: 'PICKUP', label: t('user.checkout.pickupLabel'), hint: t('user.checkout.pickupNearby'), icon: 'lucide:store' },
 ]);
 
 const paymentMethods = computed<Array<{ value: 'CLICK'; label: string; hint: string; icon: string }>>(() => [
@@ -165,11 +165,11 @@ const missing = computed(() => [
   !form.contact_name && t('user.checkout.missingName'),
   !form.contact_phone && t('user.checkout.missingPhone'),
   form.delivery_method === 'DELIVERY' && !form.shipping_address && deliveryLatitude.value == null && t('user.checkout.missingAddress'),
-  form.delivery_method === 'PICKUP' && !selectedBranchId.value && 'Olib ketish uchun filialni tanlang',
+  form.delivery_method === 'PICKUP' && !selectedBranchId.value && t('user.checkout.pickupBranchRequired'),
   // Yandex only delivers inside Tashkent: its quote says so, and the backend
   // refuses the order.
   form.delivery_method === 'DELIVERY' && deliveryQuote.value?.available === false
-    && (deliveryQuote.value.error || 'Tanlangan xizmat bu manzilga yetkazib bermaydi'),
+    && (deliveryQuote.value.error || t('user.checkout.serviceNotDelivering')),
 ].filter(Boolean) as string[]);
 
 const canSubmit = computed(() => Boolean(

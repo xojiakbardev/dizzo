@@ -179,7 +179,7 @@ async function downloadPlacementSvg(placement: OrderPlacement) {
   }
   catch (err) {
     console.error('SVG generation failed:', err);
-    error.value = 'SVG faylni generatsiya qilishda xatolik yuz berdi';
+    error.value = t('admin.orders.item.svgFailed');
   }
   finally {
     generatingSvg.value = null;
@@ -214,7 +214,7 @@ async function downloadAreaSvg(row: FileRow) {
   }
   catch (err) {
     console.error('Failed to generate print SVG:', err);
-    error.value = 'SVG faylni generatsiya qilishda xatolik yuz berdi';
+    error.value = t('admin.orders.item.svgFailed');
   }
   finally {
     generatingSvg.value = null;
@@ -507,7 +507,7 @@ async function setStatus(status: OrderItem['production_status']) {
                 size="sm"
                 :disabled="generatingSvg === row.key"
                 class="h-8 gap-1 px-2.5 font-semibold text-primary hover:border-primary hover:bg-primary/10"
-                title="Chop etish uchun aniq o'lchamli va shaffof SVG yuklab olish"
+                :title="t('admin.orders.item.svgDownloadTitle')"
                 @click="downloadAreaSvg(row)"
               >
                 <Icon
@@ -573,7 +573,7 @@ async function setStatus(status: OrderItem['production_status']) {
               size="sm"
               :disabled="generatingSvg === row.area"
               class="h-8 gap-1 px-2.5 font-semibold text-primary hover:border-primary hover:bg-primary/10"
-              :title="`SVG yuklab olish — ${mm(row.width_mm)}×${mm(row.height_mm)} mm`"
+              :title="t('admin.orders.item.svgDownloadSize', { w: mm(row.width_mm), h: mm(row.height_mm) })"
               @click="downloadPlacementSvg(row)"
             >
               <Icon

@@ -6,6 +6,7 @@
       "emailLabel": "Email*",
       "emailPlaceholder": "Enter your email address",
       "forgotPassword": "Forgot your password?",
+      "forgotPasswordHint": "Sign in with Telegram or Google — it opens the account with the same email or phone. If that doesn't work, contact us and we'll reset your password.",
       "fullNameLabel": "Full name*",
       "fullNamePlaceholder": "Enter your name",
       "googleError": "Something went wrong signing in with Google.",

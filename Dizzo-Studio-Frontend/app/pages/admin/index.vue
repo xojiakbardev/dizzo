@@ -47,7 +47,19 @@ function change(pair: PeriodPair<number | string> | undefined) {
   return before > 0 ? ((now - before) / before) * 100 : null;
 }
 
-const kpis = computed(() => {
+interface Kpi {
+  key: string;
+  title: string;
+  icon: string;
+  value: string;
+  delta?: number | null;
+  previous?: string;
+  chip?: string;
+  chipTitle?: string;
+  to?: string;
+}
+
+const kpis = computed((): Kpi[] => {
   const s = board.value?.summary;
   const c = board.value?.conversion;
   const rate = c && c.designers > 0 ? Math.round((c.buyers / c.designers) * 100) : null;
