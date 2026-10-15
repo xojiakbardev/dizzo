@@ -323,6 +323,9 @@ async function nominatimReverse(point: LatLng): Promise<PlaceInfo | null> {
   };
 }
 
+const PLUS_CODE = /^[23456789CFGHJMPQRVWX]{2,8}\+[23456789CFGHJMPQRVWX]{0,3}(\s|,|$)/;
+const STREET_TYPES = ['street_address', 'premise', 'subpremise', 'route'];
+
 /** The address of a point on the map; null when nothing could name it. */
 export async function reverseGeocode(point: LatLng): Promise<PlaceInfo | null> {
   if (googleUsable()) {
@@ -330,9 +333,11 @@ export async function reverseGeocode(point: LatLng): Promise<PlaceInfo | null> {
       const gmaps = await loadGoogle();
       const { Geocoder } = await gmaps.importLibrary('geocoding');
       const { results } = await new Geocoder().geocode({ location: point });
-      // The first answer is often a bare Plus Code ("76XR+R25, Toshkent"):
-      // the nearest real address reads better to a courier.
-      const best = results?.find((item: any) => !item.types?.includes('plus_code')) ?? results?.[0];
+      // Google often answers a Plus Code first ("76XR+R25, Toshkent", even
+      // for a shop): a street address reads better to a courier.
+      const named = (results ?? []).filter((item: any) => !PLUS_CODE.test(item.formatted_address));
+      const best = named.find((item: any) => item.types?.some((type: string) => STREET_TYPES.includes(type)))
+        ?? named[0] ?? results?.[0];
       if (best) return { address: best.formatted_address, city: cityOf(best.address_components) };
     }
     catch {
