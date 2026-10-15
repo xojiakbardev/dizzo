@@ -241,7 +241,7 @@ onBeforeUnmount(() => {
         ref="mapEl"
         :class="mapClass"
       />
-      <div class="pointer-events-none absolute bottom-3 left-3 z-20 rounded-full border border-border/80 bg-background/90 px-2.5 py-1 text-[11px] font-mono text-foreground shadow-sm backdrop-blur">
+      <div class="pointer-events-none absolute top-3 left-3 z-20 rounded-full border border-border/80 bg-background/90 px-2.5 py-1 text-[11px] font-mono text-foreground shadow-sm backdrop-blur">
         {{ selectedLat.toFixed(5) }}, {{ selectedLng.toFixed(5) }}
       </div>
     </div>

@@ -330,7 +330,9 @@ export async function reverseGeocode(point: LatLng): Promise<PlaceInfo | null> {
       const gmaps = await loadGoogle();
       const { Geocoder } = await gmaps.importLibrary('geocoding');
       const { results } = await new Geocoder().geocode({ location: point });
-      const best = results?.[0];
+      // The first answer is often a bare Plus Code ("76XR+R25, Toshkent"):
+      // the nearest real address reads better to a courier.
+      const best = results?.find((item: any) => !item.types?.includes('plus_code')) ?? results?.[0];
       if (best) return { address: best.formatted_address, city: cityOf(best.address_components) };
     }
     catch {
