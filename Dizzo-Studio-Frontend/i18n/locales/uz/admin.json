@@ -895,7 +895,7 @@
         "groupId": "Moderator guruhi",
         "groupIdShort": "Telegram moderator guruhi",
         "groupIdPlaceholder": "-1001234567890",
-        "groupIdHint": "Botni moderatorlar guruhiga qo‘shing, keyin guruh ID sini kiriting. ID ni @userinfobot orqali oling — odatda -100 bilan boshlanadi. Bo‘sh qoldirsangiz, galereya xabarlari yuborilmaydi."
+        "groupIdHint": "Botni moderatorlar guruhiga qo‘shing, keyin guruh ID sini kiriting. ID ni {'@'}userinfobot orqali oling — odatda -100 bilan boshlanadi. Bo‘sh qoldirsangiz, galereya xabarlari yuborilmaydi."
       }
     }
   }

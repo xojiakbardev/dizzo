@@ -2,6 +2,7 @@
   "user": {
     "common": {
       "cancel": "Bekor qilish",
+      "confirm": "Tasdiqlash",
       "delete": "O‘chirish",
       "total": "Jami",
       "subtotal": "Oraliq summa",

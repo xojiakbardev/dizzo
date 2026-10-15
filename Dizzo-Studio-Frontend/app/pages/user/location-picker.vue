@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// Imported by hand: auto-import names it MapLocationPickerMap (it lives in
+// components/map/), so <LocationPickerMap> never resolved and the page
+// showed an empty card instead of the map.
+import LocationPickerMap from '~/components/map/LocationPickerMap.vue';
 const route = useRoute();
 const localePath = useLocalePath();
 const router = useRouter();

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { loadYandexMaps } from '~/utils/yandexMaps';
+import { createMapView, onMapProviderLost, TASHKENT } from '~/utils/maps';
+import type { MapPin, MapView } from '~/utils/maps';
 import { useBranches } from '~/composables/queries/useBranches';
 import type { Branch } from '~/types/commerce';
 
@@ -13,90 +14,52 @@ const emit = defineEmits<{
   'select': [branch: Branch];
 }>();
 
-const { t } = useI18n();
-const runtimeConfig = useRuntimeConfig();
-const yandexApiKey = runtimeConfig.public.yandexMapsApiKey as string | undefined;
 const { data: branches, isLoading } = useBranches(true);
 
 const mapEl = ref<HTMLDivElement | null>(null);
-// No map (Yandex blocked or slow): the branch list below still works alone.
+// No map at all (offline, blocked): the branch list below still works alone.
 const mapFailed = ref(false);
-let mapInstance: any = null;
-const markersMap = new Map<number, any>();
+let view: MapView | null = null;
+const pins = new Map<number, MapPin>();
+let stopWatchingProvider: (() => void) | null = null;
 
 const selectedBranch = computed(() => {
   if (!branches.value || !props.modelValue) return branches.value?.[0] || null;
   return branches.value.find(b => b.id === props.modelValue) || branches.value[0] || null;
 });
 
-function createCustomPin(branch: Branch, isSelected: boolean) {
-  const activeClass = isSelected
-    ? 'bg-primary text-primary-foreground ring-4 ring-primary/30 scale-110 shadow-xl'
-    : 'bg-card text-foreground border border-border/80 shadow-md hover:scale-105';
-
-  return {
-    iconLayout: 'default#image',
-    iconImageHref: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none">
-        <rect x="4" y="4" width="16" height="16" rx="8" fill="${isSelected ? '#ed5123' : '#ffffff'}" stroke="${isSelected ? '#f97316' : '#0f172a'}" stroke-width="1.5"/>
-        <path d="M7 14.5V9.5C7 8.67 7.67 8 8.5 8H15.5C16.33 8 17 8.67 17 9.5V14.5C17 15.33 16.33 16 15.5 16H8.5C7.67 16 7 15.33 7 14.5Z" fill="${isSelected ? '#ffffff' : '#ed5123'}"/>
-        <path d="M9.5 12.5h5" stroke="${isSelected ? '#ed5123' : '#ffffff'}" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M12 10v5" stroke="${isSelected ? '#ed5123' : '#ffffff'}" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-    `)}`,
-    iconImageSize: [40, 40],
-    iconImageOffset: [-20, -40],
-  };
-}
-
 function selectBranch(branch: Branch) {
   emit('update:modelValue', branch.id);
   emit('select', branch);
-
-  if (mapInstance && branch.latitude && branch.longitude) {
-    mapInstance.panTo([branch.latitude, branch.longitude], { flying: true });
-    mapInstance.setZoom(15, { duration: 200 });
+  if (view && branch.latitude && branch.longitude) {
+    view.panTo({ lat: branch.latitude, lng: branch.longitude }, 15);
   }
-
-  markersMap.forEach((marker, id) => {
-    if (branch.id !== id) return;
-    marker.options.set('icon', createCustomPin(branch, true));
-  });
 }
 
-async function ensureYandexMaps() {
-  await loadYandexMaps(yandexApiKey);
+function drawPins() {
+  pins.forEach(pin => pin.remove());
+  pins.clear();
+  if (!view || !branches.value) return;
+  for (const branch of branches.value) {
+    if (!branch.latitude || !branch.longitude) continue;
+    pins.set(branch.id, view.addPin({ lat: branch.latitude, lng: branch.longitude }, {
+      kind: 'branch',
+      selected: selectedBranch.value?.id === branch.id,
+      onClick: () => selectBranch(branch),
+    }));
+  }
 }
 
 async function initMap() {
   if (!mapEl.value || !import.meta.client) return;
+  view?.destroy();
+  pins.clear();
+  const branch = selectedBranch.value;
+  const center = branch?.latitude && branch?.longitude ? { lat: branch.latitude, lng: branch.longitude } : TASHKENT;
   try {
-    await ensureYandexMaps();
-    const ymaps = (window as any).ymaps;
-    const center = selectedBranch.value?.latitude && selectedBranch.value?.longitude
-      ? [selectedBranch.value.latitude, selectedBranch.value.longitude]
-      : [41.311081, 69.240562];
-
-    mapInstance = new ymaps.Map(mapEl.value, {
-      center,
-      zoom: 13,
-      controls: [],
-    }, { suppressMapOpenBlock: true });
-
-    if (branches.value && branches.value.length > 0) {
-      branches.value.forEach((branch) => {
-        if (!branch.latitude || !branch.longitude) return;
-        const isSelected = selectedBranch.value?.id === branch.id;
-        const marker = new ymaps.Placemark([branch.latitude, branch.longitude], {}, createCustomPin(branch, isSelected));
-        marker.events.add('click', () => selectBranch(branch));
-        mapInstance.geoObjects.add(marker);
-        markersMap.set(branch.id, marker);
-      });
-
-      if (!props.modelValue && branches.value[0]) {
-        selectBranch(branches.value[0]);
-      }
-    }
+    view = await createMapView(mapEl.value, center, 13);
+    mapFailed.value = false;
+    drawPins();
   }
   catch {
     mapFailed.value = true;
@@ -104,33 +67,26 @@ async function initMap() {
 }
 
 watch(branches, () => {
-  if (!mapInstance || !branches.value) return;
-  markersMap.forEach((marker) => mapInstance.geoObjects.remove(marker));
-  markersMap.clear();
-
-  branches.value.forEach((branch) => {
-    if (!branch.latitude || !branch.longitude) return;
-    const isSelected = selectedBranch.value?.id === branch.id;
-    const yMarker = new (window as any).ymaps.Placemark([branch.latitude, branch.longitude], {}, createCustomPin(branch, isSelected));
-    yMarker.events.add('click', () => selectBranch(branch));
-    mapInstance.geoObjects.add(yMarker);
-    markersMap.set(branch.id, yMarker);
-  });
+  drawPins();
   // Branches that arrive after the map still preselect the first one.
-  if (!props.modelValue && branches.value[0]) selectBranch(branches.value[0]);
+  if (!props.modelValue && branches.value?.[0]) selectBranch(branches.value[0]);
+}, { immediate: true });
+
+watch(() => selectedBranch.value?.id, (id) => {
+  pins.forEach((pin, branchId) => pin.setSelected(branchId === id));
 });
 
 onMounted(() => {
+  stopWatchingProvider = onMapProviderLost(() => void initMap());
   nextTick(() => {
-    initMap();
+    void initMap();
   });
 });
 
 onBeforeUnmount(() => {
-  if (mapInstance) {
-    mapInstance.destroy();
-    mapInstance = null;
-  }
+  stopWatchingProvider?.();
+  view?.destroy();
+  view = null;
 });
 </script>
 
@@ -236,11 +192,3 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
-
-<style>
-/* Reset default leaflet marker shadows to keep custom clean aesthetics */
-.custom-dizzo-marker {
-  background: transparent !important;
-  border: none !important;
-}
-</style>

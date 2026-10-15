@@ -895,7 +895,7 @@
         "groupId": "Moderator group",
         "groupIdShort": "Telegram moderator group",
         "groupIdPlaceholder": "-1001234567890",
-        "groupIdHint": "Add the bot to the moderators’ group, then paste the group ID. Get it from @userinfobot — it usually starts with -100. Leave empty to skip gallery notifications."
+        "groupIdHint": "Add the bot to the moderators’ group, then paste the group ID. Get it from {'@'}userinfobot — it usually starts with -100. Leave empty to skip gallery notifications."
       }
     }
   }

@@ -134,8 +134,11 @@ export default defineNuxtConfig({
       apiUrl: process.env.NUXT_PUBLIC_API_URL,
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
       mediaUrl: process.env.NUXT_PUBLIC_MEDIA_URL,
+      // Maps, address search and pin naming (app/utils/maps.ts); without a
+      // key every map falls back to OpenStreetMap. The Map ID enables
+      // advanced markers (optional).
       googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-      yandexMapsApiKey: process.env.NUXT_PUBLIC_YANDEX_MAPS_API_KEY,
+      googleMapsMapId: process.env.NUXT_PUBLIC_GOOGLE_MAPS_MAP_ID,
     },
   },
 

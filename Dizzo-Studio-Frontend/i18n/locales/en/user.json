@@ -2,6 +2,7 @@
   "user": {
     "common": {
       "cancel": "Cancel",
+      "confirm": "Confirm",
       "delete": "Delete",
       "total": "Total",
       "subtotal": "Subtotal",
