@@ -136,8 +136,9 @@ export default defineNuxtConfig({
       mediaUrl: process.env.NUXT_PUBLIC_MEDIA_URL,
       // Maps, address search and pin naming (app/utils/maps.ts); without a
       // key every map falls back to OpenStreetMap. The Map ID enables
-      // advanced markers (optional).
-      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      // advanced markers (optional). The key is public by nature (it ships
+      // in every page) and locked to the dizzo.uz referrers in Google Cloud.
+      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyAtbfiQy92r8h_Hv0B6CRqT0BqbsDMI6fU',
       googleMapsMapId: process.env.NUXT_PUBLIC_GOOGLE_MAPS_MAP_ID,
     },
   },
