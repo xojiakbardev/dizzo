@@ -83,6 +83,12 @@ export function onMapProviderLost(rebuild: () => void): () => void {
   return () => refusalListeners.delete(rebuild);
 }
 
+function refuseGoogle() {
+  if (googleRefused) return;
+  googleRefused = true;
+  refusalListeners.forEach(rebuild => rebuild());
+}
+
 function loadGoogle(): Promise<any> {
   if (googleLoading) return googleLoading;
   const w = window as any;
@@ -93,10 +99,7 @@ function loadGoogle(): Promise<any> {
       window.clearTimeout(timer);
       resolve(w.google.maps);
     };
-    w.gm_authFailure = () => {
-      googleRefused = true;
-      refusalListeners.forEach(rebuild => rebuild());
-    };
+    w.gm_authFailure = refuseGoogle;
     const lang = (document.documentElement.lang || 'uz').slice(0, 2);
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(config().key!)}&v=weekly&loading=async&callback=__dizzoMapsReady&language=${lang}&region=UZ`;
@@ -129,6 +132,16 @@ async function googleMap(el: HTMLElement, center: LatLng, zoom: number): Promise
     gestureHandling: 'greedy',
     clickableIcons: false,
   });
+  // Some refusals (ApiTargetBlockedMapError: the key may not use the Maps
+  // JavaScript API) never call gm_authFailure and leave a grey map; a map
+  // that draws no tiles in time counts as refused too.
+  let drawn = false;
+  map.addListener('tilesloaded', () => {
+    drawn = true;
+  });
+  window.setTimeout(() => {
+    if (!drawn && el.isConnected) refuseGoogle();
+  }, 10_000);
 
   return {
     provider: 'google',
