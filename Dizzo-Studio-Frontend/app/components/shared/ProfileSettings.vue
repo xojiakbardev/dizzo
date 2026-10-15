@@ -64,7 +64,7 @@ async function onAvatarChange(event: Event) {
   avatarError.value = null;
 
   if (file.size > 5 * 1024 * 1024) {
-    avatarError.value = 'Rasm hajmi 5MB dan oshmasligi kerak';
+    avatarError.value = t('storefront.profile.avatarTooLarge');
     input.value = '';
     return;
   }
@@ -73,10 +73,10 @@ async function onAvatarChange(event: Event) {
   try {
     const media = await mediaUpload.upload(file, 'avatar');
     await updateProfileMutation.mutateAsync({ avatar: media.url });
-    profileMessage.value = { type: 'success', text: 'Profil rasmi muvaffaqiyatli yangilandi' };
+    profileMessage.value = { type: 'success', text: t('storefront.profile.avatarSaved') };
   }
   catch (err) {
-    avatarError.value = getApiErrorMessage(err, 'Profil rasmini yuklab bo\'lmadi');
+    avatarError.value = getApiErrorMessage(err, t('storefront.profile.avatarUploadError'));
   }
   finally {
     isUploadingAvatar.value = false;
@@ -89,10 +89,10 @@ async function removeAvatar() {
   isUploadingAvatar.value = true;
   try {
     await updateProfileMutation.mutateAsync({ avatar: '' });
-    profileMessage.value = { type: 'success', text: 'Profil rasmi o\'chirildi' };
+    profileMessage.value = { type: 'success', text: t('storefront.profile.avatarRemoved') };
   }
   catch (err) {
-    avatarError.value = getApiErrorMessage(err, 'Profil rasmini o\'chirib bo\'lmadi');
+    avatarError.value = getApiErrorMessage(err, t('storefront.profile.avatarRemoveError'));
   }
   finally {
     isUploadingAvatar.value = false;
@@ -256,7 +256,8 @@ async function handleSaveProfile() {
             <button
               type="button"
               class="relative block size-16 rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer shadow-sm"
-              title="Rasmni o'zgartirish"
+              :title="t('storefront.profile.changePhoto')"
+              :aria-label="t('storefront.profile.changePhoto')"
               :disabled="isUploadingAvatar"
               @click="triggerAvatarUpload"
             >
@@ -294,7 +295,8 @@ async function handleSaveProfile() {
             <button
               type="button"
               class="absolute -bottom-1 -right-1 flex size-6 items-center justify-center rounded-full border-2 border-card bg-primary text-primary-foreground shadow-sm transition hover:scale-110 active:scale-95 cursor-pointer"
-              title="Rasm yuklash"
+              :title="t('storefront.profile.uploadPhoto')"
+              :aria-label="t('storefront.profile.uploadPhoto')"
               :disabled="isUploadingAvatar"
               @click="triggerAvatarUpload"
             >
@@ -327,7 +329,7 @@ async function handleSaveProfile() {
                 :disabled="isUploadingAvatar"
                 @click="triggerAvatarUpload"
               >
-                Rasm yuklash
+                {{ t('storefront.profile.uploadPhoto') }}
               </button>
               <template v-if="avatarUrl">
                 <span class="text-xs text-muted-foreground">•</span>
@@ -337,7 +339,7 @@ async function handleSaveProfile() {
                   :disabled="isUploadingAvatar"
                   @click="removeAvatar"
                 >
-                  O'chirish
+                  {{ t('storefront.profile.removePhoto') }}
                 </button>
               </template>
             </div>

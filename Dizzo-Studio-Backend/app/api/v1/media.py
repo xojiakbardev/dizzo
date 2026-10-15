@@ -234,10 +234,10 @@ async def create_upload(
 @router.post("/{media_id}/complete/", response_model=MediaOut)
 async def complete_upload(
     media_id: str, background: BackgroundTasks, session: AsyncSession = Depends(get_db),
-    storage: R2Storage = Depends(get_storage),
+    user: User | None = Depends(optional_user), storage: R2Storage = Depends(get_storage),
 ):
     media = await session.get(Media, media_id)
-    if media is None:
+    if media is None or (media.owner_id is not None and (user is None or media.owner_id != user.id)):
         raise HTTPException(status_code=404, detail="Fayl topilmadi")
     if media.status == "ready":
         return media_out(media, storage)

@@ -136,6 +136,10 @@ async def update_branch(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Filial topilmadi")
 
     data = payload.model_dump(exclude_unset=True)
+    if data.get("slug") and data["slug"] != branch.slug:
+        taken = (await session.execute(select(Branch).where(Branch.slug == data["slug"]))).scalar_one_or_none()
+        if taken:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Bunday slug'li filial allaqachon mavjud")
     for field, val in data.items():
         setattr(branch, field, val)
 
@@ -339,8 +343,12 @@ async def assign_branch_worker(
     if role_to_set not in ASSIGNABLE_BRANCH_ROLES:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bu rolni filial xodimiga berib bo'lmaydi")
 
-    # Demoting a global admin/moderator into a branch is an admin's decision.
-    if target_user.role in GLOBAL_STAFF_ROLES and user.role not in PRIVILEGED_ROLES:
+    # Demoting a global admin/moderator into a branch is an admin's decision,
+    # and so is moving someone who already works at another branch.
+    if user.role not in PRIVILEGED_ROLES and (
+        target_user.role in GLOBAL_STAFF_ROLES
+        or (target_user.branch_id is not None and target_user.branch_id != branch_id)
+    ):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bu foydalanuvchining rolini o'zgartirish huquqi yo'q")
 
     changed = (target_user.role, target_user.branch_id, target_user.is_staff) != (role_to_set, branch_id, True)

@@ -61,6 +61,9 @@
       "list": {
         "allStatuses": "All statuses",
         "allMethods": "All methods",
+        "fullscreen": "Full screen",
+        "fullscreenTitle": "Open full screen",
+        "backToList": "Back to orders",
         "col": {
           "number": "Order #",
           "date": "Date",
@@ -225,6 +228,10 @@
     },
     "tutorials": {
       "published": "Published",
+      "col": {
+        "title": "Title",
+        "status": "Status"
+      },
       "publish": "Publish",
       "comingSoon": "coming soon",
       "comingSoonTitle": "Coming soon",
@@ -255,6 +262,13 @@
     },
     "gallery": {
       "published": "Published",
+      "viewImages": "View images",
+      "col": {
+        "design": "Design",
+        "images": "Images",
+        "colour": "Colour",
+        "status": "Status"
+      },
       "publish": "Publish",
       "searchPlaceholder": "Search by name, product or section",
       "add": "Add design",
@@ -838,6 +852,8 @@
     "users": {
       "createFailed": "Could not create the user.",
       "roleFailed": "Could not change the role.",
+      "branchFilter": "Filter by branch",
+      "allBranches": "All branches",
       "col": {
         "user": "User",
         "email": "Email",

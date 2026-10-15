@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings
 from app.models.commerce import Order, Payment
-from app.services.orders import OrderStatus
+from app.services.orders import PAID_STATUSES, OrderStatus
 
 logger = logging.getLogger("app.payments.click")
 
@@ -210,7 +210,7 @@ class ClickService:
             response["error_note"] = "Order is cancelled"
             return response
 
-        if order.status in (OrderStatus.PAID, OrderStatus.MODERATED, OrderStatus.READY_FOR_PRODUCTION, OrderStatus.IN_PRODUCTION, OrderStatus.COMPLETED):
+        if order.status in PAID_STATUSES:
             # Check if this exact click transaction was already recorded
             existing_payment = (
                 await session.execute(
@@ -274,7 +274,6 @@ class ClickService:
         merchant_prepare_id = data.get("merchant_prepare_id")
         raw_amount = data.get("amount", "0")
         action = str(data.get("action", "1"))
-        error_param = int(data.get("error", 0))
         sign_time = str(data.get("sign_time", ""))
         sign_string = str(data.get("sign_string", ""))
 
@@ -285,6 +284,15 @@ class ClickService:
             "error": CLICK_SUCCESS,
             "error_note": "Success",
         }
+
+        try:
+            error_param = int(str(data.get("error", 0) or 0).strip())
+        except (TypeError, ValueError):
+            # A non-numeric error code is a bad request, not a 500.
+            logger.warning("Click complete with non-numeric error=%r", data.get("error"))
+            response["error"] = CLICK_BAD_REQUEST
+            response["error_note"] = "Incorrect parameter error"
+            return response
 
         # 1. Verify signature
         if not self.verify_signature(
@@ -345,8 +353,18 @@ class ClickService:
 
         # 4. Handle Click cancellation if error_param < 0
         if error_param < 0:
+            if payment.status == "PAID":
+                # The money is already banked: a late cancel can't take it back.
+                response["error"] = CLICK_ALREADY_PAID
+                response["error_note"] = "Already paid"
+                return response
             payment.status = "CANCELLED"
             payment.meta = {**(payment.meta or {}), "cancel_error": error_param, "cancel_time": sign_time}
+            # The order waits for no payment any more; NEW lets the customer
+            # pay again or cancel it (cancel_order only takes NEW orders).
+            pending = await session.execute(select(Order).where(Order.id == payment.order_id).with_for_update())
+            if (order := pending.scalar_one_or_none()) is not None and order.status == OrderStatus.PAYMENT_PENDING:
+                order.status = OrderStatus.NEW
             await session.commit()
             response["error"] = CLICK_TRANSACTION_CANCELLED
             response["error_note"] = "Transaction cancelled by provider"
@@ -398,8 +416,10 @@ class ClickService:
         payment.provider_paydoc_id = click_paydoc_id
         payment.meta = {**(payment.meta or {}), "completed_at": sign_time}
 
-        # Update order status to PAID
-        order.status = OrderStatus.PAID
+        # Update order status to PAID — unless staff already moved the order
+        # further along, which a late complete must not undo.
+        if order.status not in PAID_STATUSES:
+            order.status = OrderStatus.PAID
         await session.commit()
 
         logger.info("Order %s successfully paid via Click (Payment ID: %s)", order.order_number, payment.id)

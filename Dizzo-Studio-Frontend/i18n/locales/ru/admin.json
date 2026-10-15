@@ -61,6 +61,9 @@
       "list": {
         "allStatuses": "Все статусы",
         "allMethods": "Все способы",
+        "fullscreen": "Полный экран",
+        "fullscreenTitle": "Открыть на весь экран",
+        "backToList": "Вернуться к списку заказов",
         "col": {
           "number": "Заказ №",
           "date": "Дата",
@@ -849,6 +852,8 @@
     "users": {
       "createFailed": "Не удалось создать пользователя.",
       "roleFailed": "Не удалось изменить роль.",
+      "branchFilter": "Фильтр по филиалу",
+      "allBranches": "Все филиалы",
       "col": {
         "user": "Пользователь",
         "email": "Email",

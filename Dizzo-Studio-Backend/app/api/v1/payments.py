@@ -12,7 +12,7 @@ from app.core.config import Settings, get_settings
 from app.db.session import get_db
 from app.models.commerce import Order
 from app.models.user import User
-from app.services.orders import OrderStatus
+from app.services.orders import PAID_STATUSES, OrderStatus
 from app.services.payments.click import ClickService
 
 import json
@@ -107,7 +107,7 @@ async def get_click_payment_url(
     if order.customer_id != user.id and not may_pay_for_others:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Ruxsat yo'q")
 
-    if order.status in (OrderStatus.PAID, OrderStatus.MODERATED, OrderStatus.READY_FOR_PRODUCTION, OrderStatus.IN_PRODUCTION, OrderStatus.COMPLETED):
+    if order.status in PAID_STATUSES:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Buyurtma allaqachon to'langan")
 
     if order.status == OrderStatus.CANCELLED:

@@ -50,7 +50,7 @@ const extractedCancelReason = computed(() => {
   const match = notes.match(/\[(?:Bekor qilish sababi|Причина отмены|Cancellation reason|Reason):\s*([^\]]+)\]/i);
   if (match) return match[1];
   if (notes.includes("Moderatsiyadan o'tmadi") || notes.includes("Не прошло модерацию") || notes.includes("Did not pass moderation")) {
-    return "Moderatsiyadan o'tmadi";
+    return t('user.order.moderationFailed');
   }
   return null;
 });

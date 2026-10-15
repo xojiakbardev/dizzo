@@ -307,6 +307,8 @@ async def telegram_moderate_showcase(
         item.status = "REJECTED"
         item.is_published = False
         item.rejection_reason = f"Rad etdi: {user.full_name}"
+    else:
+        return {"ok": False, "reason": "bad_action", "message": "Noma'lum amal"}
 
     await session.commit()
     return {

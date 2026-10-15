@@ -57,6 +57,10 @@ ALLOWED_TRANSITIONS: dict[OrderStatus, frozenset[OrderStatus]] = {
 ALLOWED_TRANSITIONS[OrderStatus.COMPLETED] = frozenset()
 ALLOWED_TRANSITIONS[OrderStatus.CANCELLED] = frozenset()
 
+# Every status from PAID on: an order in one of them has been paid and must
+# never be charged again, however far along production it is.
+PAID_STATUSES: frozenset[OrderStatus] = frozenset(_PIPELINE[_PIPELINE.index(OrderStatus.PAID):])
+
 
 ORDER_STATUS_VALUES: frozenset[str] = frozenset(s.value for s in OrderStatus)
 

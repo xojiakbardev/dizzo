@@ -40,6 +40,14 @@ MESSAGES: dict[str, dict[str, str]] = {
     },
     "Savatdagi mahsulot topilmadi": {"ru": "Товар в корзине не найден", "en": "Cart item not found"},
     "Savat bo'sh": {"ru": "Корзина пуста", "en": "Your cart is empty"},
+    "Yetkazib beruvchi noto'g'ri tanlangan": {
+        "ru": "Неверно выбрана служба доставки",
+        "en": "Invalid delivery carrier",
+    },
+    "Bu manzilga yetkazib berib bo'lmaydi": {
+        "ru": "Доставка по этому адресу невозможна",
+        "en": "Delivery to this address is not available",
+    },
     "Sotuvda yo'q: {names}. Savatdan olib tashlang.": {
         "ru": "Нет в продаже: {names}. Удалите из корзины.",
         "en": "No longer available: {names}. Please remove them from your cart.",

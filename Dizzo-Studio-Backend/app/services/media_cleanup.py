@@ -51,6 +51,7 @@ from app.models.catalog import (
     VariantColor,
 )
 from app.models.commerce import CartItem, Design, OrderItem
+from app.models.design_asset import DesignAsset
 from app.models.gallery import GalleryShowcaseImage
 from app.models.media import Media
 from app.models.review import ReviewPhoto
@@ -78,6 +79,7 @@ MEDIA_COLUMNS = (
     ProductCategory.image_media_id,
     Shape.model_media_id,
     CatalogImage.media_id,
+    DesignAsset.media_id,
     DesignTemplate.preview_media_id,
     DesignTemplateImage.media_id,
     GalleryShowcaseImage.media_id,

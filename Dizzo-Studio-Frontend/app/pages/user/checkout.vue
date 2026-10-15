@@ -40,7 +40,9 @@ const calculateDeliveryMutation = useCalculateDelivery();
 const submitError = ref<string | null>(null);
 const result = ref<CheckoutResult | null>(null);
 
-const form = reactive({
+// Kept in useState so a trip to the map picker (its own page) and back
+// doesn't wipe what was already filled in or chosen.
+const form = useState('checkout-form', () => ({
   contact_name: '',
   contact_email: '',
   contact_phone: '',
@@ -49,11 +51,14 @@ const form = reactive({
   shipping_address: '',
   shipping_city: 'Toshkent',
   customer_notes: '',
-});
+})).value;
 
-// Delivery carrier & real-time calculation
-const selectedCarrier = ref<'YANDEX' | 'BTS'>('YANDEX');
-const deliveryCost = ref<number>(35000);
+// Delivery carrier & real-time calculation. The fallback prices match the
+// backend's defaults (Yandex 25 000, BTS 35 000); the backend prices the
+// order itself anyway.
+const FALLBACK_COST = { YANDEX: 25000, BTS: 35000 } as const;
+const selectedCarrier = useState<'YANDEX' | 'BTS'>('checkout-carrier', () => 'YANDEX');
+const deliveryCost = ref<number>(FALLBACK_COST.YANDEX);
 const deliveryQuote = ref<DeliveryQuote | null>(null);
 const isCalculatingDelivery = ref(false);
 
@@ -65,8 +70,8 @@ const estimatedDeliveryDays = computed(() => {
 });
 
 // Delivery address coordinates from pin drop
-const deliveryLatitude = ref<number | null>(null);
-const deliveryLongitude = ref<number | null>(null);
+const deliveryLatitude = useState<number | null>('checkout-lat', () => null);
+const deliveryLongitude = useState<number | null>('checkout-lon', () => null);
 
 // Pickup branch selection
 const selectedBranchId = ref<number | null>(null);
@@ -87,7 +92,8 @@ async function fetchDeliveryPrice() {
     deliveryQuote.value = quote;
     deliveryCost.value = quote.price;
   } catch {
-    deliveryCost.value = selectedCarrier.value === 'YANDEX' ? 35000 : 25000;
+    deliveryQuote.value = null;
+    deliveryCost.value = FALLBACK_COST[selectedCarrier.value];
   } finally {
     isCalculatingDelivery.value = false;
   }
@@ -160,6 +166,10 @@ const missing = computed(() => [
   !form.contact_phone && t('user.checkout.missingPhone'),
   form.delivery_method === 'DELIVERY' && !form.shipping_address && deliveryLatitude.value == null && t('user.checkout.missingAddress'),
   form.delivery_method === 'PICKUP' && !selectedBranchId.value && 'Olib ketish uchun filialni tanlang',
+  // Yandex only delivers inside Tashkent: its quote says so, and the backend
+  // refuses the order.
+  form.delivery_method === 'DELIVERY' && deliveryQuote.value?.available === false
+    && (deliveryQuote.value.error || 'Tanlangan xizmat bu manzilga yetkazib bermaydi'),
 ].filter(Boolean) as string[]);
 
 const canSubmit = computed(() => Boolean(
@@ -201,6 +211,7 @@ async function handleSubmit() {
       },
     });
     idempotencyKey = null;
+    form.customer_notes = '';
     document.getElementById('main-content')?.scrollTo({ top: 0 });
   }
   catch (checkoutError) {

@@ -29,18 +29,21 @@ def normalize_email(email: str | None) -> str | None:
 # Every token carries the user's token_version ("tv"): bumping the column
 # (logout, password change, deactivation, role change) invalidates every
 # token issued before. Refresh tokens also carry a jti naming their row in
-# refresh_sessions, which is spent on use (rotation). Tokens issued before
-# this existed have neither claim and count as version 0.
+# refresh_sessions, which is spent on use (rotation); the access token issued
+# with it names that row as its "sid", so signing one device out ends just
+# that device. Tokens issued before this existed have none of these claims
+# and count as version 0.
 def create_token(user_id: int, token_type: str, expires: timedelta, **claims: Any) -> str:
     now = datetime.now(UTC)
     payload: dict[str, Any] = {"sub": str(user_id), "type": token_type, "iat": now, "exp": now + expires, **claims}
     return jwt.encode(payload, get_settings().jwt_secret_key, algorithm=get_settings().jwt_algorithm)
 
 
-def create_access_token(user_id: int, token_version: int = 0) -> str:
-    return create_token(
-        user_id, "access", timedelta(minutes=get_settings().access_token_minutes), tv=token_version
-    )
+def create_access_token(user_id: int, token_version: int = 0, sid: str | None = None) -> str:
+    claims: dict[str, Any] = {"tv": token_version}
+    if sid:
+        claims["sid"] = sid
+    return create_token(user_id, "access", timedelta(minutes=get_settings().access_token_minutes), **claims)
 
 
 def create_refresh_token(user_id: int, token_version: int = 0, jti: str | None = None) -> str:

@@ -182,6 +182,7 @@
       "title": "Buyurtma",
       "cancelled": "Buyurtma bekor qilingan",
       "cancelledReason": "Bekor qilish sababi: {reason}",
+      "moderationFailed": "Moderatsiyadan o‘tmadi",
       "yourReview": "Fikringiz",
       "leaveReview": "Fikr qoldirish",
       "telegram": "Telegram orqali yozish",

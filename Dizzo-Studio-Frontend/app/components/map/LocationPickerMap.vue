@@ -50,6 +50,7 @@ const selectedCity = ref(props.city || 'Toshkent');
 let map: any = null;
 let marker: any = null;
 let searchTimer: ReturnType<typeof setTimeout> | null = null;
+let searchTicket = 0;
 let yandexMapInstance: any = null;
 let yandexMapMarker: any = null;
 let activeProvider: 'yandex' | 'leaflet' | null = null;
@@ -205,7 +206,7 @@ async function reverseGeocode(lat: number, lon: number) {
 
   if (yandexApiKey) {
     try {
-      const response = await fetch(`https://geocode-maps.yandex.ru/1.x/?apikey=${encodeURIComponent(yandexApiKey)}&format=json&geocode=${lon},${lat}`);
+      const response = await fetch(`https://geocode-maps.yandex.ru/1.x/?apikey=${encodeURIComponent(yandexApiKey)}&format=json&lang=uz_UZ&geocode=${lon},${lat}`);
       if (response.ok) {
         const data = await response.json();
         const pos = data.response?.GeoObjectCollection?.featureMember?.[0]?.GeoObject;
@@ -325,7 +326,7 @@ function toLatin(str: string): string {
     'м': 'm', 'М': 'M',
     'н': 'n', 'Н': 'N',
     'о': 'o', 'О': 'O',
-    'п': 'p', 'P': 'P',
+    'п': 'p', 'П': 'P',
     'р': 'r', 'Р': 'R',
     'с': 's', 'С': 'S',
     'т': 't', 'Т': 'T',
@@ -353,25 +354,16 @@ async function fetchGeocodeItem(queryText: string, lang = 'uz_UZ'): Promise<any[
 async function searchAddress(query: string): Promise<SearchResult[]> {
   if (yandexApiKey) {
     try {
+      // Two geocoder calls per search: the text as typed in Uzbek, and its
+      // Cyrillic spelling in Russian (most street names are indexed so).
+      // Every spelling in both languages made ten calls per keystroke and
+      // used up the key's daily limit, after which the map stopped loading.
       const normalizedApos = normalizeApostrophes(query);
       const cyrillic = toCyrillic(normalizedApos);
-      const latin = toLatin(normalizedApos);
-      const cleanApos = normalizedApos.replace(/'/g, '');
-
-      const searchQueries = new Set<string>();
-      searchQueries.add(query);
-      searchQueries.add(normalizedApos);
-      if (cyrillic !== query) searchQueries.add(cyrillic);
-      if (latin !== query) searchQueries.add(latin);
-      if (cleanApos !== query) searchQueries.add(cleanApos);
-
-      const promises: Promise<any[]>[] = [];
-      for (const qItem of searchQueries) {
-        promises.push(fetchGeocodeItem(qItem, 'uz_UZ'));
-        promises.push(fetchGeocodeItem(qItem, 'ru_RU'));
-      }
-
-      const resultsNested = await Promise.all(promises);
+      const resultsNested = await Promise.all([
+        fetchGeocodeItem(normalizedApos, 'uz_UZ'),
+        fetchGeocodeItem(cyrillic !== normalizedApos ? cyrillic : toLatin(normalizedApos), 'ru_RU'),
+      ]);
       const allFeatures = resultsNested.flat();
 
       const seen = new Set<string>();
@@ -433,15 +425,20 @@ function onSearchInput() {
   }
 
   searchTimer = setTimeout(async () => {
+    // A slower answer to an earlier query must not replace a newer one.
+    const ticket = ++searchTicket;
     try {
-      searchResults.value = await searchAddress(q);
-      showSearchResults.value = searchResults.value.length > 0;
+      const found = await searchAddress(q);
+      if (ticket !== searchTicket) return;
+      searchResults.value = found;
+      showSearchResults.value = found.length > 0;
     }
     catch {
+      if (ticket !== searchTicket) return;
       searchResults.value = [];
       showSearchResults.value = false;
     }
-  }, 300);
+  }, 450);
 }
 
 function selectSearchResult(item: SearchResult) {

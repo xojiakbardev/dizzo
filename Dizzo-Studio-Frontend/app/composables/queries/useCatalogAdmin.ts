@@ -87,7 +87,10 @@ export function useCatalogAdminActions() {
         ? await api.delete<AdminCatalogProduct>(path)
         : await api[verb]<AdminCatalogProduct>(path, body);
       queryClient.setQueryData(productKey(product.id), product);
-      await queryClient.invalidateQueries({ queryKey: LIST_KEY });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: LIST_KEY }),
+        queryClient.invalidateQueries({ queryKey: ['catalog'] }),
+      ]);
       return product;
     }
     finally {

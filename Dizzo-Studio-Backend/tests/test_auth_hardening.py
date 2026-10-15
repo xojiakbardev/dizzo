@@ -147,6 +147,14 @@ async def test_refresh_rotates_and_a_replayed_token_signs_everyone_out(
     get_settings.cache_clear()
     time.sleep(0.01)
     client.cookies.clear()
+    # The client never got the answer: its old token, sent again, still gets
+    # the session that replaced it while that one is unspent.
+    lost = await client.post("/api/auth/token/refresh/", json={"refresh_token": first["refresh_token"]})
+    assert lost.status_code == 200
+    client.cookies.clear()
+    pair = (await client.post("/api/auth/token/refresh/", json={"refresh_token": pair["refresh_token"]})).json()
+    time.sleep(0.01)
+    client.cookies.clear()
     replay = await client.post("/api/auth/token/refresh/", json={"refresh_token": first["refresh_token"]})
     assert replay.status_code == 401
     # The replay revoked every session, the legitimate one included.
@@ -157,18 +165,24 @@ async def test_refresh_rotates_and_a_replayed_token_signs_everyone_out(
 
 
 @pytest.mark.asyncio
-async def test_logout_revokes_access_and_refresh_tokens(client: httpx.AsyncClient) -> None:
+async def test_logout_signs_out_only_that_device(client: httpx.AsyncClient) -> None:
     await register(client, "logout@example.com")
     app_pair = (await login(client, "logout@example.com")).json()
     other_device = (await login(client, "logout@example.com")).json()
+    client.cookies.clear()
 
     assert (await client.post("/api/auth/logout/", json={"refresh_token": app_pair["refresh_token"]})).status_code == 200
 
-    for pair in (app_pair, other_device):
-        assert (await client.get("/api/auth/me", headers=bearer(pair["access_token"]))).status_code == 401
-        client.cookies.clear()
-        refreshed = await client.post("/api/auth/token/refresh/", json={"refresh_token": pair["refresh_token"]})
-        assert refreshed.status_code == 401
+    assert (await client.get("/api/auth/me", headers=bearer(app_pair["access_token"]))).status_code == 401
+    client.cookies.clear()
+    refreshed = await client.post("/api/auth/token/refresh/", json={"refresh_token": app_pair["refresh_token"]})
+    assert refreshed.status_code == 401
+    # Signing out on the phone doesn't sign the browser out.
+    client.cookies.clear()
+    assert (await client.get("/api/auth/me", headers=bearer(other_device["access_token"]))).status_code == 200
+    client.cookies.clear()
+    refreshed = await client.post("/api/auth/token/refresh/", json={"refresh_token": other_device["refresh_token"]})
+    assert refreshed.status_code == 200
 
 
 @pytest.mark.asyncio
@@ -196,10 +210,14 @@ async def test_tokens_from_before_the_upgrade_work_until_refreshed(
         spent = (await session.execute(select(RefreshSession).where(RefreshSession.jti.like("legacy-%")))).scalar_one()
         assert spent.rotated_at is not None and spent.user_id == user["id"]
 
-    # Once logged out, old-style tokens stop too.
+    # An old-style token names no device, so logging out with it signs the
+    # account out everywhere, old-style tokens included.
     client.cookies.clear()
-    await client.post("/api/auth/logout/", json={"refresh_token": rotated.json()["refresh_token"]})
+    await client.post("/api/auth/logout/", json={"refresh_token": refresh})
     assert (await client.get("/api/auth/me", headers=bearer(access))).status_code == 401
+    client.cookies.clear()
+    gone = await client.post("/api/auth/token/refresh/", json={"refresh_token": rotated.json()["refresh_token"]})
+    assert gone.status_code == 401
 
 
 @pytest.mark.asyncio

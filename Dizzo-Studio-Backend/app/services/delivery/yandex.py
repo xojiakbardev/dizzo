@@ -23,13 +23,12 @@ TASHKENT_LON_MAX = 69.45
 
 
 def is_within_tashkent(latitude: float | None, longitude: float | None, city: str = "") -> bool:
-    """Checks whether the destination address or pin is inside Tashkent city."""
-    if city and ("toshkent" in city.lower() or "ташкент" in city.lower() or "tashkent" in city.lower()):
-        return True
+    """Checks whether the destination address or pin is inside Tashkent city.
+    A pin decides on its own: the city field defaults to "Toshkent", so a pin
+    in Samarkand with the default city is not in Tashkent."""
     if latitude is not None and longitude is not None:
-        if TASHKENT_LAT_MIN <= latitude <= TASHKENT_LAT_MAX and TASHKENT_LON_MIN <= longitude <= TASHKENT_LON_MAX:
-            return True
-    return False
+        return TASHKENT_LAT_MIN <= latitude <= TASHKENT_LAT_MAX and TASHKENT_LON_MIN <= longitude <= TASHKENT_LON_MAX
+    return bool(city) and any(name in city.lower() for name in ("toshkent", "ташкент", "tashkent"))
 
 
 class YandexDeliveryService:

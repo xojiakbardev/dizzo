@@ -202,7 +202,15 @@
       "reconnect": "Reconnect",
       "save": "Save changes",
       "saveError": "We couldn’t save your changes.",
-      "saved": "Your profile has been saved."
+      "saved": "Your profile has been saved.",
+      "avatarTooLarge": "The image must be 5 MB or smaller.",
+      "avatarSaved": "Profile photo updated.",
+      "avatarRemoved": "Profile photo removed.",
+      "avatarUploadError": "Could not upload the profile photo.",
+      "avatarRemoveError": "Could not remove the profile photo.",
+      "changePhoto": "Change photo",
+      "uploadPhoto": "Upload photo",
+      "removePhoto": "Remove photo"
     },
     "richText": {
       "bold": "Bold",

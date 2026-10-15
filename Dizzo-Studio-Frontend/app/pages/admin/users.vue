@@ -279,9 +279,9 @@ const columns = computed<DataTableColumn[]>(() => [
       <UiSelect v-model="branchFilter">
         <UiSelectTrigger
           class="w-full bg-card sm:w-48"
-          aria-label="Filial bo'yicha filter"
+          :aria-label="t('admin.users.branchFilter')"
         >
-          <UiSelectValue placeholder="Barcha filiallar" />
+          <UiSelectValue :placeholder="t('admin.users.allBranches')" />
         </UiSelectTrigger>
         <UiSelectContent position="popper">
           <UiSelectItem value="ALL">

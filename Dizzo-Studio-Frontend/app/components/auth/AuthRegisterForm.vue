@@ -9,6 +9,7 @@ const registerMutation = useRegister();
 const { t } = useI18n();
 const form = reactive({ full_name: '', phone_number: '', email: '', password: '' });
 const error = ref<string | null>(null);
+const id = useId();
 
 async function handleRegister() {
   error.value = null;
@@ -42,8 +43,12 @@ async function handleRegister() {
     </p>
 
     <div>
-      <label class="mb-1 block text-xs font-semibold text-gray-700">{{ t('storefront.auth.fullNameLabel') }}</label>
+      <label
+        :for="`${id}-full`"
+        class="mb-1 block text-xs font-semibold text-gray-700"
+      >{{ t('storefront.auth.fullNameLabel') }}</label>
       <input
+        :id="`${id}-full`"
         v-model="form.full_name"
         :placeholder="t('storefront.auth.fullNamePlaceholder')"
         autocomplete="name"
@@ -53,8 +58,12 @@ async function handleRegister() {
     </div>
 
     <div>
-      <label class="mb-1 block text-xs font-semibold text-gray-700">{{ t('storefront.auth.phoneLabel') }}</label>
+      <label
+        :for="`${id}-phone`"
+        class="mb-1 block text-xs font-semibold text-gray-700"
+      >{{ t('storefront.auth.phoneLabel') }}</label>
       <input
+        :id="`${id}-phone`"
         v-model="form.phone_number"
         type="tel"
         placeholder="+998 90 123 45 67"
@@ -65,8 +74,12 @@ async function handleRegister() {
     </div>
 
     <div>
-      <label class="mb-1 block text-xs font-semibold text-gray-700">{{ t('storefront.auth.emailLabel') }}</label>
+      <label
+        :for="`${id}-email`"
+        class="mb-1 block text-xs font-semibold text-gray-700"
+      >{{ t('storefront.auth.emailLabel') }}</label>
       <input
+        :id="`${id}-email`"
         v-model="form.email"
         type="email"
         :placeholder="t('storefront.auth.emailPlaceholder')"
@@ -77,8 +90,12 @@ async function handleRegister() {
     </div>
 
     <div>
-      <label class="mb-1 block text-xs font-semibold text-gray-700">{{ t('storefront.auth.passwordLabel') }}</label>
+      <label
+        :for="`${id}-password`"
+        class="mb-1 block text-xs font-semibold text-gray-700"
+      >{{ t('storefront.auth.passwordLabel') }}</label>
       <input
+        :id="`${id}-password`"
         v-model="form.password"
         type="password"
         :placeholder="t('storefront.auth.newPasswordPlaceholder')"

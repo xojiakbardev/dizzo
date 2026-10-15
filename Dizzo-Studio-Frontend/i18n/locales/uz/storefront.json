@@ -202,7 +202,15 @@
       "reconnect": "Qayta ulash",
       "save": "O‘zgarishlarni saqlash",
       "saveError": "Saqlashda xatolik yuz berdi.",
-      "saved": "Profil ma'lumotlari muvaffaqiyatli saqlandi."
+      "saved": "Profil ma'lumotlari muvaffaqiyatli saqlandi.",
+      "avatarTooLarge": "Rasm hajmi 5 MB dan oshmasligi kerak.",
+      "avatarSaved": "Profil rasmi yangilandi.",
+      "avatarRemoved": "Profil rasmi o‘chirildi.",
+      "avatarUploadError": "Profil rasmini yuklab bo‘lmadi.",
+      "avatarRemoveError": "Profil rasmini o‘chirib bo‘lmadi.",
+      "changePhoto": "Rasmni o‘zgartirish",
+      "uploadPhoto": "Rasm yuklash",
+      "removePhoto": "Rasmni o‘chirish"
     },
     "richText": {
       "bold": "Qalin",

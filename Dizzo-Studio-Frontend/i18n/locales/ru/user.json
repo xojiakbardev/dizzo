@@ -182,6 +182,7 @@
       "title": "Заказ",
       "cancelled": "Заказ отменён",
       "cancelledReason": "Причина отмены: {reason}",
+      "moderationFailed": "Не прошло модерацию",
       "yourReview": "Ваш отзыв",
       "leaveReview": "Оставить отзыв",
       "telegram": "Написать в Telegram",

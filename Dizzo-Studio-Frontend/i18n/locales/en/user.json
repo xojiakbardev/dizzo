@@ -182,6 +182,7 @@
       "title": "Order",
       "cancelled": "This order was cancelled",
       "cancelledReason": "Cancellation reason: {reason}",
+      "moderationFailed": "Did not pass moderation",
       "yourReview": "Your review",
       "leaveReview": "Leave a review",
       "telegram": "Message us on Telegram",

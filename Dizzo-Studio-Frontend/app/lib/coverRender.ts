@@ -20,8 +20,10 @@ const PRODUCT_MAX_H = 0.52;
  * begins — the product overlaps the edge, so it sits on it instead of
  * floating above it. */
 const PRODUCT_FOOT = 0.775;
-const SURFACE_LEFT = 0.735;
-const SURFACE_RIGHT = 0.695;
+// Level: a surface falling to the right turned the product (and the
+// customer's print on it) ~2° off straight, which read as a skewed print.
+const SURFACE_LEFT = 0.715;
+const SURFACE_RIGHT = 0.715;
 
 export interface CoverOptions {
   /** The side of the square picture. The catalog wants 1200. */
@@ -109,8 +111,7 @@ function drawProduct(ctx: CanvasRenderingContext2D, s: number, image: HTMLImageE
   const scale = Math.min((s * PRODUCT_MAX_W) / box.width, (s * PRODUCT_MAX_H) / box.height);
   const width = box.width * scale;
   const height = box.height * scale;
-  // The surface falls to the right, so the product leans with it: standing
-  // upright on a tilted table is what looks wrong.
+  // Square to the surface (level now, so upright).
   const tilt = -Math.atan2(SURFACE_LEFT - SURFACE_RIGHT, 1);
   ctx.save();
   ctx.translate(s * 0.5, s * PRODUCT_FOOT);

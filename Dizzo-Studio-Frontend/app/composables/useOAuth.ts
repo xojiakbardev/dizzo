@@ -49,7 +49,10 @@ export function useOAuth() {
 
   async function ensureConfig(): Promise<OAuthConfigResponse> {
     if (oauthConfig.value) return oauthConfig.value;
-    configPromise ??= api.get<OAuthConfigResponse>('/auth/oauth/config/');
+    configPromise ??= api.get<OAuthConfigResponse>('/auth/oauth/config/').catch((err) => {
+      configPromise = null;
+      throw err;
+    });
     oauthConfig.value = await configPromise;
     return oauthConfig.value;
   }

@@ -116,6 +116,8 @@ watch(branches, () => {
     mapInstance.geoObjects.add(yMarker);
     markersMap.set(branch.id, yMarker);
   });
+  // Branches that arrive after the map still preselect the first one.
+  if (!props.modelValue && branches.value[0]) selectBranch(branches.value[0]);
 });
 
 onMounted(() => {

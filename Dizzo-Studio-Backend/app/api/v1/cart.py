@@ -16,6 +16,7 @@ from app.core.i18n import _
 from app.db.session import get_db
 from app.models.commerce import Cart, CartItem, Design
 from app.models.user import User
+from app.schemas.catalog import QuoteOut
 from app.schemas.design import CartItemIn, CartOut, DesignDocument, QuantityIn
 from app.services.catalog import lock_shape, quote, resolve_size, size_scale
 from app.services.design_rules import document_problems
@@ -109,6 +110,9 @@ async def update_item(
     item = await own_item(session, await get_cart(session, user), item_uuid)
     if payload.quantity is not None:
         item.quantity = payload.quantity
+        quoted = QuoteOut.model_validate(item.package["quote"])
+        quoted.quantity, quoted.total = item.quantity, quoted.unit_price * item.quantity
+        item.package = {**item.package, "quote": quoted.model_dump(mode="json")}
     if payload.size is not None:
         size = resolve_size(item.variant, payload.size or None, required=True)
         document = DesignDocument.model_validate(item.package["document"])

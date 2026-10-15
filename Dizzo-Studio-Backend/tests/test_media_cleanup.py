@@ -197,3 +197,22 @@ async def test_a_customer_may_keep_more_designs_than_the_old_cap(
 
     another = ok(await client.post("/api/studio/designs/", json=body), 201)
     assert another["id"] != first["id"]
+
+
+@pytest.mark.asyncio
+async def test_studio_assets_are_never_deleted(
+    client: httpx.AsyncClient, storage: FakeStorage, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    from app.models.design_asset import DesignAsset
+
+    await shop(client, storage, session_factory)
+    icon = await upload_file(client, storage, "design", png((64, 64)))
+    async with session_factory() as session:
+        session.add(DesignAsset(media_id=icon, name="Yurak", category="love", type="icon"))
+        await session.commit()
+    await age(session_factory, days=40)
+
+    reports = await sweep(session_factory, storage, dry_run=False)
+
+    assert reports["orphans"].rows == 0
+    assert icon in await media_ids(session_factory)

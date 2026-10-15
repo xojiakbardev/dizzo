@@ -61,6 +61,9 @@
       "list": {
         "allStatuses": "Barcha holatlar",
         "allMethods": "Barcha usullar",
+        "fullscreen": "To‘liq ekran",
+        "fullscreenTitle": "To‘liq ekranga o‘tish",
+        "backToList": "Buyurtmalar ro‘yxatiga qaytish",
         "col": {
           "number": "Buyurtma №",
           "date": "Sana",
@@ -849,6 +852,8 @@
     "users": {
       "createFailed": "Foydalanuvchi yaratib bo‘lmadi.",
       "roleFailed": "Rolni o‘zgartirib bo‘lmadi.",
+      "branchFilter": "Filial bo‘yicha filtr",
+      "allBranches": "Barcha filiallar",
       "col": {
         "user": "Foydalanuvchi",
         "email": "Email",

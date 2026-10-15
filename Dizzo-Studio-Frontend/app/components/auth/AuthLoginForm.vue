@@ -9,6 +9,7 @@ const loginMutation = useLogin();
 const { t } = useI18n();
 const form = reactive({ email: '', password: '' });
 const error = ref<string | null>(null);
+const id = useId();
 
 async function handleLogin() {
   error.value = null;
@@ -34,8 +35,12 @@ async function handleLogin() {
     </p>
 
     <div>
-      <label class="mb-1 block text-xs font-semibold text-gray-700">{{ t('storefront.auth.emailLabel') }}</label>
+      <label
+        :for="`${id}-email`"
+        class="mb-1 block text-xs font-semibold text-gray-700"
+      >{{ t('storefront.auth.emailLabel') }}</label>
       <input
+        :id="`${id}-email`"
         v-model="form.email"
         type="email"
         :placeholder="t('storefront.auth.emailPlaceholder')"
@@ -46,8 +51,12 @@ async function handleLogin() {
     </div>
 
     <div>
-      <label class="mb-1 block text-xs font-semibold text-gray-700">{{ t('storefront.auth.passwordLabel') }}</label>
+      <label
+        :for="`${id}-password`"
+        class="mb-1 block text-xs font-semibold text-gray-700"
+      >{{ t('storefront.auth.passwordLabel') }}</label>
       <input
+        :id="`${id}-password`"
         v-model="form.password"
         type="password"
         :placeholder="t('storefront.auth.passwordPlaceholder')"

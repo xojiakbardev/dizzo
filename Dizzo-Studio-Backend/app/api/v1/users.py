@@ -208,8 +208,7 @@ async def admin_update_user_role(
         target.phone_number = payload.phone_number
     if payload.role is not None:
         target.role = payload.role
-        if payload.role != "customer":
-            target.is_staff = True
+        target.is_staff = payload.role != "customer"
     if payload.is_staff is not None:
         target.is_staff = payload.is_staff
     if payload.is_active is not None:

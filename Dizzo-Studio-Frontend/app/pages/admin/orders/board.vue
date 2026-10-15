@@ -81,7 +81,7 @@ onMounted(() => {
         <NuxtLink
           :to="localePath('/admin/orders')"
           class="flex items-center gap-1.5 rounded-lg border border-border/80 bg-card px-2.5 py-1.5 text-xs font-semibold text-muted-foreground transition-all hover:bg-muted hover:text-foreground shadow-2xs"
-          title="Buyurtmalar ro'yxatiga qaytish"
+          :title="t('admin.orders.list.backToList')"
         >
           <Icon
             name="lucide:arrow-left"

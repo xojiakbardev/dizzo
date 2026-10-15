@@ -1,3 +1,5 @@
+import { localizedPath } from '~/lib/i18n';
+
 export function useScrollTo() {
   const router = useRouter();
 
@@ -15,8 +17,8 @@ export function useScrollTo() {
       }
     };
 
-    if (router.currentRoute.value.path !== '/') {
-      Promise.resolve(navigateTo('/')).then(() => {
+    if (router.currentRoute.value.path !== localizedPath('/')) {
+      Promise.resolve(navigateTo(localizedPath('/'))).then(() => {
         setTimeout(performScroll, 250);
       });
     }

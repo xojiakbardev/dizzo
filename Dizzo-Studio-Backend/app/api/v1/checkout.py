@@ -7,12 +7,14 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user
+from app.core.config import get_settings
 from app.core.i18n import _
 from app.db.session import get_db
 from app.models.commerce import Cart, Order, OrderItem
 from app.models.user import User
 from app.schemas.orders import CheckoutRequest
 from app.services.catalog import quote
+from app.services.delivery import BTSDeliveryService, YandexDeliveryService, is_within_tashkent
 from app.services.orders import get_order, order_detail_payload
 from app.services.packages import (
     copy_into_order,
@@ -60,6 +62,32 @@ async def checkout_response(session: AsyncSession, order_id: int, user: User, st
         "status": order.status,
         "payment_url": payment_url,
     }
+
+
+async def delivery_price(session: AsyncSession, payload: CheckoutRequest) -> tuple[str, Decimal]:
+    """The carrier and the price of a delivery, worked out here: the price the
+    client sends is only what it showed, and trusting it let anyone order
+    with free delivery. No carrier (the app) means Yandex inside Tashkent
+    and BTS elsewhere."""
+    lat = float(payload.latitude) if payload.latitude is not None else None
+    lon = float(payload.longitude) if payload.longitude is not None else None
+    carrier = payload.carrier.strip().upper() or (
+        "YANDEX" if is_within_tashkent(lat, lon, payload.shipping_city) else "BTS"
+    )
+    settings = get_settings()
+    if carrier == "YANDEX":
+        offer = await YandexDeliveryService(settings).calculate_quote(
+            lat, lon, payload.shipping_address, payload.shipping_city or "Toshkent"
+        )
+    elif carrier == "BTS":
+        offer = await BTSDeliveryService(settings).calculate_quote(
+            session, city=payload.shipping_city, dest_lat=lat, dest_lon=lon
+        )
+    else:
+        raise HTTPException(status_code=422, detail=_("Yetkazib beruvchi noto'g'ri tanlangan"))
+    if not offer.get("available"):
+        raise HTTPException(status_code=422, detail=offer.get("error") or _("Bu manzilga yetkazib berib bo'lmaydi"))
+    return carrier, Decimal(str(offer["price"])).quantize(Decimal("0.01"))
 
 
 @router.post("/checkout/")
@@ -151,14 +179,16 @@ async def checkout(
             status_code=422,
             detail="Buyurtma summasi 0 so'm bo'lishi mumkin emas. Savatni tekshiring yoki biz bilan bog'laning.",
         )
-    shipping_cost = payload.shipping_cost if payload.delivery_method == "DELIVERY" else Decimal("0")
+    carrier, shipping_cost = "", Decimal("0")
+    if payload.delivery_method == "DELIVERY":
+        carrier, shipping_cost = await delivery_price(session, payload)
     order = Order(
         order_number=provisional_order_number(),
         customer_id=user.id,
         idempotency_key=idempotency_key,
         status="NEW",
         delivery_method=payload.delivery_method,
-        carrier=payload.carrier if payload.delivery_method == "DELIVERY" else "",
+        carrier=carrier,
         branch_id=payload.branch_id if payload.delivery_method == "PICKUP" else None,
         subtotal=subtotal,
         shipping_cost=shipping_cost,

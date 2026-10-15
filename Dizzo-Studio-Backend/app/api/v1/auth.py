@@ -31,6 +31,7 @@ from app.services.auth import (
     authenticate_telegram,
     authenticate_telegram_oidc,
     clear_auth_cookies,
+    end_session,
     get_or_create_social,
     request_access_token,
     revoke_all_tokens,
@@ -425,16 +426,16 @@ async def logout(
     payload: RefreshRequest | None = None,
     session: AsyncSession = Depends(get_db),
 ):
-    """Signs the account out everywhere: every access and refresh token
-    issued to it so far stops working. The app sends {"refresh_token"}; the
-    web sends its cookies."""
-    user = await user_from_any_token(
-        session,
-        request_access_token(request),
-        (payload.refresh_token if payload else None) or request.cookies.get("refresh_token") or "",
-    )
+    """Signs this device out: its access and refresh tokens stop working,
+    the account's other devices (the app, another browser) stay signed in.
+    Tokens from before per-device sessions sign the account out everywhere.
+    The app sends {"refresh_token"}; the web sends its cookies."""
+    access = request_access_token(request)
+    refresh = (payload.refresh_token if payload else None) or request.cookies.get("refresh_token") or ""
+    user = await user_from_any_token(session, access, refresh)
     if user is not None:
-        await revoke_all_tokens(session, user)
+        if not await end_session(session, access, refresh):
+            await revoke_all_tokens(session, user)
         await session.commit()
     clear_auth_cookies(response)
     return {"detail": "Logged out"}

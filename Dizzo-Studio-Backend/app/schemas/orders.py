@@ -25,6 +25,7 @@ class CheckoutRequest(BaseModel):
     shipping_postal_code: str = Field(default="", max_length=32)
     shipping_country: str = Field(default="", max_length=120)
     carrier: str = Field(default="", max_length=120)
+    # Accepted for older clients and ignored: the backend prices delivery itself.
     shipping_cost: Decimal = Field(default=Decimal("0"), ge=0)
     customer_notes: str = Field(default="", max_length=2000)
 

@@ -423,3 +423,59 @@ async def test_a_webhook_for_another_click_service_is_refused(client: AsyncClien
     })
 
     assert res.json()["error"] == CLICK_BAD_REQUEST
+
+
+@pytest.mark.anyio
+async def test_an_order_in_production_is_not_charged_again(client: AsyncClient, click_settings, sample_order, session_factory):
+    # Paid and already past PAID in the pipeline: a second prepare is refused,
+    # whatever stage the order reached.
+    async with session_factory() as session:
+        order = await session.get(Order, sample_order.id)
+        order.status = "QUALITY_CHECK"
+        await session.commit()
+    sign_time = "2026-09-17 12:00:00"
+    sign = make_prepare_sign("4343", click_settings.click_service_id, click_settings.click_secret_key, sample_order.order_number, "150000.00", "0", sign_time)
+    res = await client.post("/api/payments/click/prepare", json={
+        "click_trans_id": 4343, "service_id": int(click_settings.click_service_id), "click_paydoc_id": 1,
+        "merchant_trans_id": sample_order.order_number, "amount": 150000.00, "action": 0,
+        "sign_time": sign_time, "sign_string": sign,
+    })
+    assert res.json()["error"] == CLICK_ALREADY_PAID
+
+
+@pytest.mark.anyio
+async def test_a_late_complete_does_not_send_the_order_back_to_paid(client: AsyncClient, click_settings, sample_order, session_factory):
+    prepare_id = await prepared(client, click_settings, sample_order)
+    async with session_factory() as session:
+        order = await session.get(Order, sample_order.id)
+        order.status = "IN_PRODUCTION"
+        await session.commit()
+
+    res = await client.post("/api/payments/click/complete", json=complete_body(click_settings, sample_order, prepare_id, "150000.00"))
+
+    assert res.json()["error"] == CLICK_SUCCESS, res.text
+    async with session_factory() as session:
+        assert (await session.get(Order, sample_order.id)).status == "IN_PRODUCTION"
+
+
+@pytest.mark.anyio
+async def test_complete_survives_a_non_numeric_error_code(client: AsyncClient, click_settings, sample_order):
+    prepare_id = await prepared(client, click_settings, sample_order)
+    res = await client.post("/api/payments/click/complete", json={**complete_body(click_settings, sample_order, prepare_id, "150000.00"), "error": "oops"})
+    assert res.status_code == 200
+    assert res.json()["error"] == CLICK_BAD_REQUEST
+
+
+@pytest.mark.anyio
+async def test_a_cancelled_payment_leaves_the_order_new_again(client: AsyncClient, click_settings, sample_order, session_factory):
+    prepare_id = await prepared(client, click_settings, sample_order)
+    async with session_factory() as session:
+        assert (await session.get(Order, sample_order.id)).status == "PAYMENT_PENDING"
+
+    res = await client.post("/api/payments/click/complete", json={**complete_body(click_settings, sample_order, prepare_id, "150000.00"), "error": -5017})
+
+    assert res.json()["error"] == CLICK_TRANSACTION_CANCELLED
+    async with session_factory() as session:
+        # The customer may pay again or cancel it (cancel_order takes NEW orders only).
+        assert (await session.get(Order, sample_order.id)).status == "NEW"
+        assert (await session.get(Payment, prepare_id)).status == "CANCELLED"

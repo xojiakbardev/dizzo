@@ -40,10 +40,10 @@ export function useSiteSeo() {
     const match = /^\/studio\/([^/]+)$/.exec(path.value);
     return match ? decodeURIComponent(match[1]!) : null;
   });
-  const product = cached<PublicProductDetail>(() => ['catalog', 'product', productSlug.value ?? '']);
-  const categories = cached<PublicCategory[]>(() => ['catalog', 'categories']);
+  const product = cached<PublicProductDetail>(() => ['catalog', 'product', productSlug.value ?? '', locale.value]);
+  const categories = cached<PublicCategory[]>(() => ['catalog', 'categories', locale.value]);
   // The catalog page's first page (its search is empty on a shared link) and its shelf counts.
-  const productFeed = cached<InfiniteData<PublicProductCard[]>>(() => ['catalog', 'feed', shelfSlug.value, '']);
+  const productFeed = cached<InfiniteData<PublicProductCard[]>>(() => ['catalog', 'feed', shelfSlug.value, '', locale.value]);
   const productCounts = cached<{ total: number; counts: Record<string, number> }>(() => ['catalog', 'shelves']);
   const shelfCounts = cached<{ total: number; counts: Record<string, number> }>(() => ['gallery', 'shelves']);
   const feed = cached<InfiniteData<GalleryItem[]>>(() => ['gallery', 'feed', shelfSlug.value]);

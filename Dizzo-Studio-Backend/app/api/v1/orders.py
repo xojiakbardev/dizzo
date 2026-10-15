@@ -217,8 +217,10 @@ async def admin_list_orders(
 
     # Scoping by branch for branch workers / managers
     if user.role in BRANCH_STAFF_ROLES:
-        query = query.where(Order.branch_id == user.branch_id)
-        count_query = count_query.where(Order.branch_id == user.branch_id)
+        # A NULL branch is nobody's branch (see check_order_access).
+        scope = Order.branch_id == user.branch_id if user.branch_id else false()
+        query = query.where(scope)
+        count_query = count_query.where(scope)
     elif branch_id:
         query = query.where(Order.branch_id == branch_id)
         count_query = count_query.where(Order.branch_id == branch_id)

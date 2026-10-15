@@ -57,7 +57,7 @@ def _aware(moment: datetime) -> datetime:
 
 def _pair(user: User, jti: str) -> dict:
     return {
-        "access_token": create_access_token(user.id, user.token_version),
+        "access_token": create_access_token(user.id, user.token_version, jti),
         "refresh_token": create_refresh_token(user.id, user.token_version, jti),
         "token_type": "bearer",
         "user": user_payload(user),
@@ -100,9 +100,13 @@ async def revoke_all_tokens(session: AsyncSession, user: User) -> None:
 
 
 async def rotate_refresh_token(session: AsyncSession, token: str) -> dict:
-    """Spends a refresh token for a new pair. A token spent within the grace
-    period (another tab refreshed at the same moment) gets the pair of the
-    session that replaced it; spent any earlier, it was replayed, and every
+    """Spends a refresh token for a new pair. A spent token presented again
+    gets the pair of the session that replaced it while that successor has
+    not been spent itself: another tab refreshed at the same moment, or the
+    answer to the first refresh never reached the client (a phone dropped the
+    connection, a tab was suspended mid-request) — signing everyone out then
+    is what made sessions end "for no reason". Once the successor has been
+    spent too, past the grace period, the old token was replayed and every
     session of the user is revoked."""
     unauthorized = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=INVALID_REFRESH)
     claims = decode_claims(token, "refresh") if token else None
@@ -140,15 +144,38 @@ async def rotate_refresh_token(session: AsyncSession, token: str) -> dict:
         await session.refresh(row)  # lost the race to a concurrent refresh
 
     grace = timedelta(seconds=get_settings().refresh_reuse_grace_seconds)
-    if row.replaced_by and row.rotated_at and now - _aware(row.rotated_at) <= grace:
-        successor = await session.get(RefreshSession, row.replaced_by)
-        if successor is not None:
-            await session.commit()
-            return _pair(user, successor.jti)
+    successor = await session.get(RefreshSession, row.replaced_by) if row.replaced_by else None
+    if successor is not None and _aware(successor.expires_at) > now and (
+        successor.rotated_at is None or (row.rotated_at and now - _aware(row.rotated_at) <= grace)
+    ):
+        await session.commit()
+        return _pair(user, successor.jti)
     logger.warning("refresh token replayed for user %s: revoking all sessions", user.id)
     await revoke_all_tokens(session, user)
     await session.commit()
     raise unauthorized
+
+
+async def end_session(session: AsyncSession, access: str, refresh: str) -> bool:
+    """Signs out the one device these tokens belong to: its refresh session,
+    the one it was rotated from (whose access token may still be live) and
+    the one it was rotated to. False when the tokens name no session (issued
+    before sessions existed), so the caller signs the account out everywhere."""
+    for token, kind, key in ((refresh, "refresh", "jti"), (access, "access", "sid")):
+        claims = decode_claims(token, kind) if token else None
+        jti = claims.get(key) if claims else None
+        if not jti:
+            continue
+        row = await session.get(RefreshSession, jti)
+        doomed = {jti} | ({row.replaced_by} if row is not None and row.replaced_by else set())
+        await session.execute(
+            delete(RefreshSession).where(
+                RefreshSession.user_id == int(claims["sub"]),
+                (RefreshSession.jti.in_(doomed)) | (RefreshSession.replaced_by == jti),
+            )
+        )
+        return True
+    return False
 
 
 async def user_from_any_token(session: AsyncSession, access: str, refresh: str) -> User | None:
@@ -362,7 +389,9 @@ async def current_user(request: Request, session: AsyncSession) -> User:
     token = request_access_token(request)
     claims = decode_claims(token) if token else None
     user = await session.get(User, claims["sub"]) if claims else None
-    if not user or not user.is_active or claims["tv"] != user.token_version:
+    if not user or not user.is_active or claims["tv"] != user.token_version or (
+        claims.get("sid") and await session.get(RefreshSession, claims["sid"]) is None
+    ):
         raise HTTPException(status_code=401, detail="Autentifikatsiya talab qilinadi")
     return user
 

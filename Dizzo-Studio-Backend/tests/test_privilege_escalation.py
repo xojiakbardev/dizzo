@@ -349,3 +349,71 @@ async def test_a_workers_name_cannot_inject_html_into_the_moderator_group(
     assert "Krujka &amp; Co" in text and "&lt;b&gt;Filial&lt;/b&gt;" in text and "5 &lt; 6" in text
     # The message's own markup is untouched.
     assert text.startswith("🎨 <b>Yangi galereya namunasi tekshiruv uchun!</b>")
+
+
+# ── A branch is confined to its own roster ──
+
+
+@pytest.mark.asyncio
+async def test_a_branch_lead_cannot_pull_staff_out_of_another_branch(
+    client: httpx.AsyncClient, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    mine = await make_branch(session_factory, "roster-mine")
+    theirs = await make_branch(session_factory, "roster-theirs")
+    await staff(client, session_factory, "poacher@example.com", "branch_admin", mine)
+    worker = await staff(client, session_factory, "their-worker@example.com", "branch_worker", theirs)
+    lead = await bearer(client, "poacher@example.com")
+
+    poached = await client.post(
+        f"/api/branches/{mine}/workers", json={"user_id": worker["id"], "role": "branch_worker"}, headers=lead
+    )
+
+    assert poached.status_code == 403
+    async with session_factory() as session:
+        assert (await session.get(User, worker["id"])).branch_id == theirs
+
+
+@pytest.mark.asyncio
+async def test_a_branch_worker_without_a_branch_lists_no_orders(
+    client: httpx.AsyncClient, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    customer = await register(client, "loose-buyer@example.com")
+    client.cookies.clear()
+    await staff(client, session_factory, "loose-worker@example.com", "branch_worker", None)
+    worker = await bearer(client, "loose-worker@example.com")
+    await order_at(session_factory, customer["id"], None, "B-LOOSE")
+
+    listed = await client.get("/api/orders/admin/orders/", headers=worker)
+
+    assert listed.status_code == 200, listed.text
+    assert listed.json()["count"] == 0 and listed.json()["results"] == []  # a NULL branch is nobody's branch
+
+
+@pytest.mark.asyncio
+async def test_a_branch_slug_cannot_be_taken_twice(
+    client: httpx.AsyncClient, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    await make_branch(session_factory, "chilonzor")
+    second = await make_branch(session_factory, "yunusobod")
+    await staff(client, session_factory, "slug-admin@example.com", "admin")
+    admin = await bearer(client, "slug-admin@example.com")
+
+    renamed = await client.patch(f"/api/branches/{second}", json={"slug": "chilonzor"}, headers=admin)
+
+    assert renamed.status_code == 409, renamed.text
+
+
+@pytest.mark.asyncio
+async def test_demoting_to_customer_drops_the_staff_flag(
+    client: httpx.AsyncClient, session_factory: async_sessionmaker[AsyncSession]
+) -> None:
+    await staff(client, session_factory, "root@example.com", "super_admin")
+    mod = await staff(client, session_factory, "ex-mod@example.com", "moderator")
+    root = await bearer(client, "root@example.com")
+
+    demoted = await client.patch(f"/api/users/admin/{mod['id']}/role/", json={"role": "customer"}, headers=root)
+
+    assert demoted.status_code == 200, demoted.text
+    async with session_factory() as session:
+        user = await session.get(User, mod["id"])
+        assert (user.role, user.is_staff) == ("customer", False)
